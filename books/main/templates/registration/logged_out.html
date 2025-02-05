@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% include "main/header.html" %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+      <div class="alert alert-info" role="alert">
+        <p class="mb-4">Успешный выход.</p>
+        <a href="{% url 'login' %}" class="btn btn-primary">Вернуться к странице логина</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

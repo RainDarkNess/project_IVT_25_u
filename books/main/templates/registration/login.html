@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% include "main/header.html" %}
+<div class="container mt-5">
+  {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      Пароль или логин не верные, повторите попытку.
+    </div>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <div class="alert alert-warning" role="alert">
+        У вас нет доступа к этой странице, войдите в аккаунт чтобы продолжить.
+      </div>
+    {% else %}
+      <div class="alert alert-info" role="alert">
+        Вход.
+      </div>
+    {% endif %}
+  {% endif %}
+
+  <div class="card">
+    <div class="card-body">
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="id_username" class="form-label">{{ form.username.label_tag }}</label>
+          {{ form.username }}
+        </div>
+        <div class="mb-3">
+          <label for="id_password" class="form-label">{{ form.password.label_tag }}</label>
+          {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary">Логин</button>
+        <input type="hidden" name="next" value="{{ next }}">
+      </form>
+    </div>
+  </div>
+
+  <p class="mt-3"><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+</div>
+{% endblock %}
+
