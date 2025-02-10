@@ -1,12 +1,119 @@
-{% extends "main/base.html" %}
-{% load static %}
-{% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Exchange</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-{% block content %}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .info {
+            width: 100%;
+        }
+
+        .table-container-local {
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 50px
+        }
+        
+        .table {
+            width: 100%;
+            margin-bottom: 20px;
+            border: 15px solid #e8f6e5;
+            border-top: 5px solid #e8f6e5;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            font-weight: bold;
+            padding: 5px;
+            background: #e8f6e5;
+            border: none;
+            border-bottom: 5px solid #e8f6e5;
+            text-align: center;
+        }
+
+        .table td {
+            padding: 5px;
+            border: none;
+            border-bottom: 5px solid #e8f6e5;
+            text-align: center;
+        }
+    </style>
+</head>
 <body>
-{% include "main/header.html" %}
 
-    
+<!-- Header -->
+<header style="background-color: #252736; color: white; padding: 20px;">
+    <div class="container">
+        <a href="/" style="color: white; text-decoration: none; font-size: 24px;">Book Exchange</a>
+        <nav>
+            <ul style="list-style-type: none; display: flex; gap: 20px; margin-left: auto;">
+                <li><a href="#" style="color: white; text-decoration: none;">Главная</a></li>
+                <li><a href="#" style="color: white; text-decoration: none;">Мои обмены</a></li>
+                <li><a href="#" style="color: white; text-decoration: none;">О нас</a></li>
+                <li><a href="#" style="color: white; text-decoration: none;">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
+<!-- Main Content -->
+<main style="background-position: center; background-repeat: no-repeat; background-size: cover; height: 480px; position: relative;">
+    <div class="table-container table-container-local" style="">
+        <table class="info table">
+            <tr>
+                <th>№</th>
+                <th>Книга</th>
+                <th >Пользователь</th>
+                <th >Адрес</th>
+                <th >Дата</th>
+                <th >Статус</th>
+            </tr>
+            <tr>
+                <td rowspan="2">1</td>
+                <td><a href="/">Мертвые Души. Автор: Гоголь. к. к.</a></td>
+                <td><a href="/">Мичурин Андрей Михайлович</a></td>
+                <td>проспект Карла Маркса, 245, Самара, 443090</td>
+                <td rowspan="2">25.02.2025</td>
+                <td rowspan="2">Активно</td>
+            </tr>
+            <tr>
+                <td>Мертвые Души. Автор: Гоголь. к. к.</td>
+                <td>Мичурин Андрей Михайлович</td>
+                <td>проспект Карла Маркса, 245, Самара, 443090</td>
+            </tr>
+
+        </table>
+    </div>
+</main>
+
+<!-- Advantages Section -->
+<section style="background-color: #B8FF01; padding: 60px 0;">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 40px;">
+            <div style="text-align: center;">
+                <img src="icon1.png" alt="Icon 1" style="width: 100px; height: 100px;"/>
+                <h3 style="margin-top: 15px; color: #876115;">Широкий выбор книг</h3>
+                <p>Найдите редкие издания и новинки литературы.</p>
+            </div>
+            <div style="text-align: center;">
+                <img src="icon2.png" alt="Icon 2" style="width: 100px; height: 100px;"/>
+                <h3 style="margin-top: 15px; color: #876115;">Удобный обмен</h3>
+                <p>Простая система поиска и предложения обмена.</p>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
-{% endblock content %}
+</html>
