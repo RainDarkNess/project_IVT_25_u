@@ -1,34 +1,20 @@
-<div class="header">
-    <div class="row" style="margin-left: auto; width: 50%;">
-        <div class="col">Официальный магазин</div>
-        <div class="col">Доставка</div>
-        <div class="col">Москва</div>
-        <div class="col">8 (800) 000-00-00</div>
+<header>
+    <h1>Trade Books</h1>
+    <div class="input_and_nav">
+        <form method="get" action=""> <!--поле ввода поиска--> 
+            <input type="search" class="search" placeholder="Поиск по сайту">
+        </form>
+        <nav>
+            <ul>
+                <li><a href="">Главная</a></li>
+                <li><a href="">Начать обмен</a></li>
+                <li><a href="">Мои обмены</a></li>
+                <li><a href="">Задать вопрос</a></li>
+            </ul>
+        </nav>
     </div>
-    <div class="container-sm">
-        <div class="row">
-            <a href="#default" class="logo">CompanyLogo</a>
-        </div>
-        <div class="row">
-            <div class="topnav">
-                <a class="active" href="/">На главную</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-
-                {% if user.is_authenticated %}
-                <a>{{ user.get_username }}</a>
-
-                <form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="Выйти" class="header-input">
-                </form>
-                {% else %}
-
-                <a href="/accounts/login/">Логин</a>
-                {% endif %}
-
-                <input type="text" placeholder="Search..">
-            </div>
-        </div>
+    <div class="two_buttons">
+            <button class="registration">Регистрация</button>
+        <button class="authorisation">Вход</button>
     </div>
-</div>
+</header>

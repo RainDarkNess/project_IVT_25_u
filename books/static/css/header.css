@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-VariableFont_wdth\,wght.ttf');
+}
+@font-face {
+    font-family: "Lilita One";
+    src: url('../fonts/LilitaOne-Regular.ttf');
+}
+header{
+    font-family: 'Roboto';
+    color: white;
+    background-color:#252736;
+    height: 100px;
+    display: flex;
+}
+header h1{
+    font-family: "Lilita One";
+    font-size: 30px;
+    margin: 49px 0px 0px 105px;
+}
+header .input_and_nav{
+    margin: 20px 0px 0px 400px;
+   
+}
+header .search{
+    width: 422px;
+    height: 30px;
+    padding-left:10px ;
+    border-radius: 5px;
+}
+header .search::placeholder{
+    color: #252736;
+    margin: 0px 10px 0px 0px;
+    font-size: 15px;
+}
+header nav ul{
+    list-style-type: none  ;
+    display: flex;
+}
+header ul li{
+    margin: 10px  30px 0px 0px;
+}
+header ul li:first-child{
+    margin: 10px  15px 0px -30px;
+}
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.two_buttons{
+    margin: 49px 0px 0px 395px;
+
+}
+.two_buttons button{
+    border-radius: 5px;
+}
+header .registration{
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+}
+

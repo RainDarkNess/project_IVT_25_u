@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
                   path('', views.test),
+                  # path('lk_user', views.userPageView),
                   path("accounts/login/", auth_views.LoginView.as_view(template_name="registration/login.html"),
                        name='login'),
                   path("accounts/password_reset/",
