@@ -20,10 +20,12 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+from main.views import exchange
 
 urlpatterns = [
+                  path("exchange/", exchange, name="exchange"),
                   path('', views.test),
-                  # path('lk_user', views.userPageView),
+                  path('lk_user', views.userPage),
                   path("accounts/login/", auth_views.LoginView.as_view(template_name="registration/login.html"),
                        name='login'),
                   path("accounts/password_reset/",
