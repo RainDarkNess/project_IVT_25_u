@@ -1,0 +1,70 @@
+.hello{
+    margin: 100px 0px  200px 300px;
+    width: 1200px;
+    height: 350px;
+    background-image: url('../img/back_main.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.hello h2{
+    padding: 100px 0px 0px 100px;
+}
+.hello p{
+    width: 400px;
+    color: #252736;
+    font-size: 19px;
+    font-family: 'Roboto';
+    font-weight: lighter;
+    padding-left: 100px;
+    padding-top: 30px;
+}
+.hello .two_but{
+    
+    margin-left: 100px;
+}
+.hello .two_but .auth{
+    background-color: transparent;
+    border: 1px solid #252736;
+    border-radius: 4px;
+}
+.hello .two_but .reg{
+    border-radius: 4px;
+    background-color:#252736 ;
+    color: white;
+}
+.cards-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+  }
+  .card img {
+    max-width: 100px;
+    max-height: 200px;
+  }
+  .card-body{
+    margin-left: 0px;
+  }
+  .card-body h5{
+    font-size: 15px;
+  }
+  .card-body p{
+    font-size: 12px;
+  }
+  .card {
+    margin: 0 0.5em;
+    border: none !important;
+    border-radius: 0;
+  }
+  .carousel-inner {
+    padding: 1em;
+  }
+
+  .carousel-control-prev,
+.carousel-control-next {
+  background-color: #e1e1e1;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}

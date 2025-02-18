@@ -1,0 +1,46 @@
+footer{
+    display:flex;
+    background-color: #252736 !important;
+    background-image: url('../img/booksmountain.png');
+    background-repeat: no-repeat;
+    background-size: 344px 180px;
+    background-position: calc(100% - 20px) 120px;
+    height: 280px;
+    margin-top: 100px;
+}
+footer div{
+    display:flex;
+    flex-direction:column;
+    color: White;
+    width: 170px;
+    margin-left: 200px;
+}
+footer div:first-child{
+    width: 200px;
+}
+footer .col_1 h1, .col_2 h1, .col_3 h1{
+    font-size: 30px;
+}
+footer .col_1 h1{
+    font-family: "Lilita One";
+}
+footer .col_1 p{
+    font-weight: bold;
+    font-size: 17px;
+}
+footer div a{
+    font-weight: lighter;
+    font-size: 17.5px;
+    text-decoration: none;
+    color: white;
+}
+footer .col_1 button{
+    border: 1px solid white;
+    background-color: transparent;
+    border-radius: 6px;
+    color: white;
+    width: 170px;
+}
+footer .column_item{
+    margin-top: 9px;
+}
