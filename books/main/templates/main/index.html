@@ -6,19 +6,23 @@
 
 <body>
 {% include "main/header.html" %}
-<main>
-    <div class="hello">
-        <h2>Добро пожаловать в Trade Books.</h2>
-        <p>Здесь каждый читатель 
+<div class="container-fluid main">
+  <div class="col">
+    <div class="hello row">
+        <div class="row">
+          <h2>Добро пожаловать в Trade Books.</h2>  
+        </div>
+        <div class="row row2">
+          <p>Здесь каждый читатель 
             находит свою книгу.</p>
+        </div>
         <div class="two_but">
             <button class="auth">Войти</button>
             <button class="reg">Зарегистрироваться</button>
         </div>
+        
     </div>
-    <div class="cards-wrapper">
-        <div class="carousel-control-prev">1</div>
-        <div class="carousel-control-next">2</div>
+    <div class="cards-wrapper row">
         <div class="card">
           <img src="static/img/book11.png" class="card-img-top" alt="...">
           <div class="card-body">
@@ -69,7 +73,8 @@
             </div>
           </div>
       </div>
-</main>
+    </div>
+</div>
 {% include "main/footer.html" %}
 
 
