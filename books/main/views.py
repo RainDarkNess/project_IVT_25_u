@@ -39,6 +39,3 @@ def exchange(request):
 
 def testMyTrades(request):
     return render(request, "main/myTrades.html")
-
-def test(request):
-    return render(request, "main/userPage.html")
