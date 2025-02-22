@@ -1,0 +1,26 @@
+.container-fluid {
+    animation: fadeInScale 0.6s forwards;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.card-img-top:hover{
+    transform: translateY(-20px);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-img-top{
+    transform: translateY(0);
+    transition: transform 0.2s ease-in-out;
+}

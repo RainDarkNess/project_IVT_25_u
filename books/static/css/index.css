@@ -1,224 +1,140 @@
-.main{
-  margin-top: 100px ;
-  background-color: transparent;
-}
-.main .col .hello{
-  margin: 0px 0px  200px 23vw;
-  width: 1200px;
-  height: 350px;
-  background-image: url('../img/back_main.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-
-}
-.hello h2{
-    padding: 100px 0px 0px 100px;
+.main {
+    margin-top: 100px;
+    background-color: transparent;
 }
 
-.hello p{
+.main .col .hello {
+    background-image: url('../img/back_main.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hello p {
     width: 400px;
     color: #252736;
-    font-size: 19px;
-    font-family: 'Roboto';
-    font-weight: lighter;
     padding-left: 100px;
     /* padding-top: 10px; */
 }
-.hello .two_but{
+
+.hello .two_but {
     margin-left: 100px;
 }
-.hello .two_but .auth{
+
+.hello .two_but .auth {
     background-color: transparent;
     border: 1px solid #252736;
     border-radius: 4px;
 }
-.hello .two_but .reg{
+
+.hello .two_but .reg {
     border-radius: 4px;
-    background-color:#252736 ;
+    background-color: #252736;
     color: white;
 }
-.cards-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 100px;
-  }
-  .card img {
-    max-width: 100px;
-    max-height: 200px;
-  }
-  .card-body{
-    margin-left: 0px;
-  }
-  .card-body h5{
-    font-size: 15px;
-  }
-  .card-body p{
-    font-size: 12px;
-  }
-  .card {
-    margin: 0 0.5em;
-    border: none !important;
-    border-radius: 0;
-  }
-  .carousel-inner {
-    padding: 1em;
-  }
-  .card{
-      width: 150px !important;
-  }
 
-  /* .carousel-control-prev,
-.carousel-control-next {
-  background-color: #e1e1e1;
-  width: 5vh;
-  height: 5vh;
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-} */
-
-@media (max-width: 1440px) {
-  .main{
-    margin-top: 100px ;
-  }
-  .main .col .hello{
-    /* background: rgb(127,238,209) ; */
-    margin: 0px 0px  200px 30vw;
-    width: 42vw;
-    height: 300px;
-    box-shadow: -30px 50px 0px rgba(110, 110, 110,0.5);
-  }
-}
-@media (max-width: 1440px) {
-  .main{
-    margin-top: 50px ;
-  }
-  .hello h2{
-    padding: 80px 0px 0px 50px;
-    font-size: 1.9vw;
-}
-  .hello p{
-    font-size: 1.4vw;
-    padding-left: 50px;
-}
-}
-@media (max-width: 1024px) {
-  .main .col .hello{
-    /* background: rgb(127,238,209) ; */
-    margin: 0px 0px  200px 30vw;
-    width: 42vw;
-    height: 230px;
-    box-shadow: -30px 50px 0px rgba(110, 110, 110,0.5);
-  }
-  .card{
-    width: 110px !important;
-}
-.card-body h5{
-  font-size: 1.2vw;
-}
-.card-body p{
-  font-size: 1vw;
-}
+.auth {
+    background-color: transparent;
+    border: 1px solid #252736;
+    border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-  .main .col .hello{
-    margin: 0px 0px  200px 20vw;
-    width: 60vw;
-    height: 210px;
-  }
-  .card{
-    max-width: 90px !important;
-    /* width: 80px !important; */
-}
-.card-body h5{
-  font-size: 1.2vw;
-}
-.card-body p{
-  font-size: 1vw;
-}
-.hello h2{
-  font-size: 2.9vw;
+.reg {
+    border-radius: 4px;
+    background-color: #252736;
+    color: white;
 }
 
-.hello p{
+.logo {
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 200px;
+    margin-left: auto;
+    margin-top: -170px;
+    height: 200px;
+}
 
-  font-size: 1.9vw;
+.jumbotron-local {
+    background: #7feed1;
+    position: relative;
+    padding: 10px;
+    box-shadow: #656565 2px 2px 2px 0;
+}
 
+@media screen and (max-width: 1195px) {
+    .hello-container {
+        padding-top: 50px;
+    }
 }
-.cards-wrapper {
-  /* margin-left: 20vw; */
-  max-width: 90vw;
-  max-height: 25vw;
-  overflow: hidden;
+
+
+.button-74 {
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
+
+.button-74:hover {
+    background-color: #fff;
 }
-@media (max-width: 430px) {
-  .main .col .hello{
-    height: 140px;
-    width: 70vw;
-    margin-left: 10vw;
-    padding-left: 0;
-    box-shadow: none;
-    margin-bottom: 40px;
-  }
-  .hello h2{
-    padding-top: 40px;
-    padding-left: 10px;
-    font-size: 3.2vw;
-  }
-  .hello p{
-    padding-left: 10px;
-    padding-top: 0;
-    font-size: 2.9vw;
-  }
-  .main .hello .two_but {
-    margin: 0;
-  }
-  .main .hello .two_but button{
-    font-size: 2vw;
-  }
-  .cards-wrapper {
-    max-height: 47vw;
-  }
-  .card-body h5{
-    font-size: 3vw;
-  }
-  .card-body p{
-    font-size: 1.8vw;
-  }
-  .card{
-    max-width: 150px !important;
+
+.button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
 }
+
+@media (min-width: 768px) {
+    .button-74 {
+        min-width: 120px;
+        padding: 0 25px;
+    }
 }
-@media (max-width: 375px) {
-  .main .col .hello{
-    height: 160px;
-    width: 70vw;
-    margin-bottom: 40px;
+
+.button-74-login {
+    background-color: #c8edff;
+    border: 2px solid #422800;
+    margin-right: 20px;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
-.hello h2{
-  font-size: 3.7vw;
+
+.button-74-login:hover {
+    background-color: #fff;
 }
-.hello p{
-  font-size: 3.3vw;
+
+.button-74-login:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
 }
-.main .hello .two_but button{
-  font-size: 2.4vw;
-}
-.cards-wrapper {
-  max-height: 55vw;
-}
-}
-@media (max-width: 320px) {
-  .cards-wrapper {
-    max-height: 62vw;
-    margin-bottom: 0;
-  }
-  .card-body h5{
-    font-size: 3.5vw;
-  }
-  .card p{
-    font-size: 2.7vw;
-  }
+
+@media (min-width: 768px) {
+    .button-74-login {
+        min-width: 120px;
+        padding: 0 25px;
+    }
 }

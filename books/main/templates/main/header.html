@@ -1,59 +1,38 @@
 <div class="container-fluid header">
     <div class="row">
-        <div class="col" id="be_row">
-            <h1>Trade Books</h1>
-        </div>
-        <div class="col" id="search_and_nav">
-            <div id="add">
+        <h1 class="icon-text gradient-text">Trade Books</h1>
+    </div>
+    <div class="row">
+        <div class="align-items-center" style="padding: 10px">
+            <!--        <div class="col text-center" id="be_row">-->
+            <!--        </div>-->
+            <div class="col text-center" id="search_and_nav">
+                <div id="add" class="mb-3">
+                    <!-- Дополнительные элементы можно добавить сюда -->
+                </div>
+                <div class="nav justify-content-center mt-2">
+                    <a class="nav-link" href="">Главная</a>
+                    <a class="nav-link" href="">Начать обмен</a>
+                    <a class="nav-link" href="">Мои обмены</a>
+                    <a class="nav-link" href="">Задать вопрос</a>
+                    <form method="get" action="" class="d-flex justify-content-center"> <!-- Поле ввода поиска -->
+                        <input type="search" class="form-control me-2" placeholder="Поиск по сайту" aria-label="Search">
+                    </form>
+                </div>
             </div>
-            <div class="row">
-                <form method="get" action=""> <!--поле ввода поиска--> 
-                    <input type="search" class="search" placeholder="Поиск по сайту">
-                </form>
-            </div>
-            <div class="row nav">
-                <div class="col"><a href="">Главная</a></div>
-                <div class="col"><a href="">Начать обмен</a></div>
-                <div class="col"><a href="">Мои обмены</a></div>
-                <div class="col"><a href="">Задать вопрос</a></div>
-            </div>
-        </div>
-        <div class="col" id="be_row2">
-            <button class="registration">Регистрация</button>
-            <button class="authorisation">Вход</button>
         </div>
     </div>
+
 </div>
-<script>
-        // Функция для обработки события
-    function handleResize() {
-        // Получаем текущую ширину окна
-        const width = window.innerWidth;
-        be_row = document.getElementById('be_row');
-        be_row2 = document.getElementById('be_row2');
-        // search_and_nav = document.getElementById('search_and_nav');
-        addd = document.getElementById('add');
 
-        // Проверяем, равна ли ширина 425 пикселям
-        if (width <= 425) {
-            if(be_row){
-                rem_row = be_row;
-                rem_row2 = be_row2;
+<style>
+    @media (max-width: 768px) {
+        .header .row {
+            flex-direction: column;
+        }
 
-                be_row.remove();
-                be_row2.remove();
-                addd.classList.add('row');
-                addd.style.marginBottom = "10px";
-                addd.appendChild(be_row);
-                addd.appendChild(be_row2);
-            }
+        .header .col {
+            width: 100%;
         }
     }
-
-    // Добавляем обработчик события resize
-    window.addEventListener('resize', handleResize);
-
-    // Вызываем функцию сразу, чтобы проверить ширину при загрузке страницы
-    handleResize();
-
-</script>
+</style>

@@ -7,74 +7,47 @@
 <body>
 {% include "main/header.html" %}
 <div class="container-fluid main">
-  <div class="col">
-    <div class="hello row">
-        <div class="row">
-          <h2>Добро пожаловать в Trade Books.</h2>  
-        </div>
-        <div class="row row2">
-          <p>Здесь каждый читатель 
-            находит свою книгу.</p>
-        </div>
-        <div class="two_but">
-            <button class="auth">Войти</button>
-            <button class="reg">Зарегистрироваться</button>
-        </div>
-        
-    </div>
-    <div class="cards-wrapper row">
-        <div class="card">
-          <img src="static/img/book11.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example </p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="static/img/book11.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example </p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="static/img/book11.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example </p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="static/img/book11.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example </p>
-          </div>
-        </div>
-        <div class="card">
-            <img src="static/img/book11.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example </p>
+    <div class="col">
+
+        <div class="container-sm hello-container">
+            <div class="jumbotron jumbotron-local">
+                <div class="logo position-absolute top-0 end-0 p-3"></div>
+                <h1 class="display-4">Добро пожаловать в Trade Books.</h1>
+                <p class="lead">Здесь каждый читатель находит свою книгу.</p>
+                <p>Использются служебные классы для типографики и расстояния содержимого в контейнере большего
+                    размера.</p>
+                <div class="two_but">
+                    <button class="button-74-login" role="button">Войти</button>
+                    <button class="button-74" role="button">Зарегистрироваться</button>
+                </div>
             </div>
-          </div>
-          <div class="card">
-            <img src="static/img/book11.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example </p>
+        </div>
+        <div class="container mt-4">
+        <h2>Актуальные предложения</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="padding-top: 50px;" id="cardsContainer">
+                <div class="card" style="width: 13rem; margin: 5px">
+                    <img src="static/img/book11.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Книга</h5>
+                        <p class="card-text">Пример описания книги.</p>
+                        <a href="#" class="button-74-login" role="button">Отозваться</a>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="card">
-            <img src="static/img/book11.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example </p>
-            </div>
-          </div>
-      </div>
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        for (let i = 0; i < 5; i++) {
+            const cardsContainer = document.getElementById('cardsContainer');
+            const cardToDuplicate = cardsContainer.querySelector('.card');
+            const newCard = cardToDuplicate.cloneNode(true);
+            cardsContainer.appendChild(newCard);
+        }
+    });
+</script>
 {% include "main/footer.html" %}
 
 
