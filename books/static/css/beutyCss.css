@@ -24,3 +24,37 @@
     transform: translateY(0);
     transition: transform 0.2s ease-in-out;
 }
+
+.paint-order {
+  paint-order: stroke fill;
+
+  /* https://caniuse.com/mdn-css_properties_paint-order */
+  /* default is paint-order: fill stroke */
+  /* mdn: https://developer.mozilla.org/en-US/docs/Web/CSS/paint-order */
+}
+
+
+@layer demo.support {
+  .head-text {
+    line-height: 0.9;
+    color: #210f00;
+      padding: 20px;
+  }
+}
+
+.head-text-background{
+    opacity: 0;
+    background: #0dcaf0;
+    height: max-content;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+.chat-left{
+    border-radius: 0 20px 20px 20px;
+}
+
+.chat-right{
+    margin-left: auto;
+    border-radius: 20px 0px 20px 20px;
+}

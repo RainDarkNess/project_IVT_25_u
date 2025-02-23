@@ -17,7 +17,7 @@
 }
 
 .hello .two_but {
-    margin-left: 100px;
+    margin-left: auto;
 }
 
 .hello .two_but .auth {
@@ -54,11 +54,36 @@
     height: 200px;
 }
 
+.dummy-see {
+    background-image: url('../img/dummySee.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+}
+
+.dummy-sitting {
+    background-image: url('../img/dummySitting.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
+    margin-left: auto;
+}
+
 .jumbotron-local {
     background: #7feed1;
     position: relative;
     padding: 10px;
-    box-shadow: #656565 2px 2px 2px 0;
+    /*box-shadow: #656565 2px 2px 2px 0;*/
+    border-radius: 40px;
+}
+
+.dialog-local {
+    background: #e7fff8;
+    position: relative;
+    padding: 40px;
+    border-radius: 40px;
 }
 
 @media screen and (max-width: 1195px) {
@@ -137,4 +162,53 @@
         min-width: 120px;
         padding: 0 25px;
     }
+}
+
+.how-this-working-container {
+    padding-top: 20px;
+}
+
+.how-this-working-container h1 {
+    font-weight: 20;
+    font-size: 80px;
+}
+
+.how-this-working-block {
+    border-radius: 20px;
+    background: #7feed1;
+    height: fit-content;
+    display: flex;
+}
+
+.how-this-working-block h2 {
+    font-weight: 10;
+    padding: 20px;
+    max-width: 700px;
+}
+
+.img-and-text {
+    display: inline;
+}
+
+@media screen and (max-width: 1197px) {
+    .dummy-sitting {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .how-this-working-block {
+        display: block;
+    }
+    .how-this-working-block h2{
+        width: fit-content;
+        max-width: fit-content;
+    }
+}
+.bg-h2{
+    background: #ebfff8;
+    margin: 20px;
+    box-shadow: #3b7762 2px 2px;
+    border-radius: 20px;
+    width: fit-content;
+    height: fit-content;
 }

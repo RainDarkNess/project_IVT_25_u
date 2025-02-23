@@ -11,19 +11,66 @@
 
         <div class="container-sm hello-container">
             <div class="jumbotron jumbotron-local">
-                <div class="logo position-absolute top-0 end-0 p-3"></div>
-                <h1 class="display-4">Добро пожаловать в Trade Books.</h1>
-                <p class="lead">Здесь каждый читатель находит свою книгу.</p>
-                <p>Использются служебные классы для типографики и расстояния содержимого в контейнере большего
-                    размера.</p>
-                <div class="two_but">
-                    <button class="button-74-login" role="button">Войти</button>
-                    <button class="button-74" role="button">Зарегистрироваться</button>
+                <div class="dialog-local">
+                    <div class="logo position-absolute top-0 end-0 p-3"></div>
+
+                    <div class="head-text-background chat-left" id="textBlockIdOne">
+                        <h1 class="head-text" id="textOne">0</h1>
+                    </div>
+
+                    <div class="head-text-background chat-right" style="margin-left: auto" id="textBlockIdTwo">
+                        <h2 style="text-align: left" class="head-text" id="textTwo">0</h2>
+                    </div>
+
+                    <div class="head-text-background chat-left" id="textBlockIdThee">
+                        <h2 class="head-text" id="textThee">0</h2>
+                    </div>
+
+                    <div class="dummy-see top-0"></div>
+
+                    <div class="two_but">
+
+                        {% if user.is_authenticated %}
+                        <a>{{ user.get_username }}</a>
+
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Выйти" class="header-input button-74-login">
+                        </form>
+                        {% else %}
+
+                        <a class="button-74-login" href="/accounts/login/" role="button">Войти</a>
+                        <a class="button-74" href="/accounts/login/" role="button">Зарегистрироваться</a>
+                        {% endif %}
+
+
+                    </div>
                 </div>
             </div>
         </div>
+
+
+        <div class="container-sm how-this-working-container">
+            <div class="jumbotron">
+                <h1 class="how-this-working">Как это работает?</h1>
+
+                <div class="img-and-text">
+
+                    <div class="how-this-working-block">
+                        <div class="bg-h2">
+                            <h2>Вы выставляете свою книгу и указываете свои предпочтения, после к вам приходит заявка
+                                с тем чтобы обменяться книгами, вы укзаываете вами удобный адрес и все готово!</h2>
+                        </div>
+                        <div class="dummy-sitting  end-0"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="container mt-4">
-        <h2>Актуальные предложения</h2>
+            <h2>Актуальные предложения</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="padding-top: 50px;" id="cardsContainer">
                 <div class="card" style="width: 13rem; margin: 5px">
                     <img src="static/img/book11.png" class="card-img-top" alt="...">
@@ -39,6 +86,26 @@
 </div>
 
 <script>
+    data = [
+        {
+            "id": "textOne",
+            "text": "Добро пожаловать в Trade Books",
+            "textBlockId": "textBlockIdOne"
+        },
+        {
+            "id": "textTwo",
+            "text": "Здесь каждый читатель находит свою книгу.",
+            "textBlockId": "textBlockIdTwo"
+        },
+        {
+            "id": "textThee",
+            "text": "Мы не продаем книги, а обмениваем их.",
+            "textBlockId": "textBlockIdThee"
+        },
+
+    ]
+    indexData = 0;
+
     document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < 5; i++) {
             const cardsContainer = document.getElementById('cardsContainer');
@@ -46,7 +113,41 @@
             const newCard = cardToDuplicate.cloneNode(true);
             cardsContainer.appendChild(newCard);
         }
+
+        setTimeout(() => type(data[indexData].id, data[indexData].text, data[indexData].textBlockId), 600);
+
     });
+
+    let index = 0;
+
+    function type(id, text, textBlockId) {
+        let blockText = document.getElementById(textBlockId);
+
+        let textElement = document.getElementById(id);
+
+        if (textElement.textContent === "0") {
+            textElement.textContent = "";
+        }
+
+        try {
+            blockText.style.opacity = "1";
+        } catch (e) {
+            console.error(e);
+        }
+
+        if (index < text.length) {
+            textElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(() => type(id, text, textBlockId), 20);
+        } else {
+            if (indexData < data.length) {
+                indexData++;
+                setTimeout(() => type(data[indexData].id, data[indexData].text, data[indexData].textBlockId), 600);
+            }
+            index = 0;
+        }
+    }
+
 </script>
 {% include "main/footer.html" %}
 
