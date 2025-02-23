@@ -1,0 +1,214 @@
+.main {
+    margin-top: 100px;
+    background-color: transparent;
+}
+
+.main .col .hello {
+    background-image: url('../img/back_main.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hello p {
+    width: 400px;
+    color: #252736;
+    padding-left: 100px;
+    /* padding-top: 10px; */
+}
+
+.hello .two_but {
+    margin-left: auto;
+}
+
+.hello .two_but .auth {
+    background-color: transparent;
+    border: 1px solid #252736;
+    border-radius: 4px;
+}
+
+.hello .two_but .reg {
+    border-radius: 4px;
+    background-color: #252736;
+    color: white;
+}
+
+.auth {
+    background-color: transparent;
+    border: 1px solid #252736;
+    border-radius: 4px;
+}
+
+.reg {
+    border-radius: 4px;
+    background-color: #252736;
+    color: white;
+}
+
+.logo {
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 200px;
+    margin-left: auto;
+    margin-top: -170px;
+    height: 200px;
+}
+
+.dummy-see {
+    background-image: url('../img/dummySee.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+}
+
+.dummy-sitting {
+    background-image: url('../img/dummySitting.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
+    margin-left: auto;
+}
+
+.jumbotron-local {
+    background: #7feed1;
+    position: relative;
+    padding: 10px;
+    /*box-shadow: #656565 2px 2px 2px 0;*/
+    border-radius: 40px;
+}
+
+.dialog-local {
+    background: #e7fff8;
+    position: relative;
+    padding: 40px;
+    border-radius: 40px;
+}
+
+@media screen and (max-width: 1195px) {
+    .hello-container {
+        padding-top: 50px;
+    }
+}
+
+
+.button-74 {
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-74:hover {
+    background-color: #fff;
+}
+
+.button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+    .button-74 {
+        min-width: 120px;
+        padding: 0 25px;
+    }
+}
+
+.button-74-login {
+    background-color: #c8edff;
+    border: 2px solid #422800;
+    margin-right: 20px;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-74-login:hover {
+    background-color: #fff;
+}
+
+.button-74-login:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+    .button-74-login {
+        min-width: 120px;
+        padding: 0 25px;
+    }
+}
+
+.how-this-working-container {
+    padding-top: 20px;
+}
+
+.how-this-working-container h1 {
+    font-weight: 20;
+    font-size: 80px;
+}
+
+.how-this-working-block {
+    border-radius: 20px;
+    background: #7feed1;
+    height: fit-content;
+    display: flex;
+}
+
+.how-this-working-block h2 {
+    font-weight: 10;
+    padding: 20px;
+    max-width: 700px;
+}
+
+.img-and-text {
+    display: inline;
+}
+
+@media screen and (max-width: 1197px) {
+    .dummy-sitting {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .how-this-working-block {
+        display: block;
+    }
+    .how-this-working-block h2{
+        width: fit-content;
+        max-width: fit-content;
+    }
+}
+.bg-h2{
+    background: #ebfff8;
+    margin: 20px;
+    box-shadow: #3b7762 2px 2px;
+    border-radius: 20px;
+    width: fit-content;
+    height: fit-content;
+}

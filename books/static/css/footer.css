@@ -1,0 +1,123 @@
+.footer{
+    background-color: #252736 !important;
+    background-image: url('../img/booksmountain.png');
+    background-repeat: no-repeat;
+    background-size: 344px 180px;
+    background-position: calc(100% - 20px) 120px;
+    height: 280px;
+    margin-top:50px;
+    color: White;
+}
+.footer .col{
+    margin-top: 30px;
+}ы
+.footer .col_1{
+    width: 20vw;
+    margin-left: 20vw;
+}
+.footer .col_1 h1, .col_2 h1, .col_3 h1{
+    font-size: 1.5vw;
+}
+.footer .col_1 h1{
+    font-family: "Lilita One";
+}
+.footer .col_1 p{
+    font-weight: bold;
+    font-size: 0.9vw;
+}
+.footer div a{
+    font-weight: lighter;
+    font-size: 0.9vw;
+    text-decoration: none;
+    color: white;
+}
+.footer .col_1 button{
+    border: 1px solid white;
+    background-color: transparent;
+    border-radius: 6px;
+    color: white;
+    font-size: 1vw;
+}
+@media (max-width: 1440px) {
+    .footer{
+        background-size: 20.4vw 14vw;
+        background-position: calc(100% - 1vw) 10vw;
+        height: 280px;
+    }
+    .footer .col_1 h1, .col_2 h1, .col_3 h1{
+        font-size: 2.5vw;
+    }
+    .footer .col_1 p{
+        font-size: 1.3vw;
+    }
+    .footer .col_1 button{
+        font-size: 1.3vw;
+    }
+    .footer div a{
+        font-size: 1.3vw;
+    }
+    .footer .col_1{
+        width: 20vw;
+        margin-left: 10vw;
+    }
+}
+@media (max-width: 1024px) {
+    .footer{
+        background-size: 20.4vw 14vw;
+        background-position: calc(100% - 1vw) 5vw;
+        height: 170px;
+    }
+}
+@media (max-width: 425px) {
+    .footer{
+        background-size: 20.4vw 14vw;
+        background-position: calc(100% - 1vw) 24vw;
+        height: 150px;
+    }
+    .footer .col{
+        margin-top: 10px;
+        margin-left: 2vw;
+    }
+    .footer .col_1{
+        width: 10vw;
+        margin-left: 5vw;
+    }
+    .footer .col_1 h1, .col_2 h1, .col_3 h1{
+        font-size: 3vw;
+    }
+    .footer .col_1 p{
+        font-size: 2.6vw;
+        font-weight: 100;
+    }
+    .footer .col_1 button{
+        font-size: 2.4vw;
+    }
+    .footer div a{
+        font-size: 2.4vw;
+    }
+}
+@media (max-width: 375px) {
+    .footer{
+        background-size: 20.4vw 14vw;
+        background-position: calc(100% - 1vw) 28vw;
+        height: 150px;
+    }
+}
+@media (max-width: 325px) {
+    .footer{
+        background-position: calc(100% - 1vw) 34vw;
+        height: 150px;
+    }
+    .footer .col_1 h1, .col_2 h1, .col_3 h1{
+        font-size: 3.5vw;
+    }
+    .footer .col_1 p{
+        font-size: 3vw;
+    }
+    .footer .col_1 button{
+        font-size: 2.7vw;
+    }
+    .footer div a{
+        font-size: 3vw;
+    }
+}

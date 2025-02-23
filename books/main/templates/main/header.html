@@ -1,34 +1,38 @@
-<div class="header">
-    <div class="row" style="margin-left: auto; width: 50%;">
-        <div class="col">Официальный магазин</div>
-        <div class="col">Доставка</div>
-        <div class="col">Москва</div>
-        <div class="col">8 (800) 000-00-00</div>
+<div class="container-fluid header">
+    <div class="row">
+        <h1 class="icon-text gradient-text">Trade Books</h1>
     </div>
-    <div class="container-sm">
-        <div class="row">
-            <a href="#default" class="logo">CompanyLogo</a>
-        </div>
-        <div class="row">
-            <div class="topnav">
-                <a class="active" href="/">На главную</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-
-                {% if user.is_authenticated %}
-                <a>{{ user.get_username }}</a>
-
-                <form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="Выйти" class="header-input">
-                </form>
-                {% else %}
-
-                <a href="/accounts/login/">Логин</a>
-                {% endif %}
-
-                <input type="text" placeholder="Search..">
+    <div class="row">
+        <div class="align-items-center" style="padding: 10px">
+            <!--        <div class="col text-center" id="be_row">-->
+            <!--        </div>-->
+            <div class="col text-center" id="search_and_nav">
+                <div id="add" class="mb-3">
+                    <!-- Дополнительные элементы можно добавить сюда -->
+                </div>
+                <div class="nav justify-content-center mt-2">
+                    <a class="nav-link" href="/">Главная</a>
+                    <a class="nav-link" href="/trading/">Начать обмен</a>
+                    <a class="nav-link" href="/user-page/">Мои обмены</a>
+                    <a class="nav-link" href="">Задать вопрос</a>
+                    <form method="get" action="" class="d-flex justify-content-center"> <!-- Поле ввода поиска -->
+                        <input type="search" class="form-control me-2" placeholder="Поиск по сайту" aria-label="Search">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
+
+<style>
+    @media (max-width: 768px) {
+        .header .row {
+            flex-direction: column;
+        }
+
+        .header .col {
+            width: 100%;
+        }
+    }
+</style>
