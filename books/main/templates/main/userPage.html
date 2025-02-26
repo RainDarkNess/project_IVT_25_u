@@ -14,10 +14,22 @@
 
 <div class="container mt-4">
     <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
-        <img src="https://via.placeholder.com/150x150" alt="Avatar" class="avatar rounded-circle border border-primary">
+        <img src="https://via.placeholder.com/150x150" class="avatar">
         <div class="info text-center text-md-start ms-md-3">
-            <h2 class="fw-bold">Иван Иванов</h2>
-            <p><strong>Email:</strong> ivan@example.com</p>
+
+            {% if user.is_authenticated %}
+
+            {% if user.get_full_name %}
+                <h2 class="fw-bold"> {{ user.get_full_name }} </h2>
+            {% else %}
+                <h2 class="fw-bold"> {{ user.get_username }} </h2>
+            {% endif %}
+
+            <p><strong>Email:</strong> {{ user.email }} </p>
+            {% else %}
+
+            {% endif %}
+
             <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
             <p><strong>Адрес:</strong> Москва, ул. Ленина, д. 1</p>
         </div>
