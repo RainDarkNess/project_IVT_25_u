@@ -12,9 +12,11 @@
     background: var(--bg-second);
 }
 .container-fluid{
-    background: var(--bg-second);
+    /*background: var(--bg-second);*/
 }
-
+.nav-link{
+    color: white !important;
+}
 /* Header */
 
 .header {
