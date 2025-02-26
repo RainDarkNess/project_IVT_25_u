@@ -14,15 +14,15 @@
 
 <div class="container mt-4">
     <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
-        <img src="https://via.placeholder.com/150x150" class="avatar">
+        <img src="{{ user.img.url }}" class="avatar" alt="Avatar">
         <div class="info text-center text-md-start ms-md-3">
 
             {% if user.is_authenticated %}
 
             {% if user.get_full_name %}
-                <h2 class="fw-bold"> {{ user.get_full_name }} </h2>
+            <h2 class="fw-bold"> {{ user.get_full_name }} </h2>
             {% else %}
-                <h2 class="fw-bold"> {{ user.get_username }} </h2>
+            <h2 class="fw-bold"> {{ user.get_username }} </h2>
             {% endif %}
 
             <p><strong>Email:</strong> {{ user.email }} </p>
@@ -30,10 +30,10 @@
 
             {% endif %}
 
-            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
-            <p><strong>Адрес:</strong> Москва, ул. Ленина, д. 1</p>
+            <p><strong>Телефон:</strong> {{ user.telephone }} </p>
+            <p><strong>Адрес:</strong> {{ user.address }}</p>
         </div>
-        <button class="btn btn-primary mt-3 mt-md-0">Редактировать профиль</button>
+        <a class="btn btn-primary mt-3 mt-md-0" href="{% url 'edit_profile' %}">Редактировать профиль</a>
     </div>
 
     <h2 class="mt-4">Мои книги</h2>

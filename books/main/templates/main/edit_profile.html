@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container">
+    <h1 class="text-center">Измените свой профиль</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Отображение формы -->
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <div>
+        <a href="{% url 'userPage' %}" class="text-center mt-3">Назад к профилю</a>
+    </div>
+
+</div>
+
+{% include "main/footer.html" %}
+
+{% endblock content %}
