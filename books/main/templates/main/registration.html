@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container">
+    <h1 class="text-center">Регистрация</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
+    <div class="text-center mt-3">
+        <a href="{% url 'login' %}">Уже есть аккаунт? Войти</a>
+    </div>
+</div>
+{% include "main/footer.html" %}
+
+{% endblock content %}
