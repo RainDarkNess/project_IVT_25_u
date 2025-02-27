@@ -1,0 +1,149 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+{% include "main/header.html" %}
+
+<body>
+<main>
+    <section class="exchange-form">
+        <h2 id="form-title">Шаг 1: Хочу обменять</h2>
+        <form id="exchangeForm">
+            <!-- Форма "Хочу обменять" -->
+            <div class = "container" id="wantToExchange">
+                <div class="row">
+                    <div class="col">
+                    <label>Автор:</label>
+                    </div>
+                    <div class="col">
+                    <input type="text" id="authorSurname" placeholder="Фамилия" autocomplete="off">
+                    </div>
+<!--                    <div id="authorSuggestions" class="suggestions"></div>-->
+                    <div class="col">
+                    <input type="text" id="authorName" placeholder="Имя" autocomplete="off">
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                                <label class="col">Название книги:</label>
+                                <input class="col" type="text" id="bookTitle" maxlength="50"><br>
+                    </div>
+                    <div class="row">
+                                <label class="col">ISBN:</label>
+                                <input class="col" type="text" id="isbn" maxlength="13"><br>
+                    </div>
+                    <div class="row">
+                                <label class="col">Год издания:</label>
+                                <input class="col" type="number" id="publishYear" max="2025"><br>
+                    </div>
+                </div>
+
+                <h3>Категории</h3>
+                <button class = "clear" type="button" id="clearCategories">Снять выделение</button>
+                <div id="categories">
+                    <ul>
+                        <li><input type="checkbox" name="genre" value="Фантастика"> Фантастика
+                            <ul>
+                                <li><input type="checkbox" name="subgenre" value="Космическая"> Космическая</li>
+                                <li><input type="checkbox" name="subgenre" value="Антиутопия"> Антиутопия</li>
+                            </ul>
+                        </li>
+                        <li><input type="checkbox" name="genre" value="Детектив"> Детектив
+                            <ul>
+                                <li><input type="checkbox" name="subgenre" value="Классический"> Классический</li>
+                                <li><input type="checkbox" name="subgenre" value="Современный"> Современный</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Форма "Хочу получить" -->
+            <div id="wantToReceive" style="display: none;">
+                <label>Желаемый жанр:</label>
+                <button class="clear" type="button" id="clearReceiveCategories">Снять выделение</button>
+                <div id="receiveCategories">
+                    <ul>
+                        <li><input type="checkbox" name="receiveGenre" value="Фантастика"> Фантастика
+                            <ul>
+                                <li><input type="checkbox" name="receiveSubgenre" value="Космическая"> Космическая</li>
+                                <li><input type="checkbox" name="receiveSubgenre" value="Антиутопия"> Антиутопия</li>
+                            </ul>
+                        </li>
+                        <li><input type="checkbox" name="receiveGenre" value="Детектив"> Детектив
+                            <ul>
+                                <li><input type="checkbox" name="receiveSubgenre" value="Классический"> Классический</li>
+                                <li><input type="checkbox" name="receiveSubgenre" value="Современный"> Современный</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Кнопки управления -->
+            <div class="form-buttons">
+                <button type="button" id="prevStep" style="display: none;">Назад</button>
+                <button type="button" id="nextStep" disabled>Далее</button>
+                <button type="button" id="toggleForm">Переключить форму</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const wantToExchange = document.getElementById("wantToExchange");
+        const wantToReceive = document.getElementById("wantToReceive");
+        const formTitle = document.getElementById("form-title");
+        const toggleFormButton = document.getElementById("toggleForm");
+        const nextStepButton = document.getElementById("nextStep");
+        const prevStepButton = document.getElementById("prevStep");
+
+        let currentStep = "exchange";
+
+        toggleFormButton.addEventListener("click", function () {
+            if (currentStep === "exchange") {
+                wantToExchange.style.display = "none";
+                wantToReceive.style.display = "block";
+                formTitle.textContent = "Шаг 2: Хочу получить";
+                prevStepButton.style.display = "inline-block";
+                toggleFormButton.style.display = "none";
+                nextStepButton.disabled = true;
+                currentStep = "receive";
+            }
+        });
+
+        prevStepButton.addEventListener("click", function () {
+            wantToExchange.style.display = "block";
+            wantToReceive.style.display = "none";
+            formTitle.textContent = "Шаг 1: Хочу обменять";
+            prevStepButton.style.display = "none";
+            toggleFormButton.style.display = "inline-block";
+            nextStepButton.disabled = false;
+            currentStep = "exchange";
+        });
+
+        function checkCategories(formId, button) {
+            const categories = document.querySelectorAll(`#${formId} input[type="checkbox"]:checked`);
+            button.disabled = categories.length === 0;
+        }
+
+        document.getElementById("categories").addEventListener("change", () => checkCategories("categories", nextStepButton));
+        document.getElementById("receiveCategories").addEventListener("change", () => checkCategories("receiveCategories", nextStepButton));
+
+        document.getElementById("clearCategories").addEventListener("click", function () {
+            document.querySelectorAll("#categories input[type='checkbox']").forEach(checkbox => checkbox.checked = false);
+            nextStepButton.disabled = true;
+        });
+
+        document.getElementById("clearReceiveCategories").addEventListener("click", function () {
+            document.querySelectorAll("#receiveCategories input[type='checkbox']").forEach(checkbox => checkbox.checked = false);
+            nextStepButton.disabled = true;
+        });
+    });
+</script>
+
+{% include "main/footer.html" %}
+</body>
+{% endblock content %}

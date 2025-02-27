@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container mt-5">
+    <h1>Редактировать профиль</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
+            <label for="img" class="mb-0">
+                {% if user.img %}
+
+                <img src="{{ user.img.url }}" class="avatar" alt="Avatar"
+                     title="Нажмите для загрузки нового изображения">
+                {% else %}
+                <img class="avatar" alt="Avatar"
+                     title="Нажмите для загрузки нового изображения">
+                {% endif %}
+
+                <input type="file" id="img" name="img" accept="image/*" style="display: none;"
+                       onchange="this.form.submit();">
+            </label>
+            <div class="info text-center text-md-start ms-md-3">
+
+                <div class="form-group">
+                    <label for="first_name">Имя:</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control"
+                           value="{{ user.first_name }}" required>
+                    {{ form.first_name.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Фамилия:</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}"
+                           required>
+                    {{ form.last_name.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Телефон:</label>
+                    <input type="text" id="telephone" name="telephone" class="form-control" value="{{ user.telephone }}"
+                           required>
+                    {{ form.telephone.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Телефон:</label>
+                    <input type="text" id="address" name="address" class="form-control" value="{{ user.address }}"
+                           required>
+                    {{ form.telephone.errors }}
+                </div>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+
+{% include "main/footer.html" %}
+
+{% endblock content %}
