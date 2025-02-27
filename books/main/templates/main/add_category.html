@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+<div class="container mt-5">
+
+    <h1>Добавить категорию</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="category">Категория:</label>
+            <input type="text" id="category" name="category" class="form-control" required>
+            {{ form.category.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Добавить Автора</button>
+    </form>
+</div>
+{% include "main/footer.html" %}
+
+{% endblock content %}
