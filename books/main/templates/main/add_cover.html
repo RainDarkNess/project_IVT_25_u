@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+<div class="container mt-5">
+
+    <h1>Добавить обложку</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Название:</label>
+            <input type="text" id="cover" name="cover" class="form-control" required>
+            {{ cover_form.first_name.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="descriptioncover">Описание:</label>
+            {{ cover_form.descriptioncover }}
+            {{ cover_form.descriptioncover.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="img">Картинка:</label>
+            <input type="file" id="img" name="img" accept="image/*">
+            {{ cover_form.description.errors }}
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Добавить Обложку</button>
+    </form>
+</div>
+{% include "main/footer.html" %}
+
+{% endblock content %}
