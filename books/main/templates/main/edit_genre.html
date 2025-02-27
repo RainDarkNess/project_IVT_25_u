@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container mt-5">
+    <h1>Редактировать жанр: {{ genre.namegenre }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Отображение формы -->
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <a href="{% url 'add-janre' %}" class="btn btn-secondary mt-3">Назад к списку жанров</a>
+</div>
+
+{% include "main/footer.html" %}
+
+{% endblock content %}
