@@ -35,7 +35,14 @@ urlpatterns = [
                 path('admin-panel/', views.adminPanel, name='admin-panel'),
                 path('edit-genre/<int:genre_id>/', views.edit_genre, name='edit_genre'),
                 path('delete-genre/<int:genre_id>/', views.delete_genre, name='delete_genre'),
+                path('add-book/', views.addBook, name='add_book'),
+                path('books/', views.bookList, name='book_list'),
+                path('edit-book/<int:book_id>/', views.editBook, name='edit_book'),
+                path('delete-book/<int:book_id>/', views.deleteBook, name='delete_book'),
+                path('add-cover/', views.addCover, name='add_cover'),
+                path('add-author/', views.addAuthor, name='add_author'),
+                path('add-category/', views.addCategory, name='add_category'),
 
-    ]
+]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

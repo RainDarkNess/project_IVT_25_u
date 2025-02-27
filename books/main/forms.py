@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, PasswordInput, CharField, ImageField, TextInput
+from django.forms import ModelForm, PasswordInput, CharField, ImageField, TextInput, Textarea
 
-from .models import CustomUser, Genre
+from .models import CustomUser, Genre, Books, Cover, Writer, Category
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -55,3 +55,30 @@ class GenreForm(ModelForm):
         widgets = {
             'namegenre': TextInput(attrs={'placeholder': 'Введите название жанра', 'class': 'form-control'}),
         }
+
+
+class BookForm(ModelForm):
+    class Meta:
+        model = Books
+        fields = ['name', 'description', 'idcategory', 'idgenre', 'idwriter', 'idcover']
+        widgets = {
+            'description': Textarea(attrs={'rows': 4}),
+        }
+
+
+class CoverForm(ModelForm):
+    class Meta:
+        model = Cover
+        fields = ['cover', 'img', 'descriptioncover']
+
+
+class WriterForm(ModelForm):
+    class Meta:
+        model = Writer
+        fields = ['lastname', 'firstname']
+
+
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        fields = ['category']

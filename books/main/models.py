@@ -18,7 +18,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     # CUSTOM FIELDS
     telephone = models.CharField(max_length=15, blank=True, null=True)
-    img = models.ImageField(upload_to='images/')
+    img = models.ImageField(upload_to='avatars/')
     rating = models.CharField(max_length=1024, blank=True, null=True)
     address = models.CharField(_("address"), max_length=40)
 
@@ -92,17 +92,27 @@ class Books(models.Model):
     idgenre = models.ForeignKey('Genre', models.DO_NOTHING, db_column='idGenre')  # Field name made lowercase.
     idwriter = models.ForeignKey('Writer', models.DO_NOTHING, db_column='idWriter')  # Field name made lowercase.
 
+    def __str__(self):
+        return self.name
+
 
 class Category(models.Model):
     idcategory = models.AutoField(db_column='idCategory', primary_key=True)  # Field name made lowercase.
     category = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.category
+
 
 class Cover(models.Model):
     idcover = models.AutoField(db_column='idCover', primary_key=True)  # Field name made lowercase.
     cover = models.CharField(max_length=50)
+    img = models.ImageField(upload_to='books')
     descriptioncover = models.TextField(db_column='descriptionCover', blank=True,
-                                        null=True)  # Field name made lowercase.
+                                        null=True)
+
+    def __str__(self):
+        return str(self.cover)
 
 
 class DjangoAdminLog(models.Model):
@@ -136,6 +146,9 @@ class DjangoSession(models.Model):
 class Genre(models.Model):
     namegenre = models.CharField(db_column='nameGenre', unique=True, max_length=50)  # Field name made lowercase.
 
+    def __str__(self):
+        return self.namegenre
+
 
 class Orderbooks(models.Model):
     idorder = models.AutoField(db_column='idOrder', primary_key=True)  # Field name made lowercase.
@@ -164,3 +177,6 @@ class Writer(models.Model):
     lastname = models.CharField(db_column='lastName', max_length=50)  # Field name made lowercase.
     firstname = models.CharField(db_column='firstName', max_length=50)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=50, blank=True, null=True)  # Field name made lowercase.
+
+    def __str__(self):
+        return str(self.lastname) + " " + str(self.firstname)

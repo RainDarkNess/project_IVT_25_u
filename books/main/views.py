@@ -9,8 +9,8 @@ from django.views.generic import TemplateView
 
 from django.http import HttpResponse
 
-from .forms import UserProfileForm, RegistrationForm, GenreForm
-from .models import CustomUser, Genre
+from .forms import UserProfileForm, RegistrationForm, GenreForm, BookForm, CoverForm, WriterForm, CategoryForm
+from .models import CustomUser, Genre, Books
 
 
 def test(request):
@@ -84,7 +84,7 @@ def adminPanel(request):
     return render(request, 'main/admin-panel.html')
 
 
-@staff_member_required
+@login_required
 def addGenre(request):
     genres = Genre.objects.all()
     if request.method == 'POST':
@@ -98,7 +98,7 @@ def addGenre(request):
     return render(request, 'main/add_genre.html', {'form': form, 'genres': genres})
 
 
-@staff_member_required
+@login_required
 def edit_genre(request, genre_id):
     genre = get_object_or_404(Genre, id=genre_id)
     if request.method == 'POST':
@@ -112,7 +112,7 @@ def edit_genre(request, genre_id):
     return render(request, 'main/edit_genre.html', {'form': form, 'genre': genre})
 
 
-@staff_member_required
+@login_required
 def delete_genre(request, genre_id):
     genre = get_object_or_404(Genre, id=genre_id)
     if request.method == 'POST':
@@ -120,3 +120,105 @@ def delete_genre(request, genre_id):
         return redirect('add-janre')
 
     return render(request, 'main/delete_genre.html', {'genre': genre})
+
+
+@login_required
+def addBook(request):
+    if request.method == 'POST':
+        book_form = BookForm(request.POST)
+
+        if book_form.is_valid():
+            book = book_form.save()
+            book.save()
+            return redirect('book_list')
+    else:
+        book_form = BookForm()
+
+    return render(request, 'main/add_book.html', {'book_form': book_form})
+
+
+@login_required
+def addCover(request):
+    if request.method == 'POST':
+        cover_form = CoverForm(request.POST, request.FILES)
+
+        if cover_form.is_valid():
+            cover = cover_form.save()
+            cover.save()
+            return redirect('add_book')
+    else:
+        cover_form = CoverForm()
+
+    return render(request, 'main/add_cover.html', {'cover_form': cover_form})
+
+
+@login_required
+def bookList(request):
+    books = Books.objects.all()  # Получаем все книги из базы данных
+    return render(request, 'main/book_list.html', {'books': books})
+
+
+@login_required
+def deleteBook(request, book_id):
+    book = get_object_or_404(Books, idbooks=book_id)
+    if request.method == 'POST':
+        book.delete()  # Удаляем книгу
+        return redirect('book_list')  # Перенаправляем на список книг
+
+    return render(request, 'main/delete_book.html', {'book': book})
+
+
+@login_required
+def editBook(request, book_id):
+    book = get_object_or_404(Books, idbooks=book_id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm(instance=book)
+
+    return render(request, 'main/edit_book.html', {'form': form, 'book': book})
+
+
+@login_required
+def addAuthor(request):
+    form = WriterForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            cover = form.save()
+            cover.save()
+            return redirect('add_book')
+    else:
+        form = WriterForm()
+
+    return render(request, 'main/add_author.html', {'form': form})
+
+
+@login_required
+def addAuthor(request):
+    form = WriterForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            author = form.save()
+            author.save()
+            return redirect('add_book')
+    else:
+        form = WriterForm()
+
+    return render(request, 'main/add_author.html', {'form': form})
+
+
+@login_required
+def addCategory(request):
+    form = CategoryForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if form.is_valid():
+            category = form.save()
+            category.save()
+            return redirect('add_book')
+    else:
+        form = CategoryForm()
+
+    return render(request, 'main/add_category.html', {'form': form})
