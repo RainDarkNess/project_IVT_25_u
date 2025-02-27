@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .info {
+            flex-grow: 1;
+        }
+
+        .books-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .exchange-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .exchange-button:hover {
+            background-color: #0056b3;
+        }
+
+        .notifications {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .notification {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .notification:last-child {
+            border-bottom: none;
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Личный кабинет</h1>
+
+    <!-- Навигационное меню -->
+    <nav>
+        <a href="#">Главная</a>
+        <a href="#">Книги</a>
+        <a href="#">Обмены</a>
+        <a href="#">Профиль</a>
+        <a href="#">Выход</a>
+    </nav>
+
+    <!-- Профиль пользователя -->
+    <div class="profile">
+        <img src="https://via.placeholder.com/150x150" alt="Avatar" class="avatar">
+        <div class="info">
+            <h2>Иван Иванов</h2>
+            <p><strong>Email:</strong> ivan@example.com</p>
+            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+            <p><strong>Адрес:</strong> Москва, ул. Ленина, д. 1</p>
+        </div>
+        <button>Редактировать профиль</button>
+    </div>
+
+    <!-- Список книг -->
+    <h2>Мои книги</h2>
+    <ul class="books-list">
+        <li class="book-item">
+            <div>
+                <h3 class="book-title">Война и мир</h3>
+                <p>Лев Толстой</p>
+                <p>Состояние: Отличное</p>
+            </div>
+            <button class="exchange-button">Предложить обмен</button>
+        </li>
+        <li class="book-item">
+            <div>
+                <h3 class="book-title">Мастер и Маргарита</h3>
+                <p>Михаил Булгаков</p>
+                <p>Состояние: Хорошее</p>
+            </div>
+            <button class="exchange-button">Предложить обмен</button>
+        </li>
+    </ul>
+
+    <!-- Обмены -->
+    <h2>Текущие обмены</h2>
+    <table>
+        <tr>
+            <th>Книга</th>
+            <th>Пользователь</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        <tr>
+            <td>Преступление и наказание</td>
+            <td>Сергей Петров</td>
+            <td>В ожидании подтверждения</td>
+            <td>
+                <button>Подтвердить</button>
+                <button>Отказать</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Анна Каренина</td>
+            <td>Елена Сидорова</td>
+            <td>Завершено</td>
+            <td>-</td>
+        </tr>
+    </table>
+
+    <!-- Уведомления -->
+    <div class="notifications">
+        <h2>Уведомления</h2>
+        <div class="notification">
+            <p>Новый запрос на обмен вашей книги "Война и мир".</p>
+            <span class="notification-time">Сегодня, 14:30</span>
+        </div>
+        <div class="notification">
+            <p>Ваш обмен книги "Мастер и Маргарита" подтвержден.</p>
+            <span class="notification-time">Вчера, 17:00</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
