@@ -17,13 +17,21 @@
                     <a class="nav-link" href="/trading/">Начать обмен</a>
                     <a class="nav-link" href="/user-page/">Мои обмены: {{ user.get_username }}</a>
 
+
+                    {% if user.is_superuser %}
+                        <a class="nav-link" href="/admin-panel/">Админ панель</a>
+                    {% else %}
+
+                    {% endif %}
+
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <input  type="submit" value="Выйти" class="header-input nav-link">
+                        <input type="submit" value="Выйти" class="header-input nav-link">
                     </form>
                     {% else %}
                     <a class="nav-link" href="/accounts/login/">Логин</a>
                     {% endif %}
+
 
                     <a class="nav-link" href="">Задать вопрос</a>
                     <form method="get" action="" class="d-flex justify-content-center"> <!-- Поле ввода поиска -->
