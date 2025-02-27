@@ -1,0 +1,173 @@
+/* Общие стили */
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    background-color: #f8f8f8;*/
+/*}*/
+
+/*!* Шапка *!*/
+/*header {*/
+/*    background-color: #007bff;*/
+/*    color: white;*/
+/*    padding: 15px;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
+
+/*header h1 {*/
+/*    margin: 0;*/
+/*}*/
+
+/*.input_and_nav {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 20px;*/
+/*}*/
+
+/*.search {*/
+/*    padding: 5px;*/
+/*    border-radius: 5px;*/
+/*    border: none;*/
+/*}*/
+
+/*nav ul {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    display: flex;*/
+/*    gap: 15px;*/
+/*}*/
+
+/*nav ul li {*/
+/*    display: inline;*/
+/*}*/
+
+/*nav ul li a {*/
+/*    color: white;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.two_buttons button {*/
+/*    background-color: white;*/
+/*    border: 1px solid white;*/
+/*    padding: 7px 15px;*/
+/*    cursor: pointer;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+/*.two_buttons button:hover {*/
+/*    background-color: #0056b3;*/
+/*    color: white;*/
+/*}*/
+
+/* Форма обмена */
+.container{
+    background: transparent;
+}
+
+#wantToExchange{
+    background: transparent;
+}
+.exchange-form {
+    background: white;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.exchange-form h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* Подсказки для автодополнения */
+.suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    width: calc(100% - 20px);
+    z-index: 10;
+}
+
+.suggestions div {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background: #ddd;
+}
+
+/* Категории */
+#categories {
+    margin-top: 15px;
+}
+
+#categories ul {
+    list-style: none;
+    padding-left: 15px;
+}
+
+#categories ul li {
+    margin-bottom: 5px;
+}
+
+/* Кнопки */
+.clear {
+    margin-top: 15px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#nextStep {
+    background-color: #007bff;
+    color: white;
+}
+
+#nextStep:disabled {
+    background-color: gray;
+}
+
+/* Подвал */
+footer {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer .column_item {
+    display: block;
+    margin: 5px 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
