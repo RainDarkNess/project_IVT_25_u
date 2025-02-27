@@ -45,7 +45,7 @@ def testTrades(request):
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('userPage')

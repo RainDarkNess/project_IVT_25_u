@@ -25,7 +25,7 @@ class UserProfileForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'telephone', 'img']
+        fields = ['email', 'first_name', 'last_name', 'telephone', 'img', 'address']
 
 
 class RegistrationForm(ModelForm):
