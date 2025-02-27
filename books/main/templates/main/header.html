@@ -16,6 +16,7 @@
                     {% if user.is_authenticated %}
                     <a class="nav-link" href="/trading/">Начать обмен</a>
                     <a class="nav-link" href="/user-page/">Мои обмены: {{ user.get_username }}</a>
+                    <a class="nav-link" href="/books/">Мои книги</a>
 
 
                     {% if user.is_superuser %}
