@@ -1,0 +1,104 @@
+
+.profile {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #007bff;
+}
+
+.info h2 {
+    margin: 0;
+    color: #333;
+}
+
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.books-list {
+    list-style: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.book-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.exchange-button {
+    background-color: #28a745;
+}
+
+.exchange-button:hover {
+    background-color: #218838;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background: #007bff;
+    color: white;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+.notifications {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.notification {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification:last-child {
+    border-bottom: none;
+}
+
+.notification-time {
+    font-size: 0.9em;
+    color: #888;
+}
