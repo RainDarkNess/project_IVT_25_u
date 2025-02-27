@@ -23,15 +23,19 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
 urlpatterns = [
-                  path("exchange/", views.exchange, name="exchange"),
-                  path('', views.test),
-                  path('accounts/', include('django.contrib.auth.urls')),
-                  path('user-page/', views.userPage, name="userPage"),
-                  path('myTrades/', views.testMyTrades),
-                  path('trading/', views.testTrades),
-                  path('edit-profile/', views.edit_profile, name='edit_profile'),
-                  path('register/', views.register, name='register'),
+                path("exchange/", views.exchange, name="exchange"),
+                path('', views.test),
+                path('accounts/', include('django.contrib.auth.urls')),
+                path('user-page/', views.userPage, name="userPage"),
+                path('myTrades/', views.testMyTrades),
+                path('trading/', views.testTrades),
+                path('edit-profile/', views.edit_profile, name='edit_profile'),
+                path('register/', views.register, name='register'),
+                path('add-janre/', views.addGenre, name='add-janre'),
+                path('admin-panel/', views.adminPanel, name='admin-panel'),
+                path('edit-genre/<int:genre_id>/', views.edit_genre, name='edit_genre'),
+                path('delete-genre/<int:genre_id>/', views.delete_genre, name='delete_genre'),
 
-              ]
+    ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

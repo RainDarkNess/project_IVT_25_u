@@ -1,15 +1,16 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 
 # Create your views here.
 
 from django.http import HttpResponse
 
-from .forms import UserProfileForm, RegistrationForm
-from .models import CustomUser
+from .forms import UserProfileForm, RegistrationForm, GenreForm
+from .models import CustomUser, Genre
 
 
 def test(request):
@@ -76,3 +77,46 @@ def register(request):
         'images': CustomUser.objects.all
     }
     return render(request, 'main/registration.html', context=context)
+
+
+@staff_member_required
+def adminPanel(request):
+    return render(request, 'main/admin-panel.html')
+
+
+@staff_member_required
+def addGenre(request):
+    genres = Genre.objects.all()
+    if request.method == 'POST':
+        form = GenreForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add-janre')
+    else:
+        form = GenreForm()
+
+    return render(request, 'main/add_genre.html', {'form': form, 'genres': genres})
+
+
+@staff_member_required
+def edit_genre(request, genre_id):
+    genre = get_object_or_404(Genre, id=genre_id)
+    if request.method == 'POST':
+        form = GenreForm(request.POST, instance=genre)
+        if form.is_valid():
+            form.save()
+            return redirect('add-janre')
+    else:
+        form = GenreForm(instance=genre)
+
+    return render(request, 'main/edit_genre.html', {'form': form, 'genre': genre})
+
+
+@staff_member_required
+def delete_genre(request, genre_id):
+    genre = get_object_or_404(Genre, id=genre_id)
+    if request.method == 'POST':
+        genre.delete()
+        return redirect('add-janre')
+
+    return render(request, 'main/delete_genre.html', {'genre': genre})

@@ -134,7 +134,7 @@ class DjangoSession(models.Model):
 
 
 class Genre(models.Model):
-    namegenre = models.CharField(db_column='nameGenre', max_length=50)  # Field name made lowercase.
+    namegenre = models.CharField(db_column='nameGenre', unique=True, max_length=50)  # Field name made lowercase.
 
 
 class Orderbooks(models.Model):

@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, PasswordInput, CharField, ImageField
+from django.forms import ModelForm, PasswordInput, CharField, ImageField, TextInput
 
-from .models import CustomUser
+from .models import CustomUser, Genre
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -46,3 +46,12 @@ class RegistrationForm(ModelForm):
             raise ValidationError("Пароли не совпадают.")
 
         return cleaned_data
+
+
+class GenreForm(ModelForm):
+    class Meta:
+        model = Genre
+        fields = ['namegenre']
+        widgets = {
+            'namegenre': TextInput(attrs={'placeholder': 'Введите название жанра', 'class': 'form-control'}),
+        }
