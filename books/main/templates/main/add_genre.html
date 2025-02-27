@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container mt-5">
+    <h1>Добавить жанр</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="namegenre">Добавить жанр:</label>
+            <input type="text" id="namegenre" name="namegenre" class="form-control"
+                   required>
+            {{ form.telephone.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить жанр</button>
+    </form>
+    <h2>Список жанров</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Название жанра</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for genre in genres %}
+        <tr>
+            <th scope="row">{{ genre.namegenre }}</th>
+            <td><a href="{% url 'edit_genre' genre.id %}" class="btn btn-warning">Редактировать</a>
+            </td>
+            <td><a href="{% url 'delete_genre' genre.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <th scope="row">Жанров нет.</th>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include "main/footer.html" %}
+
+{% endblock content %}
