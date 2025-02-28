@@ -31,17 +31,27 @@ urlpatterns = [
                 path('trading/', views.testTrades),
                 path('edit-profile/', views.edit_profile, name='edit_profile'),
                 path('register/', views.register, name='register'),
-                path('add-janre/', views.addGenre, name='add-janre'),
                 path('admin-panel/', views.adminPanel, name='admin-panel'),
-                path('edit-genre/<int:genre_id>/', views.edit_genre, name='edit_genre'),
-                path('delete-genre/<int:genre_id>/', views.delete_genre, name='delete_genre'),
                 path('add-book/', views.addBook, name='add_book'),
                 path('books/', views.bookList, name='book_list'),
                 path('edit-book/<int:book_id>/', views.editBook, name='edit_book'),
                 path('delete-book/<int:book_id>/', views.deleteBook, name='delete_book'),
+
+                path('add-janre/', views.addGenre, name='add-janre'),
+                path('edit-genre/<int:genre_id>/', views.edit_genre, name='edit_genre'),
+                path('delete-genre/<int:genre_id>/', views.delete_genre, name='delete_genre'),
+
                 path('add-cover/', views.addCover, name='add_cover'),
+                path('edit-cover/<int:cover_id>/', views.editCover, name='edit_cover'),
+                path('delete-cover/<int:cover_id>/', views.deleteCover, name='delete_cover'),
+
                 path('add-author/', views.addAuthor, name='add_author'),
+                path('edit-author/<int:author_id>/', views.editAuthor, name='edit_author'),
+                path('delete-author/<int:author_id>/', views.deleteAuthor, name='delete_author'),
+
                 path('add-category/', views.addCategory, name='add_category'),
+                path('edit-category/<int:category_id>/', views.editCategory, name='edit_category'),
+                path('delete-category/<int:category_id>/', views.deleteCategory, name='delete_category'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

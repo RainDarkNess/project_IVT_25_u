@@ -87,10 +87,11 @@ class Books(models.Model):
     idbooks = models.AutoField(db_column='idBooks', primary_key=True)  # Field name made lowercase.
     name = models.CharField(max_length=150)
     description = models.TextField()
-    idcategory = models.ForeignKey('Category', models.DO_NOTHING, db_column='idCategory')  # Field name made lowercase.
-    idcover = models.ForeignKey('Cover', models.DO_NOTHING, db_column='idCover')  # Field name made lowercase.
-    idgenre = models.ForeignKey('Genre', models.DO_NOTHING, db_column='idGenre')  # Field name made lowercase.
-    idwriter = models.ForeignKey('Writer', models.DO_NOTHING, db_column='idWriter')  # Field name made lowercase.
+    idcategory = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, db_column='idCategory')  # Field name made lowercase.
+    idcover = models.ForeignKey('Cover', on_delete=models.SET_NULL, null=True, db_column='idCover')  # Field name made lowercase.
+    idgenre = models.ForeignKey('Genre', on_delete=models.SET_NULL, null=True, db_column='idGenre')  # Field name made lowercase.
+    idwriter = models.ForeignKey('Writer', on_delete=models.SET_NULL, null=True, db_column='idWriter')  # Field name made lowercase.
+    idAuthorUser = models.ForeignKey('CustomUser', on_delete=models.SET_NULL, null=True, db_column='idAuthorUser')  # Field name made lowercase.
 
     def __str__(self):
         return self.name
@@ -99,6 +100,7 @@ class Books(models.Model):
 class Category(models.Model):
     idcategory = models.AutoField(db_column='idCategory', primary_key=True)  # Field name made lowercase.
     category = models.CharField(max_length=50)
+    idAuthorUser = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='idAuthorUser')  # Field name made lowercase.
 
     def __str__(self):
         return self.category
@@ -110,6 +112,7 @@ class Cover(models.Model):
     img = models.ImageField(upload_to='books')
     descriptioncover = models.TextField(db_column='descriptionCover', blank=True,
                                         null=True)
+    idAuthorUser = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='idAuthorUser')  # Field name made lowercase.
 
     def __str__(self):
         return str(self.cover)
@@ -145,6 +148,7 @@ class DjangoSession(models.Model):
 
 class Genre(models.Model):
     namegenre = models.CharField(db_column='nameGenre', unique=True, max_length=50)  # Field name made lowercase.
+    idAuthorUser = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='idAuthorUser')  # Field name made lowercase.
 
     def __str__(self):
         return self.namegenre
@@ -177,6 +181,7 @@ class Writer(models.Model):
     lastname = models.CharField(db_column='lastName', max_length=50)  # Field name made lowercase.
     firstname = models.CharField(db_column='firstName', max_length=50)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    idAuthorUser = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='idAuthorUser')  # Field name made lowercase.
 
     def __str__(self):
         return str(self.lastname) + " " + str(self.firstname)

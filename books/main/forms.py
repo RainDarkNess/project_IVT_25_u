@@ -67,6 +67,8 @@ class BookForm(ModelForm):
 
 
 class CoverForm(ModelForm):
+    img = ImageField(required=False, label="Загрузить изображение")
+
     class Meta:
         model = Cover
         fields = ['cover', 'img', 'descriptioncover']
