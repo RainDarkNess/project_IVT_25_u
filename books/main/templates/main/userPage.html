@@ -40,22 +40,25 @@
 
     <h2 class="mt-4">Мои книги</h2>
     <ul class="books-list list-unstyled">
+        {% for book in books %}
         <li class="book-item card p-3 mb-2 d-flex flex-md-row flex-column justify-content-between align-items-md-center">
             <div>
-                <h3 class="book-title fw-bold">Война и мир</h3>
-                <p>Лев Толстой</p>
+                <h3 class="book-title fw-bold">{{ book.name }}</h3>
+
+                {% if book.idcover %}
+                <img style="width: 200px; height: 200px" src="/media/{{ book.idcover.img }}">
+                {% else %}
+                <p>Изображение отсуствует</p>
+                {% endif %}
+
+                <p>Автор: {{ book.idwriter }}</p>
                 <p>Состояние: Отличное</p>
+                <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
             </div>
             <button class="exchange-button btn btn-success mt-2 mt-md-0">Предложить обмен</button>
         </li>
-        <li class="book-item card p-3 mb-2 d-flex flex-md-row flex-column justify-content-between align-items-md-center">
-            <div>
-                <h3 class="book-title fw-bold">Мастер и Маргарита</h3>
-                <p>Михаил Булгаков</p>
-                <p>Состояние: Хорошее</p>
-            </div>
-            <button class="exchange-button btn btn-success mt-2 mt-md-0">Предложить обмен</button>
-        </li>
+        {% endfor %}
     </ul>
 
     <h2 class="mt-4">Текущие обмены</h2>
