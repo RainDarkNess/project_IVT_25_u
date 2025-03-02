@@ -19,8 +19,12 @@ from .models import CustomUser, Genre, Books, Cover, Category, Writer, OrderRequ
 
 
 def test(request):
-    return render(request, "main/index.html", {'requests':
+    if request.user.is_authenticated:
+        return render(request, "main/index.html", {'requests':
                                                    OrderRequests.objects.exclude(userrequest=request.user)})
+    else:
+        return render(request, "main/index.html", {'requests':
+                                                   OrderRequests.objects.all()})
 
 
 @login_required(login_url='/accounts/login/')
