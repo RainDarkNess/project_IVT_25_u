@@ -8,6 +8,7 @@
 {% include "main/header.html" %}
 <div class="container-fluid main">
     <div class="col">
+        {% if not user.is_authenticated %}
 
         <div class="container-sm hello-container">
             <div class="jumbotron jumbotron-local">
@@ -67,21 +68,49 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <div class="container-sm how-this-working-container">
+            <div class="jumbotron" style="display: flex">
+                <div>
+                    {% if user.is_superuser %}
+                        <h1 class="how-this-working">А, это вы администратор {{ user.username }}</h1>
+                        <h2>Зашли заняться своими админскими делами?</h2>
+                    {% else %}
+                        <h1 class="how-this-working">С возвращением {{ user.username }}</h1>
+                        <h2>Обменяться зашли?</h2>
+                    {% endif %}
 
+                </div>
+                <div class="dummy-hi end-0"></div>
+            </div>
+        </div>
+        {% endif %}
 
+        {% if requests %}
         <div class="container mt-4">
             <h2>Актуальные предложения</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="padding-top: 50px;" id="cardsContainer">
+                {% for request in requests %}
                 <div class="card card-properties">
-                    <img src="static/img/book11.png" class="card-img-top" alt="...">
+                    <img src="/media/{{ request.booktorequest.idcover.img }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Книга</h5>
-                        <p class="card-text">Пример описания книги.</p>
-                        <a href="#" class="button-74-login" role="button">Отозваться</a>
+                        <h5 class="card-title">{{ request.booktorequest.name }}</h5>
+                        <p class="card-text">{{ request.booktorequest.description }}</p>
+                        <p class="card-text"><b>Жанр:</b> {{ request.booktorequest.idgenre }}</p>
+                        <p class="card-text"><b>Категория:</b> {{ request.booktorequest.idcategory }}</p>
+                        <p class="card-text"><b>Автор:</b> {{ request.booktorequest.idwriter }}</p>
+                        <p class="card-text"><b>Выставил:</b> {{ request.userrequest }}</p>
                     </div>
+                        <a href="{% url 'create_trade' request.idorder %}" class="button-74-login " role="button">Отозваться</a>
                 </div>
+                {% endfor %}
             </div>
         </div>
+        {% else %}
+                <div class="container mt-4">
+                    <h2>Предложений нет</h2>
+                </div>
+        {% endif %}
     </div>
 </div>
 
@@ -107,12 +136,12 @@
     indexData = 0;
 
     document.addEventListener("DOMContentLoaded", () => {
-        for (let i = 0; i < 5; i++) {
-            const cardsContainer = document.getElementById('cardsContainer');
-            const cardToDuplicate = cardsContainer.querySelector('.card');
-            const newCard = cardToDuplicate.cloneNode(true);
-            cardsContainer.appendChild(newCard);
-        }
+        // for (let i = 0; i < 5; i++) {
+        //     const cardsContainer = document.getElementById('cardsContainer');
+        //     const cardToDuplicate = cardsContainer.querySelector('.card');
+        //     const newCard = cardToDuplicate.cloneNode(true);
+        //     cardsContainer.appendChild(newCard);
+        // }
 
         setTimeout(() => type(data[indexData].id, data[indexData].text, data[indexData].textBlockId), 600);
 
