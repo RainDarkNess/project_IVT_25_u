@@ -6,25 +6,7 @@
 
 {% include "main/header.html" %}
 
-<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bookModalLabel">Выберите книгу</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <ul id="bookList" class="list-group">
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<body class="modal-local">
 <div class="mainTrading container">
 
     <h1>Создать запрос на книгу</h1>
@@ -41,42 +23,64 @@
                                 <p>Название книги: {{ order.namebookrequest }}</p>
                                 <p>Автор: {{ order.booktorequest.idwriter }}</p>
                             </label>
+                            <input for="bookone" type="text" id="bookone" name="bookone" value="{{order.booktorequest.idbooks}}" style="display:none;">
                         </div>
                         <ul class="list-group list-group-flush">
                             <label for="addressbookowner">
                                 Адрес обменщика
                             </label>
-                                <input class="list-group-item" type="text" id="addressbookowner"
-                                       name="addressbookowner" value="{{ order.booktorequest.idAuthorUser.address }}">
+                            <input class="list-group-item" type="text" id="addressbookowner"
+                                   name="addressbookowner" value="{{ order.booktorequest.idAuthorUser.address }}">
                         </ul>
                     </div>
                     <div class="card card-trade-property" style="width: 18rem;">
-                        <img class="card-img-top" id="booktwoImage" alt="..." src="{% static '/img/placeholder.jpg' %}"
+                        <img class="card-img-top" id="booktwoImage" src="{% static '/img/placeholder.jpg' %}"
                              onclick="show_books()">
                         <div class="card-body">
                             <label for="booktwo" class="mb-0 ">
                                 <h2>Книга на обмен</h2>
                                 <p>Название книги: <span id="myBookName"></span></p>
                                 <p>Автор: <span id="myBookAuthor"></span></p>
-                                <input type="text" id="booktwo" name="booktwo" style="display: none">
+                                <input for="booktwo" type="text" id="booktwo" name="booktwo" style="display: none">
                             </label>
                         </div>
                         <ul class="list-group list-group-flush">
                             <label for="addressrequester">
                                 Ваш адрес
                             </label>
-                                <input class="list-group-item" type="text" id="addressrequester"
-                                       name="addressrequester" value="{{ user.address }}">
+                            <input class="list-group-item" type="text" id="addressrequester"
+                                   name="addressrequester" value="{{ user.address }}">
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <button class="button-74-login" type="submit">Отправить заявку</button>
+        <input for="status" type="text" id="status" name="status" value="0" style="display:none;">
+        <input for="idorder" type="text" id="idorder" name="idorder" value="{{order.idorder}}" style="display:none;">
+        <input for="dateorder" type="text" id="dateorder" name="dateorder" value="{{ order.dateorder }}" style="display:none;">
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
     </form>
 
-</div>
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel">Выберите книгу</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="bookList" class="list-group">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
+</body>
 <script>
     function show_books() {
         fetch('{{SITE_URL}}/show-books/')
@@ -86,6 +90,13 @@
                 bookModal.style.display = 'block'
                 const bookList = document.getElementById('bookList');
                 bookList.innerHTML = '';
+                if (data.length === 0) {
+                    $('#bookModal').modal('show');
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = "Ни одной книги нет";
+                    bookList.appendChild(li);
+                }
                 for (let i = 0; i < data.length; i++) {
                     console.log(data[i])
                     const li = document.createElement('li');
