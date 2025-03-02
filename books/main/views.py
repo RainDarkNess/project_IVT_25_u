@@ -1,5 +1,5 @@
+import datetime
 import json
-from datetime import datetime
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login
@@ -422,7 +422,7 @@ def create_order_request(request):
         if form.is_valid():
             requestBook = form.save(commit=False)
             requestBook.userrequest = request.user
-            requestBook.dateorder = datetime.today()
+            requestBook.dateorder = datetime.datetime.now()
             requestBook.save()
             return redirect('userPage')
     else:
@@ -430,7 +430,7 @@ def create_order_request(request):
             'namebookrequest': '',
             'address': request.user.address,
             'userrequest': request.user,
-            'dateorder': datetime.today(),
+            'dateorder': datetime.datetime.now(),
         }
         form = OrderRequestsForm(initial=initial_data)
 
@@ -444,7 +444,7 @@ def create_order_request_from_page(request, book_id):
         if form.is_valid():
             requestBook = form.save(commit=False)
             requestBook.userrequest = request.user
-            requestBook.dateorder = datetime.today()
+            requestBook.dateorder = datetime.datetime.now()
             requestBook.save()
             return redirect('userPage')
     else:
@@ -454,7 +454,7 @@ def create_order_request_from_page(request, book_id):
             'category': book.idcategory,
             'address': request.user.address,
             'userrequest': request.user,
-            'dateorder': datetime.today(),
+            'dateorder': datetime.datetime.now(),
         }
         form = OrderRequestsForm(initial=initial_data)
 
@@ -496,16 +496,19 @@ def deleteTrade(request, trade_id):
 def createTrade(request, trade_id):
     order = get_object_or_404(OrderRequests, idorder=trade_id)
     if request.method == 'POST':
-        form = OrderbooksForm(request.POST, instance=order)
+        form = OrderbooksForm(request.POST)
         if form.is_valid():
+
             form.save()
             return redirect('userPage')
+        else:
+            print("Ошибки формы:", form.errors)  # Отладка
     else:
         initial_data = {
             'bookone': order.booktorequest,
             'addressrequester': order.address,
             'status': 1,
-            'dateorder': datetime.today(),
+            'dateorder': datetime.datetime.now(),
             'idorder': trade_id
         }
         form = OrderbooksForm(instance=order, initial=initial_data)

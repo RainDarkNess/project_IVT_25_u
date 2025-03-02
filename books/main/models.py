@@ -167,15 +167,15 @@ class OrderRequests(models.Model):
 
 
 class Orderbooks(models.Model):
-    idorderbooks = models.AutoField(db_column='idOrderBooks', primary_key=True)  # Field name made lowercase.
-    status = models.IntegerField(db_column='status', default=0)
+    idorderbooks = models.AutoField(db_column='idOrderBooks', primary_key=True)
+    status = models.IntegerField(db_column='status', null=True, default=0)
     bookone = models.ForeignKey('Books', on_delete=models.CASCADE, null=True, related_name='orderbooks_as_bookone')
     booktwo = models.ForeignKey('Books', on_delete=models.CASCADE, null=True, related_name='orderbooks_as_booktwo')
     addressrequester = models.CharField(db_column='addressRequester', null=True, max_length=1024)
     addressbookowner = models.CharField(db_column='addressBookOwner', null=True, max_length=1024)
 
-    dateorder = models.DateTimeField(db_column='dateorder', default=datetime.datetime.now)
-    idorder = models.ForeignKey('OrderRequests', db_column='idOrder', on_delete=models.CASCADE, default=1)
+    dateorder = models.DateTimeField(db_column='dateorder', null=True, default=datetime.datetime.now)
+    idorder = models.ForeignKey('OrderRequests', on_delete=models.SET_NULL, null=True, db_column='idOrder', default=1)
 
     # idstatus = models.ForeignKey('Status', models.DO_NOTHING, db_column='idStatus')  # Field name made lowercase.
     # idstoreuserone = models.ForeignKey('Storeuser', models.DO_NOTHING,
