@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
@@ -29,7 +31,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
 
 
 class Adressuser(models.Model):
@@ -154,15 +156,36 @@ class Genre(models.Model):
         return self.namegenre
 
 
+class OrderRequests(models.Model):
+    idorder = models.AutoField(db_column='idOrder', primary_key=True)
+    namebookrequest = models.CharField(max_length=1024, db_column='nameBookRequest')
+    booktorequest = models.ForeignKey('Books', models.DO_NOTHING, db_column='bookToRequest')
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, db_column='category')
+    userrequest = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='userRequest')
+    address = models.CharField(db_column='address', max_length=1024)
+    dateorder = models.DateTimeField(db_column='dateorder', default=datetime.datetime.now)
+
+
 class Orderbooks(models.Model):
-    idorder = models.AutoField(db_column='idOrder', primary_key=True)  # Field name made lowercase.
-    idstatus = models.ForeignKey('Status', models.DO_NOTHING, db_column='idStatus')  # Field name made lowercase.
-    idstoreuserone = models.ForeignKey('Storeuser', models.DO_NOTHING,
-                                       db_column='idStoreUserOne')  # Field name made lowercase.
-    idstoreusertwo = models.ForeignKey('Storeuser', models.DO_NOTHING, db_column='idStoreUserTwo',
-                                       related_name='orderbooks_idstoreusertwo_set')  # Field name made lowercase.
-    tradenumberone = models.CharField(db_column='tradeNumberOne', max_length=100)  # Field name made lowercase.
-    tradenumbertwo = models.CharField(db_column='tradeNumberTwo', max_length=100)  # Field name made lowercase.
+    idorderbooks = models.AutoField(db_column='idOrderBooks', primary_key=True)  # Field name made lowercase.
+    status = models.IntegerField(db_column='status', default=0)
+    bookone = models.ForeignKey('Books', on_delete=models.CASCADE, null=True, related_name='orderbooks_as_bookone')
+    booktwo = models.ForeignKey('Books', on_delete=models.CASCADE, null=True, related_name='orderbooks_as_booktwo')
+    addressrequester = models.CharField(db_column='addressRequester', null=True, max_length=1024)
+    addressbookowner = models.CharField(db_column='addressBookOwner', null=True, max_length=1024)
+
+    dateorder = models.DateTimeField(db_column='dateorder', default=datetime.datetime.now)
+    idorder = models.ForeignKey('OrderRequests', db_column='idOrder', on_delete=models.CASCADE, default=1)
+
+    # idstatus = models.ForeignKey('Status', models.DO_NOTHING, db_column='idStatus')  # Field name made lowercase.
+    # idstoreuserone = models.ForeignKey('Storeuser', models.DO_NOTHING,
+    #                                    db_column='idStoreUserOne')  # Field name made lowercase.
+    # idstoreusertwo = models.ForeignKey('Storeuser', models.DO_NOTHING, db_column='idStoreUserTwo',
+    #                                    related_name='orderbooks_idstoreusertwo_set')  # Field name made lowercase.
+    # tradenumberone = models.CharField(db_column='tradeNumberOne', max_length=100)  # Field name made lowercase.
+    # tradenumbertwo = models.CharField(db_column='tradeNumberTwo', max_length=100)  # Field name made lowercase.
+    # useridone = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='userIdOne')
+    # useridtwo = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='userIdTwo')
 
 
 class Status(models.Model):

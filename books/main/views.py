@@ -1,20 +1,26 @@
+import json
+from datetime import datetime
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
+from django.core import serializers
 
 # Create your views here.
 
 from django.http import HttpResponse
 
-from .forms import UserProfileForm, RegistrationForm, GenreForm, BookForm, CoverForm, WriterForm, CategoryForm
-from .models import CustomUser, Genre, Books, Cover, Category, Writer
+from .forms import UserProfileForm, RegistrationForm, GenreForm, BookForm, CoverForm, WriterForm, CategoryForm, \
+    OrderRequestsForm, OrderbooksForm
+from .models import CustomUser, Genre, Books, Cover, Category, Writer, OrderRequests
 
 
 def test(request):
-    return render(request, "main/index.html")
+    return render(request, "main/index.html", {'requests':
+                                                   OrderRequests.objects.exclude(userrequest=request.user)})
 
 
 @login_required(login_url='/accounts/login/')
@@ -24,7 +30,9 @@ def exchange(request):
 
 @login_required(login_url='/accounts/login/')
 def userPage(request):
-    return render(request, "main/userPage.html", {'books': Books.objects.filter(idAuthorUser=request.user)})
+    return render(request, "main/userPage.html", {
+        'books': Books.objects.filter(idAuthorUser=request.user),
+        'myOrders': OrderRequests.objects.filter(userrequest=request.user)})
 
 
 @login_required(login_url='/accounts/login/')
@@ -228,8 +236,29 @@ def deleteCover(request, cover_id):
 
 @login_required(login_url='/accounts/login/')
 def bookList(request):
-    books = Books.objects.filter(idAuthorUser=request.user)
+    if request.user.is_superuser:
+        books = Books.objects.filter()
+    else:
+        books = Books.objects.filter(idAuthorUser=request.user)
     return render(request, 'main/book_list.html', {'books': books})
+
+
+@login_required(login_url='/accounts/login/')
+def showUsersBooks(request):
+    books = Books.objects.filter(idAuthorUser=request.user)
+    data = []
+
+    for book in books:
+        book_data = {
+            'idbooks': str(book.idbooks),
+            'author': str(book.idwriter.lastname + ' ' + book.idwriter.firstname),
+            'name': str(book.name),
+            'description': str(book.description),
+            'img': book.idcover.img.url if book.idcover and book.idcover.img else None,
+        }
+        data.append(book_data)
+    data = json.dumps(data)
+    return HttpResponse(data, content_type="application/json")
 
 
 @login_required(login_url='/accounts/login/')
@@ -381,3 +410,100 @@ def deleteCategory(request, category_id):
     return render(request, 'main/delete_form.html',
                   {'category': category, 'hText': 'Удалить категорию', 'elementName': category.category,
                    'reverseRoute': 'add_category'})
+
+
+def create_order_request(request):
+    if request.method == 'POST':
+        form = OrderRequestsForm(request.POST)
+        if form.is_valid():
+            requestBook = form.save(commit=False)
+            requestBook.userrequest = request.user
+            requestBook.dateorder = datetime.today()
+            requestBook.save()
+            return redirect('userPage')
+    else:
+        initial_data = {
+            'namebookrequest': '',
+            'address': request.user.address,
+            'userrequest': request.user,
+            'dateorder': datetime.today(),
+        }
+        form = OrderRequestsForm(initial=initial_data)
+
+    return render(request, 'main/trading.html', {'form': form})
+
+
+def create_order_request_from_page(request, book_id):
+    book = get_object_or_404(Books, idbooks=book_id)
+    if request.method == 'POST':
+        form = OrderRequestsForm(request.POST)
+        if form.is_valid():
+            requestBook = form.save(commit=False)
+            requestBook.userrequest = request.user
+            requestBook.dateorder = datetime.today()
+            requestBook.save()
+            return redirect('userPage')
+    else:
+        initial_data = {
+            'namebookrequest': '',
+            'booktorequest': book,
+            'category': book.idcategory,
+            'address': request.user.address,
+            'userrequest': request.user,
+            'dateorder': datetime.today(),
+        }
+        form = OrderRequestsForm(initial=initial_data)
+
+    return render(request, 'main/trading.html', {'form': form})
+
+
+@login_required(login_url='/accounts/login/')
+def editTrade(request, trade_id):
+    order = get_object_or_404(OrderRequests, idorder=trade_id)
+    if request.method == 'POST':
+        form = OrderRequestsForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('userPage')
+    else:
+        form = OrderRequestsForm(instance=order)
+
+    return render(request, 'main/edit_form.html',
+                  {'form': form, 'hText': 'Редактировать заявку',
+                   'elementName': str(order.dateorder) + ' с книгой ' + str(order.booktorequest.name),
+                   'reverseRoute': 'userPage'})
+
+
+@login_required(login_url='/accounts/login/')
+def deleteTrade(request, trade_id):
+    order = get_object_or_404(OrderRequests, idorder=trade_id)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('userPage')
+
+    return render(request, 'main/delete_form.html',
+                  {'category': order, 'hText': 'Удалить зявку от ' + str(order.dateorder) + ' с книгой '
+                                               + str(order.booktorequest.name),
+                   'elementName': '',
+                   'reverseRoute': 'userPage'})
+
+
+@login_required(login_url='/accounts/login/')
+def createTrade(request, trade_id):
+    order = get_object_or_404(OrderRequests, idorder=trade_id)
+    if request.method == 'POST':
+        form = OrderbooksForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('userPage')
+    else:
+        initial_data = {
+            'bookone': order.booktorequest,
+            'addressrequester': order.address,
+            'status': 1,
+            'dateorder': datetime.today(),
+            'idorder': trade_id
+        }
+        form = OrderbooksForm(instance=order, initial=initial_data)
+
+    return render(request, 'main/trade.html', {'form': form, 'order': order})

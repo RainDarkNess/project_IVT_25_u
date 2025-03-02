@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, PasswordInput, CharField, ImageField, TextInput, Textarea
 
-from .models import CustomUser, Genre, Books, Cover, Writer, Category
+from .models import CustomUser, Genre, Books, Cover, Writer, Category, OrderRequests, Orderbooks
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -84,3 +84,19 @@ class CategoryForm(ModelForm):
     class Meta:
         model = Category
         fields = ['category']
+
+
+class OrderRequestsForm(ModelForm):
+    class Meta:
+        model = OrderRequests
+        fields = ['namebookrequest', 'booktorequest', 'category', 'address']
+        widgets = {
+            'namebookrequest': TextInput(attrs={'placeholder': 'Введите название книги'}),
+            'address': TextInput(attrs={'placeholder': 'Введите адрес'}),
+        }
+
+
+class OrderbooksForm(ModelForm):
+    class Meta:
+        model = Orderbooks
+        fields = ['bookone', 'booktwo', 'addressrequester', 'addressbookowner', 'idorder', 'status', 'dateorder']

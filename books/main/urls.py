@@ -28,7 +28,16 @@ urlpatterns = [
                 path('accounts/', include('django.contrib.auth.urls')),
                 path('user-page/', views.userPage, name="userPage"),
                 path('myTrades/', views.testMyTrades),
-                path('trading/', views.testTrades),
+
+                path('trading/', views.create_order_request, name="trading"),
+                path('trading-from-page/<int:book_id>/', views.create_order_request_from_page, name="trading_from_page"),
+                path('trading-edit/<int:trade_id>/', views.editTrade, name="trading_edit"),
+                path('trading-delete/<int:trade_id>/', views.deleteTrade, name="trading_delete"),
+
+                path('create-trade/<int:trade_id>/', views.createTrade, name="create_trade"),
+
+                path('show-books/', views.showUsersBooks, name="show_books"),
+
                 path('edit-profile/', views.edit_profile, name='edit_profile'),
                 path('register/', views.register, name='register'),
                 path('admin-panel/', views.adminPanel, name='admin-panel'),
