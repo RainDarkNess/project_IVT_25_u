@@ -71,6 +71,15 @@
     margin-left: auto;
 }
 
+.dummy-hi {
+    background-image: url('../img/hiLogo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
+    margin-left: auto;
+}
+
 .jumbotron-local {
     background: #7feed1;
     position: relative;
@@ -132,6 +141,7 @@
     background-color: #c8edff;
     border: 2px solid #422800;
     margin-right: 20px;
+    margin-bottom: 20px;
     border-radius: 30px;
     box-shadow: #422800 4px 4px 0 0;
     color: #422800;
@@ -139,7 +149,7 @@
     display: inline-block;
     font-weight: 600;
     font-size: 18px;
-    padding: 0 18px;
+    padding: 10px 18px;
     line-height: 50px;
     text-align: center;
     text-decoration: none;
@@ -192,6 +202,13 @@
 
 @media screen and (max-width: 1197px) {
     .dummy-sitting {
+        margin-left: auto;
+        margin-right: auto;
+        width: 300px;
+        height: 300px;
+    }
+
+    .dummy-hi {
         margin-left: auto;
         margin-right: auto;
         width: 300px;
