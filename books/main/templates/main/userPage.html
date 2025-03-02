@@ -14,9 +14,9 @@
 
 <div class="container mt-4">
     <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
-            {% if user.img %}
-                <img src="{{ user.img.url }}" class="avatar" alt="Avatar">
-            {% endif %}
+        {% if user.img %}
+        <img src="{{ user.img.url }}" class="avatar" alt="Avatar">
+        {% endif %}
         <div class="info text-center text-md-start ms-md-3">
 
             {% if user.is_authenticated %}
@@ -37,7 +37,7 @@
         </div>
         <a class="btn btn-primary mt-3 mt-md-0" href="{% url 'edit_profile' %}">Редактировать профиль</a>
     </div>
-
+    {% if books%}
     <h2 class="mt-4">Мои книги</h2>
     <ul class="books-list list-unstyled">
         {% for book in books %}
@@ -56,41 +56,39 @@
                 <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
                 <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
             </div>
-            <button class="exchange-button btn btn-success mt-2 mt-md-0">Предложить обмен</button>
+            <a href="{% url 'trading_from_page' book.idbooks %}" class="exchange-button btn btn-success mt-2 mt-md-0">Предложить обмен</a>
         </li>
         {% endfor %}
     </ul>
-
-    <h2 class="mt-4">Текущие обмены</h2>
+    {% endif %}
+    {% if myOrders%}
+    <h2 class="mt-4">Мои книги на обмен</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
             <tr>
                 <th>Книга</th>
-                <th>Пользователь</th>
-                <th>Статус</th>
+                <th>Писатель</th>
+                <th>Дата выставления</th>
                 <th>Действия</th>
             </tr>
             </thead>
             <tbody>
+            {% for order in myOrders %}
             <tr>
-                <td>Преступление и наказание</td>
-                <td>Сергей Петров</td>
-                <td>В ожидании подтверждения</td>
+                <td>{{order.booktorequest.name}}</td>
+                <td>{{order.booktorequest.idwriter}}</td>
+                <td>{{order.dateorder}}</td>
                 <td>
-                    <button class="btn btn-success btn-sm">Подтвердить</button>
-                    <button class="btn btn-danger btn-sm">Отказать</button>
+                    <a href="{% url 'trading_edit'   order.idorder %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'trading_delete' order.idorder %}" class="btn btn-danger btn-sm">Удалить</a>
                 </td>
             </tr>
-            <tr>
-                <td>Анна Каренина</td>
-                <td>Елена Сидорова</td>
-                <td>Завершено</td>
-                <td>-</td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
+    {% endif %}
 
     <h2 class="mt-4">Уведомления</h2>
     <div class="notifications card p-3">
