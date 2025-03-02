@@ -1,0 +1,113 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+
+{% include "main/header.html" %}
+
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">Выберите книгу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="bookList" class="list-group">
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="mainTrading container">
+
+    <h1>Создать запрос на книгу</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="card-group">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 trade-local-container g-4 justify-content-center ">
+                    <div class="card card-trade-property" style="width: 18rem;">
+                        <img src="/media/{{ order.booktorequest.idcover.img }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <label for="bookone" class="mb-0 ">
+                                <h2>Книга обменщика</h2>
+                                <p>Название книги: {{ order.namebookrequest }}</p>
+                                <p>Автор: {{ order.booktorequest.idwriter }}</p>
+                            </label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <label for="addressbookowner">
+                                Адрес обменщика
+                            </label>
+                                <input class="list-group-item" type="text" id="addressbookowner"
+                                       name="addressbookowner" value="{{ order.booktorequest.idAuthorUser.address }}">
+                        </ul>
+                    </div>
+                    <div class="card card-trade-property" style="width: 18rem;">
+                        <img class="card-img-top" id="booktwoImage" alt="..." src="{% static '/img/placeholder.jpg' %}"
+                             onclick="show_books()">
+                        <div class="card-body">
+                            <label for="booktwo" class="mb-0 ">
+                                <h2>Книга на обмен</h2>
+                                <p>Название книги: <span id="myBookName"></span></p>
+                                <p>Автор: <span id="myBookAuthor"></span></p>
+                                <input type="text" id="booktwo" name="booktwo" style="display: none">
+                            </label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <label for="addressrequester">
+                                Ваш адрес
+                            </label>
+                                <input class="list-group-item" type="text" id="addressrequester"
+                                       name="addressrequester" value="{{ user.address }}">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="button-74-login" type="submit">Отправить заявку</button>
+    </form>
+
+</div>
+
+<script>
+    function show_books() {
+        fetch('{{SITE_URL}}/show-books/')
+            .then(response => response.json())
+            .then(data => {
+                const bookModal = document.getElementById('bookModal');
+                bookModal.style.display = 'block'
+                const bookList = document.getElementById('bookList');
+                bookList.innerHTML = '';
+                for (let i = 0; i < data.length; i++) {
+                    console.log(data[i])
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = data[i].description;
+                    li.dataset.image = data[i].img;
+                    $('#bookModal').modal('show');
+                    li.addEventListener('click', function () {
+                        document.getElementById('booktwoImage').src = data[i].img;
+                        document.getElementById('myBookName').textContent = data[i].name;
+                        document.getElementById('myBookAuthor').textContent = data[i].description;
+                        document.getElementById('booktwo').value = data[i].idbooks;
+                        $('#bookModal').modal('hide');
+                    });
+                    bookList.appendChild(li);
+                }
+
+            });
+    }
+</script>
+
+{% include "main/footer.html" %}
+
+
+{% endblock content %}

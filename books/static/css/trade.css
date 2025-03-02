@@ -1,0 +1,22 @@
+.img-label-container {
+    display: grid;
+}
+
+.img-label-container h2 {
+    text-align: center;
+}
+
+.book-cover {
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card-trade-property{
+    margin: 20px;
+    padding: 20px;
+}
+.trade-local-container{
+    margin-right: auto !important;
+    margin-left: auto !important;;
+}
