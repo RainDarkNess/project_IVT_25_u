@@ -3,7 +3,13 @@
 {% csrf_token %}
 {% block content %}
 {% include "main/header.html" %}
-
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/add_edit_delete.css' %}">
+    </head>
+    
 <div class="container mt-5">
     <h1>Редактировать профиль</h1>
     <form method="post" enctype="multipart/form-data">
