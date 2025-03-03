@@ -13,6 +13,46 @@
 {% include "main/header.html" %}
 
 <div class="container mt-4">
+    {% if myResponses or myNotifications%}
+        <h2 class="mt-4">Уведомления</h2>
+        <div class="notifications card p-3">
+            {% for notify in myNotifications %}
+            <div class="notification border-bottom pb-2 mb-2">
+                {% if notify.status == 0 %}
+                    <p>Новый запрос на обмен вашей книги "{{notify.bookone}}" на "{{notify.booktwo}}".</p>
+                {% elif notify.status == 1 %}
+                    <p>Обмен "{{notify.bookone}}" на "{{notify.booktwo}}" в рассмотрении.</p>
+                {% elif notify.status == 2 %}
+                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" подтвержден.</p>
+                {% elif notify.status == 3 %}
+                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" изменен.</p>
+                {% endif %}
+                <p>От пользователя {{ notify.useridtwo }}</p>
+                <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' notify.idorderbooks %}">Посмотреть на мое предложение</a></p>
+                <span class="notification-time text-muted">{{notify.dateorder}}</span>
+            </div>
+            {% endfor %}
+
+            {% for response in myResponses %}
+            <div class="notification border-bottom pb-2 mb-2">
+                {% if response.status == 0 %}
+                    <p>Ваш запрос на обмен книги "{{response.booktwo}}" на "{{response.bookone}}" создан.</p>
+                {% elif response.status == 1 %}
+                    <p>Обмен "{{response.booktwo}}" на "{{response.bookone}}" в рассмотрении.</p>
+                {% elif response.status == 2 %}
+                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" подтвержден.</p>
+                {% elif response.status == 3 %}
+                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" изменен.</p>
+                {% endif %}
+                <p>Для пользователя {{ response.useridone }}</p>
+                <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' response.idorderbooks %}">Посмотреть предложение обмена</a></p>
+                <span class="notification-time text-muted">{{response.dateorder}}</span>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h2 class="mt-4">Мой профиль</h2>
     <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
         {% if user.img %}
         <img src="{{ user.img.url }}" class="avatar" alt="Avatar">
@@ -56,7 +96,8 @@
                 <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
                 <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
             </div>
-            <a href="{% url 'trading_from_page' book.idbooks %}" class="exchange-button btn btn-success mt-2 mt-md-0">Предложить обмен</a>
+            <a href="{% url 'trading_from_page' book.idbooks %}" class="exchange-button btn btn-success mt-2 mt-md-0">Предложить
+                обмен</a>
         </li>
         {% endfor %}
     </ul>
@@ -90,17 +131,6 @@
     </div>
     {% endif %}
 
-    <h2 class="mt-4">Уведомления</h2>
-    <div class="notifications card p-3">
-        <div class="notification border-bottom pb-2 mb-2">
-            <p>Новый запрос на обмен вашей книги "Война и мир".</p>
-            <span class="notification-time text-muted">Сегодня, 14:30</span>
-        </div>
-        <div class="notification">
-            <p>Ваш обмен книги "Мастер и Маргарита" подтвержден.</p>
-            <span class="notification-time text-muted">Вчера, 17:00</span>
-        </div>
-    </div>
 </div>
 
 {% include "main/footer.html" %}
