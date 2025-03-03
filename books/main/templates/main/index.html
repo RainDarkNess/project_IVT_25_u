@@ -89,7 +89,7 @@
         {% if requests %}
         <div class="container mt-4">
             <h2>Актуальные предложения</h2>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="padding-top: 50px;" id="cardsContainer">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 " style="padding-top: 50px;" id="cardsContainer">
                 {% for request in requests %}
                 <div class="card card-properties">
                     <img src="/media/{{ request.booktorequest.idcover.img }}" class="card-img-top" alt="...">
