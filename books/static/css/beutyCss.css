@@ -14,12 +14,6 @@
     }
 }
 
-
-.card-img-top:hover{
-    transform: translateY(-20px);
-    transition: transform 0.2s ease-in-out;
-}
-
 .card-img-top{
     transform: translateY(0);
     transition: transform 0.2s ease-in-out;
