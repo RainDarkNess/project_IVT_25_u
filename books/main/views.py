@@ -15,16 +15,17 @@ from django.http import HttpResponse
 
 from .forms import UserProfileForm, RegistrationForm, GenreForm, BookForm, CoverForm, WriterForm, CategoryForm, \
     OrderRequestsForm, OrderbooksForm
-from .models import CustomUser, Genre, Books, Cover, Category, Writer, OrderRequests
+from .models import CustomUser, Genre, Books, Cover, Category, Writer, OrderRequests, Orderbooks
 
 
 def test(request):
     if request.user.is_authenticated:
         return render(request, "main/index.html", {'requests':
-                                                   OrderRequests.objects.exclude(userrequest=request.user)})
+                                                       OrderRequests.objects.exclude(userrequest=request.user).exclude(
+                                                           canView=False)})
     else:
         return render(request, "main/index.html", {'requests':
-                                                   OrderRequests.objects.all()})
+                                                       OrderRequests.objects.all()})
 
 
 @login_required(login_url='/accounts/login/')
@@ -36,7 +37,10 @@ def exchange(request):
 def userPage(request):
     return render(request, "main/userPage.html", {
         'books': Books.objects.filter(idAuthorUser=request.user),
-        'myOrders': OrderRequests.objects.filter(userrequest=request.user)})
+        'myOrders': OrderRequests.objects.filter(userrequest=request.user),
+        'myNotifications': Orderbooks.objects.filter(useridone=request.user),
+        'myResponses': Orderbooks.objects.filter(useridtwo=request.user),
+    })
 
 
 @login_required(login_url='/accounts/login/')
@@ -498,7 +502,9 @@ def createTrade(request, trade_id):
     if request.method == 'POST':
         form = OrderbooksForm(request.POST)
         if form.is_valid():
-
+            # order.delete()
+            order.canView = False
+            order.save()
             form.save()
             return redirect('userPage')
         else:
@@ -509,8 +515,36 @@ def createTrade(request, trade_id):
             'addressrequester': order.address,
             'status': 1,
             'dateorder': datetime.datetime.now(),
-            'idorder': trade_id
+            'idorder': trade_id,
         }
         form = OrderbooksForm(instance=order, initial=initial_data)
 
     return render(request, 'main/trade.html', {'form': form, 'order': order})
+
+
+@login_required(login_url='/accounts/login/')
+def viewTrade(request, trade_id):
+    trade = get_object_or_404(Orderbooks, idorderbooks=trade_id)
+    if request.method == 'POST':
+        form = OrderbooksForm(request.POST, instance=trade)
+        if form.is_valid():
+            trade.dateorder = datetime.datetime.now()
+            trade.save()
+            # form.save()
+            return redirect('userPage')
+    else:
+        initial_data = {
+            'bookone': trade.bookone,
+            'booktwo': trade.booktwo,
+            'addressrequester': trade.addressrequester,
+            'addressbookowner': trade.addressbookowner,
+            'useridone': trade.useridone,
+            'useridtwo': trade.useridtwo,
+            'status': 3,
+            'dateorder': datetime.datetime.now(),
+        }
+        form = OrderbooksForm(instance=trade, initial=initial_data)
+
+    return render(request, 'main/trade.html', {'form': form, 'trade': trade,
+                                               'label': 'Просмотр обмена',
+                                               'canEdit': not (trade.useridone == request.user)})

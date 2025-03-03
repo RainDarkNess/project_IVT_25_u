@@ -164,7 +164,7 @@ class OrderRequests(models.Model):
     userrequest = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='userRequest')
     address = models.CharField(db_column='address', max_length=1024)
     dateorder = models.DateTimeField(db_column='dateorder', default=datetime.datetime.now)
-
+    canView = models.BooleanField(db_column='canView', default=True)
 
 class Orderbooks(models.Model):
     idorderbooks = models.AutoField(db_column='idOrderBooks', primary_key=True)
@@ -174,8 +174,11 @@ class Orderbooks(models.Model):
     addressrequester = models.CharField(db_column='addressRequester', null=True, max_length=1024)
     addressbookowner = models.CharField(db_column='addressBookOwner', null=True, max_length=1024)
 
+    useridone = models.ForeignKey('CustomUser', models.DO_NOTHING, null=True, related_name='orderbooks_as_useridone')
+    useridtwo = models.ForeignKey('CustomUser', models.SET_NULL, null=True, related_name='orderbooks_as_useridtwo')
+
     dateorder = models.DateTimeField(db_column='dateorder', null=True, default=datetime.datetime.now)
-    idorder = models.ForeignKey('OrderRequests', on_delete=models.SET_NULL, null=True, db_column='idOrder', default=1)
+    # idorder = models.ForeignKey('OrderRequests', on_delete=models.SET_NULL, null=True, db_column='idOrder', default=1)
 
     # idstatus = models.ForeignKey('Status', models.DO_NOTHING, db_column='idStatus')  # Field name made lowercase.
     # idstoreuserone = models.ForeignKey('Storeuser', models.DO_NOTHING,
@@ -184,8 +187,7 @@ class Orderbooks(models.Model):
     #                                    related_name='orderbooks_idstoreusertwo_set')  # Field name made lowercase.
     # tradenumberone = models.CharField(db_column='tradeNumberOne', max_length=100)  # Field name made lowercase.
     # tradenumbertwo = models.CharField(db_column='tradeNumberTwo', max_length=100)  # Field name made lowercase.
-    # useridone = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='userIdOne')
-    # useridtwo = models.ForeignKey('CustomUser', models.DO_NOTHING, db_column='userIdTwo')
+
 
 
 class Status(models.Model):

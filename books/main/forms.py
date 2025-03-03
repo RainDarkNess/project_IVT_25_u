@@ -99,4 +99,4 @@ class OrderRequestsForm(ModelForm):
 class OrderbooksForm(ModelForm):
     class Meta:
         model = Orderbooks
-        fields = ['bookone', 'booktwo', 'addressrequester', 'addressbookowner', 'idorder', 'status']
+        fields = ['bookone', 'booktwo', 'addressrequester', 'addressbookowner', 'status', 'useridone', 'useridtwo']

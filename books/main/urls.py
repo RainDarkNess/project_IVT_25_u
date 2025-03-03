@@ -35,6 +35,7 @@ urlpatterns = [
                 path('trading-delete/<int:trade_id>/', views.deleteTrade, name="trading_delete"),
 
                 path('create-trade/<int:trade_id>/', views.createTrade, name="create_trade"),
+                path('view-trade/<int:trade_id>/', views.viewTrade, name="view_trade"),
 
                 path('show-books/', views.showUsersBooks, name="show_books"),
 
