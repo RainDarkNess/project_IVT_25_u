@@ -23,3 +23,67 @@
 .modal-local{
     padding: 0 !important;
 }
+
+:root {
+	--gradient-shadow: linear-gradient(
+		45deg,
+		rgba(0, 251, 71, 0.15),
+		rgba(0, 0, 255, 	0.15),
+		rgba(0, 255, 0, 	0.15),
+		rgba(255, 255, 0, 	0.15),
+		rgba(144, 218, 133, 0.15),
+		rgba(0, 251, 59, 0.15),
+		rgba(0, 0, 255, 	0.15),
+		rgba(0, 255, 0, 	0.15),
+		rgba(255, 255, 0, 	0.15),
+		rgba(0, 255, 225, 0.15)
+	);
+}
+.it-is-my-book {
+    position: relative;
+}
+
+.it-is-my-book:before,
+.it-is-my-book:after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background: var(--gradient-shadow);
+    background-size: 400%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: -1;
+    animation: animate 10s linear infinite;
+	transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.it-is-my-book:after {
+    filter: blur(80px);
+}
+
+.it-is-my-book:hover:before,
+.it-is-my-book:hover:after {
+    background: transparent;
+}
+
+@keyframes animate {
+	0% {
+		background-position: 0 0;
+	}
+	50% {
+		background-position: 100% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+.it-is-my-book{
+	z-index: 666;
+	transition: transform 0.2s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+.it-is-my-book:hover{
+    /*transform: scale(1.2) rotate(1deg);*/
+	box-shadow: 0 0 200px rgba(65, 255, 204, 0.38);
+}
+
