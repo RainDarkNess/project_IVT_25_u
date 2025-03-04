@@ -166,6 +166,7 @@ class OrderRequests(models.Model):
     dateorder = models.DateTimeField(db_column='dateorder', default=datetime.datetime.now)
     canView = models.BooleanField(db_column='canView', default=True)
 
+
 class Orderbooks(models.Model):
     idorderbooks = models.AutoField(db_column='idOrderBooks', primary_key=True)
     status = models.IntegerField(db_column='status', null=True, default=0)
@@ -175,12 +176,24 @@ class Orderbooks(models.Model):
     addressbookowner = models.CharField(db_column='addressBookOwner', null=True, max_length=1024)
 
     useridone = models.ForeignKey('CustomUser', models.DO_NOTHING, null=True, related_name='orderbooks_as_useridone')
+    useridonetoggle = models.CharField(db_column='userIdOneToggle', null=True, max_length=1024, default=0)
+
     useridtwo = models.ForeignKey('CustomUser', models.SET_NULL, null=True, related_name='orderbooks_as_useridtwo')
+    useridtwotoggle = models.CharField(db_column='userIdTwoToggle', null=True, max_length=1024, default=0)
 
     dateorder = models.DateTimeField(db_column='dateorder', null=True, default=datetime.datetime.now)
-    # idorder = models.ForeignKey('OrderRequests', on_delete=models.SET_NULL, null=True, db_column='idOrder', default=1)
+    idorder = models.ForeignKey('OrderRequests', on_delete=models.SET_NULL, null=True, db_column='idOrder')
 
-    # idstatus = models.ForeignKey('Status', models.DO_NOTHING, db_column='idStatus')  # Field name made lowercase.
+
+class ActionOrderbooks(models.Model):
+    idorderbooks = models.ForeignKey('Orderbooks', on_delete=models.CASCADE, null=True, db_column='idorderbooks')
+    statususerone = models.CharField(db_column='statususerone', null=True, default='0', max_length=2)
+    dateorderone = models.DateTimeField(db_column='dateorderone', null=True, default=datetime.datetime.now)
+
+    statususertwo = models.CharField(db_column='statususertwo', null=True, default='0', max_length=2)
+    dateordertwo = models.DateTimeField(db_column='dateordertwo', null=True, default=datetime.datetime.now)
+
+# idstatus = models.ForeignKey('Status', models.DO_NOTHING, db_column='idStatus')  # Field name made lowercase.
     # idstoreuserone = models.ForeignKey('Storeuser', models.DO_NOTHING,
     #                                    db_column='idStoreUserOne')  # Field name made lowercase.
     # idstoreusertwo = models.ForeignKey('Storeuser', models.DO_NOTHING, db_column='idStoreUserTwo',

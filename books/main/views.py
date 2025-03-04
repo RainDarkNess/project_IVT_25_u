@@ -14,15 +14,15 @@ from django.core import serializers
 from django.http import HttpResponse
 
 from .forms import UserProfileForm, RegistrationForm, GenreForm, BookForm, CoverForm, WriterForm, CategoryForm, \
-    OrderRequestsForm, OrderbooksForm
-from .models import CustomUser, Genre, Books, Cover, Category, Writer, OrderRequests, Orderbooks
+    OrderRequestsForm, OrderbooksForm, ActionOrderbooksForm
+from .models import CustomUser, Genre, Books, Cover, Category, Writer, OrderRequests, Orderbooks, ActionOrderbooks
 
 
 def test(request):
     if request.user.is_authenticated:
         return render(request, "main/index.html", {'requests':
-                                                       OrderRequests.objects.exclude(userrequest=request.user).exclude(
-                                                           canView=False)})
+            OrderRequests.objects.exclude(userrequest=request.user).exclude(
+                canView=False)})
     else:
         return render(request, "main/index.html", {'requests':
                                                        OrderRequests.objects.all()})
@@ -497,6 +497,40 @@ def deleteTrade(request, trade_id):
 
 
 @login_required(login_url='/accounts/login/')
+def deleteTradeBooks(request, trade_id):
+    order = get_object_or_404(Orderbooks, idorderbooks=trade_id)
+    if request.method == 'POST':
+        subOrder = order.idorder
+        subOrder.canView = 1
+        subOrder.save()
+        order.delete()
+        return redirect('userPage')
+
+    return render(request, 'main/delete_form.html',
+                  {'category': order, 'hText': 'Удалить обмен от ' + str(order.dateorder) + " с вашей книгой "
+                                               + str(order.bookone),
+                   'elementName': '',
+                   'reverseRoute': 'userPage'})
+
+
+@login_required(login_url='/accounts/login/')
+def outFromTrade(request, trade_id):
+    order = get_object_or_404(Orderbooks, idorderbooks=trade_id)
+    if request.method == 'POST':
+        subOrder = order.idorder
+        subOrder.canView = 1
+        subOrder.save()
+        order.delete()
+        return redirect('userPage')
+
+    return render(request, 'main/delete_form.html',
+                  {'category': order, 'hText': 'Вы уверены что хотите выйти из обмена с вашей книгой '
+                                               + str(order.booktwo),
+                   'elementName': '',
+                   'reverseRoute': 'userPage'})
+
+
+@login_required(login_url='/accounts/login/')
 def createTrade(request, trade_id):
     order = get_object_or_404(OrderRequests, idorder=trade_id)
     if request.method == 'POST':
@@ -505,7 +539,9 @@ def createTrade(request, trade_id):
             # order.delete()
             order.canView = False
             order.save()
-            form.save()
+            orderBooks = form.save(commit=False)
+            orderBooks.idorder = order
+            orderBooks.save()
             return redirect('userPage')
         else:
             print("Ошибки формы:", form.errors)  # Отладка
@@ -525,26 +561,71 @@ def createTrade(request, trade_id):
 @login_required(login_url='/accounts/login/')
 def viewTrade(request, trade_id):
     trade = get_object_or_404(Orderbooks, idorderbooks=trade_id)
+    addressrequester = trade.addressrequester
+    addressbookowner = trade.addressbookowner
     if request.method == 'POST':
         form = OrderbooksForm(request.POST, instance=trade)
         if form.is_valid():
             trade.dateorder = datetime.datetime.now()
+            if form.cleaned_data.get('addressrequester') == '':
+                trade.addressrequester = addressrequester
+            if form.cleaned_data.get('addressbookowner') == '':
+                trade.addressbookowner = addressbookowner
+
+            if trade.useridonetoggle == '1' and trade.useridonetoggle == trade.useridtwotoggle:
+                trade.status = 2
+                trade.save()
+                return redirect('userPage')
             trade.save()
-            # form.save()
-            return redirect('userPage')
+            return redirect(request.path)
+        else:
+            print(form.errors)
     else:
-        initial_data = {
-            'bookone': trade.bookone,
-            'booktwo': trade.booktwo,
-            'addressrequester': trade.addressrequester,
-            'addressbookowner': trade.addressbookowner,
-            'useridone': trade.useridone,
-            'useridtwo': trade.useridtwo,
-            'status': 3,
-            'dateorder': datetime.datetime.now(),
-        }
-        form = OrderbooksForm(instance=trade, initial=initial_data)
+        form = OrderbooksForm(instance=trade)
 
     return render(request, 'main/trade.html', {'form': form, 'trade': trade,
                                                'label': 'Просмотр обмена',
                                                'canEdit': not (trade.useridone == request.user)})
+
+
+@login_required(login_url='/accounts/login/')
+def actionTrade(request, trade_id):
+    trade = get_object_or_404(Orderbooks, idorderbooks=trade_id)
+    newAction = False
+    try:
+        newAction = get_object_or_404(ActionOrderbooks, idorderbooks=trade_id)
+    except:
+        print('1')
+
+    if request.method == 'POST':
+        form = ActionOrderbooksForm(request.POST)
+        if form.is_valid():
+            if not newAction:
+                newAction = form.save(commit=False)
+                newAction.idorderbooks = trade
+            if trade.useridone == request.user or trade.useridtwo == request.user:
+                if form.cleaned_data.get('statususerone') != '':
+                    newAction.statususerone = form.cleaned_data.get('statususerone')
+                newAction.dateorderone = datetime.datetime.now()
+                if form.cleaned_data.get('statususertwo') != '':
+                    newAction.statususertwo = form.cleaned_data.get('statususertwo')
+                newAction.dateordertwo = datetime.datetime.now()
+            else:
+                return redirect('userPage')
+
+            if newAction.statususerone == '2' and newAction.statususertwo == newAction.statususerone:
+                trade.status = 3
+                trade.save()
+                return redirect('userPage')
+            newAction.save()
+            return redirect('userPage')
+        else:
+            print(form.errors)
+    else:
+        if not newAction:
+            form = ActionOrderbooksForm()
+        else:
+            form = ActionOrderbooksForm(instance=newAction)
+
+    return render(request, 'main/action_books.html',
+                  {'form': form, 'imMaster': trade.useridone == request.user, 'action': newAction, 'trade': trade})

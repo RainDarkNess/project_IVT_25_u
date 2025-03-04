@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, PasswordInput, CharField, ImageField, TextInput, Textarea
+from django.forms import ModelForm, PasswordInput, CharField, ImageField, TextInput, Textarea, IntegerField
 
-from .models import CustomUser, Genre, Books, Cover, Writer, Category, OrderRequests, Orderbooks
+from .models import CustomUser, Genre, Books, Cover, Writer, Category, OrderRequests, Orderbooks, ActionOrderbooks
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -97,6 +97,21 @@ class OrderRequestsForm(ModelForm):
 
 
 class OrderbooksForm(ModelForm):
+    addressrequester = CharField(required=False)
+    addressbookowner = CharField(required=False)
+    useridonetoggle  = CharField(required=False)
+    useridtwotoggle  = CharField(required=False)
+
     class Meta:
         model = Orderbooks
-        fields = ['bookone', 'booktwo', 'addressrequester', 'addressbookowner', 'status', 'useridone', 'useridtwo']
+        fields = ['bookone', 'booktwo', 'addressrequester', 'addressbookowner', 'status', 'useridone', 'useridtwo',
+                  'useridonetoggle', 'useridtwotoggle']
+
+
+class ActionOrderbooksForm(ModelForm):
+    statususerone = CharField(required=False)
+    statususertwo = CharField(required=False)
+
+    class Meta:
+        model = ActionOrderbooks
+        fields = ['statususerone', 'statususertwo']

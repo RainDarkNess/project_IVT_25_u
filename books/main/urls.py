@@ -36,6 +36,10 @@ urlpatterns = [
 
                 path('create-trade/<int:trade_id>/', views.createTrade, name="create_trade"),
                 path('view-trade/<int:trade_id>/', views.viewTrade, name="view_trade"),
+                path('trade-delete/<int:trade_id>/', views.deleteTradeBooks, name="trade_delete"),
+                path('out-from-trade/<int:trade_id>/', views.outFromTrade, name="out_from_trade"),
+
+                path('action-trade/<int:trade_id>/', views.actionTrade, name="action_trade"),
 
                 path('show-books/', views.showUsersBooks, name="show_books"),
 
