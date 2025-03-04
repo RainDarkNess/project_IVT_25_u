@@ -9,7 +9,7 @@
 <body class="modal-local">
 <div class="mainTrading container">
     {% if label %}
-    <h1>{{label}}</h1>
+    <h1 align="center" style="padding-bottom: 20px">{{label}}</h1>
     {% else %}
     <h1>Создать запрос на книгу</h1>
     {% endif %}
@@ -18,120 +18,247 @@
         <div class="container">
             <div class="card-group">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 trade-local-container g-4 justify-content-center ">
-                        <div class="card card-trade-property
+                    <div class="card card-trade-property
+
+                                    {% if trade.useridonetoggle == '1' %}
+                                        it-is-my-book
+                                    {% else %}
+                                        it-is-my-book-not-selected
+                                    {% endif %}
+
                                 {% if not canEdit and trade %}
-                                    it-is-my-book
+
                                 {% endif %}
                                 " style="width: 18rem;">
-                                {% if not canEdit and trade %}
-                                    <b>Ваша книга</b>
-                                {% else %}
-                                    <b>Книга которую вы запрашиваете</b>
-                                {% endif %}
+                        {% if trade.useridonetoggle == '1' %}
+                            <h3>Подтверждено</h3>
+                        {% endif %}
+                        {% if not canEdit and trade %}
+                        <b>Книга</b>
+                        {% else %}
+                        <b>Книга которую вы запрашиваете</b>
+                        {% endif %}
                         {% if trade %}
-                            <img src="/media/{{ trade.bookone.idcover.img }}" id="bookOneImage" class="card-img-top" alt="..."
-                                {% if not canEdit %}
-                                    onclick="show_books()"
-                                {% endif %}
-                            >
-                            <div class="card-body">
-                                <label for="bookone" class="mb-0">
-                                    <h2>Книга обменщика</h2>
-                                    <p>Название книги: <span id="myBookNameOne">{{ trade.bookone.name }}</span></p>
-                                    <p>Автор: <span id="myBookAuthorOne">{{ trade.bookone.idwriter }}</span></p>
-                                </label>
-                                <input for="bookone" type="text" id="bookone" name="bookone"
-                                       value="{{trade.bookone.idbooks}}" style="display:none;">
-                            </div>
+                        <img src="/media/{{ trade.bookone.idcover.img }}" id="bookOneImage" class="card-img-top"
+                             alt="..."
+                             {% if not canEdit %}
+
+                                   {% if trade.useridonetoggle != '1' %}
+                                        onclick="show_books()"
+                                   {% endif %}
+                             {% endif %}
+                        >
+                        <div class="card-body">
+                            <label for="bookone" class="mb-0">
+                                <h2>Книга</h2>
+                                <p>Название книги: <span id="myBookNameOne">{{ trade.bookone.name }}</span></p>
+                                <p>Автор: <span id="myBookAuthorOne">{{ trade.bookone.idwriter }}</span></p>
+                            </label>
+                            <input for="bookone" type="text" id="bookone" name="bookone"
+                                   value="{{trade.bookone.idbooks}}" style="display:none;">
+                        </div>
                         <ul class="list-group list-group-flush">
                             <label for="addressbookowner">
                                 Адрес обменщика
                             </label>
                             <input class="list-group-item" type="text" id="addressbookowner"
-                                   name="addressbookowner" value="{{ trade.addressbookowner }}">
-                        </ul>
-                        {% else %}
-                            <img src="/media/{{ order.booktorequest.idcover.img }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <label for="bookone" class="mb-0">
-                                    <h2>Книга обменщика</h2>
-                                    <p>Название книги: {{ order.namebookrequest }}</p>
-                                    <p>Автор: {{ order.booktorequest.idwriter }}</p>
-                                </label>
-                                <input for="bookone" type="text" id="bookone" name="bookone"
-                                       value="{{order.booktorequest.idbooks}}" style="display:none;">
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <label for="addressbookowner">
-                                    Адрес обменщика
-                                </label>
-                                <input class="list-group-item" type="text" id="addressbookowner"
-                                       name="addressbookowner" value="{{ order.booktorequest.idAuthorUser.address }}">
-                            </ul>
-                        {% endif %}
+                                   name="addressbookowner" value="{{ trade.addressbookowner }}"
 
+                                   {% if trade.useridonetoggle == '1' %}
+                                        disabled
+                                   {% endif %}>
+                        </ul>
+                            {% if not canEdit and trade %}
+                                <label for="useridonetoggle">
+                                    <select name="useridonetoggle" id="useridonetoggle">
+                                      {% if trade.useridonetoggle %}
+                                        <option value="0"
+                                        {% if trade.useridonetoggle == '0' %}
+                                            selected
+                                        {% endif %}
+                                        >На удержании</option>
+                                        <option value="1"
+                                        {% if trade.useridonetoggle == '1' %}
+                                            selected
+                                        {% endif %}
+                                        >Подтверждаю обмен</option>
+                                        {% else %}
+                                            <option value="0" selected>На удержании</option>
+                                            <option value="1">Подтверждаю обмен</option>
+                                        {% endif %}
+                                    </select>
+                                </label>
+                            {% endif %}
+                        {% else %}
+                        <img src="/media/{{ order.booktorequest.idcover.img }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <label for="bookone" class="mb-0">
+                                <h2>Книга</h2>
+                                <p>Название книги: {{ order.namebookrequest }}</p>
+                                <p>Автор: {{ order.booktorequest.idwriter }}</p>
+                            </label>
+                            <input for="bookone" type="text" id="bookone" name="bookone"
+                                   value="{{order.booktorequest.idbooks}}" style="display:none;">
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <label for="addressbookowner">
+                                Адрес обменщика
+                            </label>
+                            <input class="list-group-item" type="text" id="addressbookowner"
+                                   name="addressbookowner" value="{{ order.booktorequest.idAuthorUser.address }}">
+                        </ul>
+                        {% endif %}
                     </div>
                     <div class="card card-trade-property
+
+                                    {% if trade.useridtwotoggle == '1' %}
+                                        it-is-my-book
+                                    {% else %}
+                                        it-is-my-book-not-selected
+                                    {% endif %}
+
                                 {% if canEdit or not trade %}
-                                    it-is-my-book
+
                                 {% endif %}
                                 " style="width: 18rem;">
-                                {% if canEdit or not trade %}
-                                    <b>Ваша книга</b>
-                                {% else %}
-                                    <b>Книга которую вы запрашиваете</b>
-                                {% endif %}
-                        {% if trade %}
-                            <img class="card-img-top" id="booktwoImage" src="/media/{{ trade.booktwo.idcover.img }}"
-                                 {% if canEdit %}
-                                    onclick="show_books()"
-                                {% endif %}
-                            >
+                        {% if trade.useridtwotoggle == '1' %}
+                            <h3>Подтверждено</h3>
+                        {% endif %}
 
-                            <div class="card-body">
-                                <label for="booktwo" class="mb-0 ">
-                                    <h2>Книга на обмен</h2>
-                                    <p>Название книги: <span id="myBookName">{{trade.booktwo.name}}</span></p>
-                                    <p>Автор: <span id="myBookAuthor">{{trade.booktwo.idwriter}}</span></p>
-                                    <input for="booktwo" type="text" id="booktwo" name="booktwo"
-                                           value="{{trade.booktwo.idbooks}}" style="display: none">
-                                </label>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                    <label for="addressrequester">
-                                        Ваш адрес
-                                    </label>
-                                    <input class="list-group-item" type="text" id="addressrequester"
-                                           name="addressrequester" value="{{ trade.addressrequester }}">
-                            </ul>
+                        {% if canEdit or not trade %}
+                        <b>Книга</b>
                         {% else %}
-                            <img class="card-img-top" id="booktwoImage" src="{% static '/img/placeholder.png' %}"
-                                 onclick="show_books()">
+                        <b>Запрашиваемая книга</b>
+                        {% endif %}
+                        {% if trade %}
+                        <img class="card-img-top" id="booktwoImage" src="/media/{{ trade.booktwo.idcover.img }}"
+                             {% if canEdit %}
+                                   {% if trade.useridtwotoggle != '1' %}
+                                        onclick="show_books()"
+                                   {% endif %}
+                             {% endif %}
+                        >
 
-                            <div class="card-body">
-                                <label for="booktwo" class="mb-0 ">
-                                    <h2>Книга на обмен</h2>
-                                    <p>Название книги: <span id="myBookName"></span></p>
-                                    <p>Автор: <span id="myBookAuthor"></span></p>
-                                    <input for="booktwo" type="text" id="booktwo" name="booktwo" style="display: none">
-                                </label>
-                            </div>
+                        <div class="card-body">
+                            <label for="booktwo" class="mb-0 ">
+                                <h2>Книга на обмен</h2>
+                                <p>Название книги: <span id="myBookName">{{trade.booktwo.name}}</span></p>
+                                <p>Автор: <span id="myBookAuthor">{{trade.booktwo.idwriter}}</span></p>
+                                <input for="booktwo" type="text" id="booktwo" name="booktwo"
+                                       value="{{trade.booktwo.idbooks}}" style="display: none">
+                            </label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <label for="addressrequester">
+                                Адрес
+                            </label>
+                            <input class="list-group-item" type="text" id="addressrequester"
+                                   name="addressrequester" value="{{ trade.addressrequester }}"
 
-                            <ul class="list-group list-group-flush">
-                                <label for="addressrequester">
-                                    Ваш адрес
+                                   {% if trade.useridtwotoggle == '1' %}
+                                        disabled
+                                   {% endif %}>
+                        </ul>
+                            {% if canEdit or not trade %}
+                                <label for="useridtwotoggle">
+                                    <select name="useridtwotoggle" id="useridtwotoggle">
+                                      {% if trade.useridtwotoggle %}
+                                        <option value="0"
+                                        {% if trade.useridtwotoggle == '0' %}
+                                            selected
+                                        {% endif %}
+                                        >На удержании</option>
+                                        <option value="1"
+                                        {% if trade.useridtwotoggle == '1' %}
+                                            selected
+                                        {% endif %}
+                                        >Подтверждаю обмен</option>
+                                        {% else %}
+                                            <option value="0" selected>На удержании</option>
+                                            <option value="1">Подтверждаю обмен</option>
+                                        {% endif %}
+                                    </select>
                                 </label>
-                                <input class="list-group-item" type="text" id="addressrequester"
-                                       name="addressrequester" value="{{ user.address }}">
-                            </ul>
+                            {% endif %}
+
+                        {% else %}
+                        <img class="card-img-top" id="booktwoImage" src="{% static '/img/placeholder.png' %}"
+                             onclick="show_books()">
+
+                        <div class="card-body">
+                            <label for="booktwo" class="mb-0 ">
+                                <h2>Книга на обмен</h2>
+                                <p>Название книги: <span id="myBookName"></span></p>
+                                <p>Автор: <span id="myBookAuthor"></span></p>
+                                <input for="booktwo" type="text" id="booktwo" name="booktwo" style="display: none">
+                            </label>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <label for="addressrequester">
+                                Адрес
+                            </label>
+                            <input class="list-group-item" type="text" id="addressrequester"
+                                   name="addressrequester" value="{{ user.address }}">
+                        </ul>
                         {% endif %}
                     </div>
                 </div>
+
             </div>
+            <div class="row trade-local-container g-4 justify-content-center">
+                                        {% if trade.useridonetoggle == '1' %}
+                    <div class="col">
+                        <div style="width: 100%">
+                            <iframe width="100%" height="400"
+                                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=
+                        {% if trade %}
+                                    {{ trade.addressbookowner }}
+                        {% else %}
+                                    {{order.booktorequest.idAuthorUser.address}}
+                        {% endif %}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                            </iframe>
+                        </div>
+                    </div>
+                                        {% else %}
+                    <div class="col"  style="padding-bottom: 40px;">
+                        <div class="empty-map">
+                            <div>
+                                <h2>Карта появится после подтверждения адреса</h2>
+                                <div class="dummy-empty-map"></div>
+                            </div>
+                        </div>
+                    </div>
+                                        {% endif %}
+
+                                        {% if trade.useridtwotoggle == '1' %}
+                    <div class="col">
+                        <div style="width: 100%">
+                            <iframe width="100%" height="400"
+                                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=
+                        {% if trade %}
+                                    {{trade.addressrequester}}
+                        {% else %}
+                                    {{ user.address }}
+                        {% endif %}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                            </iframe>
+                        </div>
+                    </div>
+                                        {% else %}
+                    <div class="col" style="padding-bottom: 40px;">
+                        <div class="empty-map">
+                            <div>
+                                <h2>Карта появится после подтверждения адреса</h2>
+                                <div class="dummy-empty-map-two"></div>
+                            </div>
+                        </div>
+                    </div>
+                                        {% endif %}
+                </div>
         </div>
         {% if trade %}
 
-        <input for="status" type="text" id="status" name="status" value="3" style="display:none;">
+        <input for="status" type="text" id="status" name="status" value="1" style="display:none;">
 
         <input type="text" id="id_useridone" name="useridone" value="{{ trade.useridone.id }}"
                style="display:none;">
@@ -194,17 +321,17 @@
                     li.dataset.image = data[i].img;
                     $('#bookModal').modal('show');
                     li.addEventListener('click', function () {
-                        {% if canEdit or not trade %}
-                            document.getElementById('booktwoImage').src = data[i].img;
-                            document.getElementById('myBookName').textContent = data[i].name;
-                            document.getElementById('myBookAuthor').textContent = data[i].author;
-                            document.getElementById('booktwo').value = data[i].idbooks;
+                        {%if canEdit or not trade %}
+                        document.getElementById('booktwoImage').src = data[i].img;
+                        document.getElementById('myBookName').textContent = data[i].name;
+                        document.getElementById('myBookAuthor').textContent = data[i].author;
+                        document.getElementById('booktwo').value = data[i].idbooks;
                         {% else %}
-                            document.getElementById('bookOneImage').src = data[i].img;
-                            document.getElementById('myBookNameOne').textContent = data[i].name;
-                            document.getElementById('myBookAuthorOne').textContent = data[i].author;
-                            document.getElementById('bookone').value = data[i].idbooks;
-                        {% endif %}
+                        document.getElementById('bookOneImage').src = data[i].img;
+                        document.getElementById('myBookNameOne').textContent = data[i].name;
+                        document.getElementById('myBookAuthorOne').textContent = data[i].author;
+                        document.getElementById('bookone').value = data[i].idbooks;
+                        {%endif %}
                         $('#bookModal').modal('hide');
                     });
                     bookList.appendChild(li);

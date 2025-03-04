@@ -1,0 +1,138 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+
+{% include "main/header.html" %}
+
+
+<div class="card-group" style="padding-top: 20px">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 trade-local-container g-4 justify-content-center ">
+        <div class="card card-trade-property
+        {% if not action.statususerone == '2' %}
+        it-is-my-book
+        {% else %}
+        it-is-my-book-send
+        {% endif %}
+" style="width: 18rem;">
+            <b>Книга</b>
+            {% if imMaster%}
+            <b>Моя книга</b>
+            {% else %}
+            <b>Обмениваемая книга</b>
+            {% endif %}
+            <img class="card-img-top" src="/media/{{ trade.bookone.idcover.img }}">
+            <div class="card-body">
+                <label class="mb-0 ">
+                    <p>Название книги: <span >{{trade.bookone.name}}</span></p>
+                    <p>Автор: <span >{{trade.bookone.idwriter}}</span></p>
+                </label>
+            </div>
+            <ul class="list-group list-group-flush">
+                <label>
+                    Адрес
+                </label>
+                <input class="list-group-item" value="{{ trade.addressrequester }}" disabled>
+            </ul>
+        </div>
+
+        <div class="card card-trade-property
+
+        {% if not action.statususertwo == '2' %}
+            it-is-my-book
+        {% else %}
+            it-is-my-book-send
+        {% endif %}
+" style="width: 18rem;">
+            <b>Книга</b>
+            {% if imMaster%}
+            <b>Моя книга</b>
+            {% else %}
+            <b>Обмениваемая книга</b>
+            {% endif %}
+            <img class="card-img-top" src="/media/{{ trade.booktwo.idcover.img }}">
+            <div class="card-body">
+                <label class="mb-0 ">
+                    <p>Название книги: <span >{{trade.booktwo.name}}</span></p>
+                    <p>Автор: <span >{{trade.booktwo.idwriter}}</span></p>
+                </label>
+            </div>
+            <ul class="list-group list-group-flush">
+                <label>
+                    Адрес
+                </label>
+                <input class="list-group-item" value="{{ trade.addressbookowner }}" disabled>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="mainTrading container">
+    <form method="post">
+        {% csrf_token %}
+        {% if imMaster%}
+
+        {% if not action.statususerone == '2' %}
+        <label for="statususerone">
+            <h1>Статус вашей книги</h1>
+            <select id="statususerone" name="statususerone" class="select-local-action">
+                <option value="0">Пока не отправил книгу {{ trade.bookone.name }}</option>
+                <option value="1"
+                        {% if action.statususerone == '1' %}
+                selected
+                {% endif %}
+                >Отправил</option>
+            </select>
+
+        </label>
+        {% else %}
+        <p>Получатель успешно получил свою книгу</p>
+        {% endif %}
+
+        {% if action.statususertwo == '1' %}
+        <label for="statususertwo"><h2>Статус доставки книги {{ trade.booktwo.name }} на которую вы менялись</h2>
+            <select id="statususertwo" name="statususertwo" class="select-local-action">
+                <option value="1">Не пришло</option>
+                <option value="2">Пришло</option>
+            </select>
+        </label>
+        {% endif%}
+
+        {% else %}
+
+        {% if not action.statususertwo == '2' %}
+        <label for="statususertwo">
+            <h1>Статус вашей книги</h1>
+
+            <select id="statususertwo" name="statususertwo" class="select-local-action">
+                <option value="0">Пока не отправил книгу {{ trade.booktwo.name }}</option>
+                <option value="1"
+                        {% if action.statususertwo == '1' %}
+                selected
+                {% endif %}
+                >Отправил</option>
+            </select>
+        </label>
+        {% else %}
+        <p>Получатель успешно получил свою книгу</p>
+        {% endif %}
+
+        {% if action.statususerone == '1' %}
+        <label for="statususerone"><h2>Статус доставки книги {{ trade.bookone.name }} на которую вы менялись</h2>
+            <select id="statususerone" name="statususerone" class="select-local-action">
+                <option value="1">Не пришло</option>
+                <option value="2">Пришло</option>
+            </select>
+        </label>
+        {% endif%}
+
+        {% endif %}
+        <button type="submit" class="btn btn-success">Отправить</button>
+    </form>
+</div>
+{% include "main/footer.html" %}
+
+
+{% endblock content %}
