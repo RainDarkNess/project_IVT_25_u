@@ -17,19 +17,30 @@
         <h2 class="mt-4">Уведомления</h2>
         <div class="notifications card p-3">
             {% for notify in myNotifications %}
-            <div class="notification border-bottom pb-2 mb-2">
+            <div class="notification border-bottom pb-2 mb-2
+                {% if notify.status == 3 %}
+                    it-is-my-book-send
+                {% endif %}
+                ">
                 {% if notify.status == 0 %}
                     <p>Новый запрос на обмен вашей книги "{{notify.bookone}}" на "{{notify.booktwo}}".</p>
+                    <p><a class="btn btn-danger mt-3 mt-md-0" href="{% url 'trade_delete' notify.idorderbooks %}">Удалить предложение обмена</a></p>
                 {% elif notify.status == 1 %}
                     <p>Обмен "{{notify.bookone}}" на "{{notify.booktwo}}" в рассмотрении.</p>
+                    <p><a class="btn btn-danger mt-3 mt-md-0" href="{% url 'trade_delete' notify.idorderbooks %}">Удалить предложение обмена</a></p>
                 {% elif notify.status == 2 %}
-                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" подтвержден.</p>
+                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" согласован.</p>
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' notify.idorderbooks %}">Приступить к отправке книги</a></p>
                 {% elif notify.status == 3 %}
-                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" изменен.</p>
+                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" прошел успешно.</p>
                 {% endif %}
                 <p>От пользователя {{ notify.useridtwo }}</p>
+                {% if not notify.status == 3 %}
                 <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' notify.idorderbooks %}">Посмотреть на мое предложение</a></p>
-                <span class="notification-time text-muted">{{notify.dateorder}}</span>
+                {% else %}
+                <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' notify.idorderbooks %}">Просмотреть обмен</a></p>
+                {% endif %}
+                <span class="notification-time">{{notify.dateorder}}</span>
             </div>
             {% endfor %}
 
@@ -40,13 +51,19 @@
                 {% elif response.status == 1 %}
                     <p>Обмен "{{response.booktwo}}" на "{{response.bookone}}" в рассмотрении.</p>
                 {% elif response.status == 2 %}
-                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" подтвержден.</p>
+                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" согласован.</p>
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' response.idorderbooks %}">Приступить к отправке книги</a></p>
                 {% elif response.status == 3 %}
-                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" изменен.</p>
+                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" прошел успешно.</p>
                 {% endif %}
                 <p>Для пользователя {{ response.useridone }}</p>
-                <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' response.idorderbooks %}">Посмотреть предложение обмена</a></p>
-                <span class="notification-time text-muted">{{response.dateorder}}</span>
+                {% if not response.status == 3 %}
+                    <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' response.idorderbooks %}">Посмотреть предложение обмена</a></p>
+                    <p><a class="btn btn-danger mt-3 mt-md-0" href="{% url 'out_from_trade' response.idorderbooks %}">Выйти из предложения обмена</a></p>
+                {% else %}
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' response.idorderbooks %}">Просмотреть обмен</a></p>
+                {% endif %}
+                <span class="notification-time">{{response.dateorder}}</span>
             </div>
             {% endfor %}
         </div>
