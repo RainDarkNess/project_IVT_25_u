@@ -1,0 +1,61 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/add_edit_delete.css' %}">
+    </head>
+    
+<div class="container mt-5">
+
+    <h1>{{ buttonText }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">{{ buttonText }}</button>
+    </form>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            {% for theader in tHeaders %}
+                <th>{{theader}}</th>
+            {% endfor %}
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for element in list %}
+        <tr>
+            {% for key, value in element.items %}
+            <td>
+                {% if key == 'img' %}
+                    {% if value %}
+                        <img src="{{ value }}" alt="{{ cover.cover }}" style="width: 100px; height: auto;">
+                    {% else %}
+                        Нет Изображения
+                    {% endif %}
+                {% elif key == 'id' %}
+                    <a href="{% url editForm value %}" class="btn btn-warning">Редактировать</a>
+                    <a href="{% url deleteForm value %}" class="btn btn-danger">Удалить</a>
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% include "main/footer.html" %}
+
+{% endblock content %}
