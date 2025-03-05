@@ -90,7 +90,17 @@
         </div>
     {% endif %}
 
+        {% if not WE_SEE_HIM %}
     <h2 class="mt-4">Мой профиль</h2>
+        {% else %}
+    <h2 class="mt-4">Профиль
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {{ user.get_username }}
+            {% endif %}
+    </h2>
+        {% endif %}
     <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
         {% if user.img %}
         <img src="{{ user.img.url }}" class="avatar" alt="Avatar">
@@ -113,10 +123,22 @@
             <p><strong>Телефон:</strong> {{ user.telephone }} </p>
             <p><strong>Адрес:</strong> {{ user.address }}</p>
         </div>
+        {% if not WE_SEE_HIM %}
         <a class="btn btn-primary mt-3 mt-md-0" href="{% url 'edit_profile' %}">Редактировать профиль</a>
+        {% endif %}
     </div>
     {% if books%}
+        {% if not WE_SEE_HIM %}
     <h2 class="mt-4">Мои книги</h2>
+        {% else %}
+    <h2 class="mt-4">Книги
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {{ user.get_username }}
+            {% endif %}
+    </h2>
+        {% endif %}
     <ul class="books-list list-unstyled">
         {% for book in books %}
         <li class="book-item card p-3 mb-2 d-flex flex-md-row flex-column justify-content-between align-items-md-center">
@@ -124,24 +146,40 @@
                 <h3 class="book-title fw-bold">{{ book.name }}</h3>
 
                 {% if book.idcover %}
-                <img src="/media/{{ book.idcover.img }}">
+                <img style="width: 100%; height: 100%" src="/media/{{ book.idcover.img }}">
                 {% else %}
                 <p>Изображение отсуствует</p>
                 {% endif %}
 
                 <p>Автор: {{ book.idwriter }}</p>
                 <p>Состояние: Отличное</p>
-                <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
-                <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
+                {% if not WE_SEE_HIM %}
+                        <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
+                        <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
             </div>
-            <a href="{% url 'trading_from_page' book.idbooks %}" class="exchange-button btn btn-success mt-2 mt-md-0">Предложить
-                обмен</a>
+                {% if not WE_SEE_HIM %}
+                    <a href="{% url 'trading_from_page' book.idbooks %}" class="exchange-button btn btn-success mt-2 mt-md-0">Предложить
+                        обмен</a>
+                {% endif %}
         </li>
         {% endfor %}
     </ul>
     {% endif %}
     {% if myOrders%}
+
+        {% if not WE_SEE_HIM %}
     <h2 class="mt-4">Мои книги на обмен</h2>
+        {% else %}
+    <h2 class="mt-4">Книги на обмен
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {{ user.get_username }}
+            {% endif %}
+    </h2>
+        {% endif %}
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
@@ -159,8 +197,13 @@
                 <td>{{order.booktorequest.idwriter}}</td>
                 <td>{{order.dateorder}}</td>
                 <td>
+                {% if not WE_SEE_HIM %}
                     <a href="{% url 'trading_edit'   order.idorder %}" class="btn btn-warning btn-sm">Редактировать</a>
                     <a href="{% url 'trading_delete' order.idorder %}" class="btn btn-danger btn-sm">Удалить</a>
+                {% else %}
+                    <a class="btn btn-warning btn-sm disabled">Редактировать</a>
+                    <a class="btn btn-danger btn-sm disabled">Удалить</a>
+                {% endif %}
                 </td>
             </tr>
             {% endfor %}
