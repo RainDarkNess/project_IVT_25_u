@@ -100,6 +100,7 @@
                         <p class="card-text"><b>Категория:</b> {{ request.booktorequest.idcategory }}</p>
                         <p class="card-text"><b>Автор:</b> {{ request.booktorequest.idwriter }}</p>
                         <p class="card-text"><b>Выставил:</b> {{ request.userrequest }}</p>
+                        <p class="card-text"><b>Хотел бы обменяться на:</b> {{ request.namebookrequest }}</p>
                     </div>
                         <a href="{% url 'create_trade' request.idorder %}" class="button-74-login " role="button">Отозваться</a>
                 </div>
