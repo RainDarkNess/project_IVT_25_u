@@ -44,6 +44,19 @@ def userPage(request):
 
 
 @login_required(login_url='/accounts/login/')
+def userPageView(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    return render(request, "main/userPage.html", {
+        'books': Books.objects.filter(idAuthorUser=user),
+        'myOrders': OrderRequests.objects.filter(userrequest=user),
+        'myNotifications': Orderbooks.objects.filter(useridone=user),
+        'myResponses': Orderbooks.objects.filter(useridtwo=user),
+        'user': user,
+        'WE_SEE_HIM': True
+    })
+
+
+@login_required(login_url='/accounts/login/')
 def trade(request):
     return render(request, "main/trade.html")
 
@@ -100,7 +113,7 @@ def adminPanel(request):
     return render(request, 'main/admin-panel.html')
 
 
-@login_required(login_url='/accounts/login/')
+@staff_member_required(login_url='/accounts/login/')
 def addGenre(request):
     if request.user.is_superuser:
         genres = Genre.objects.filter()
@@ -133,7 +146,7 @@ def addGenre(request):
                    'editForm': editForm, 'deleteForm': deleteForm, 'buttonText': buttonText})
 
 
-@login_required(login_url='/accounts/login/')
+@staff_member_required(login_url='/accounts/login/')
 def edit_genre(request, genre_id):
     genre = get_object_or_404(Genre, id=genre_id)
     if request.method == 'POST':
@@ -149,7 +162,7 @@ def edit_genre(request, genre_id):
                    'reverseRoute': 'add-janre'})
 
 
-@login_required(login_url='/accounts/login/')
+@staff_member_required(login_url='/accounts/login/')
 def delete_genre(request, genre_id):
     genre = get_object_or_404(Genre, id=genre_id)
     if request.method == 'POST':
@@ -244,11 +257,14 @@ def deleteCover(request, cover_id):
 
 @login_required(login_url='/accounts/login/')
 def bookList(request):
-    if request.user.is_superuser:
-        books = Books.objects.filter()
-    else:
-        books = Books.objects.filter(idAuthorUser=request.user)
+    books = Books.objects.filter(idAuthorUser=request.user)
     return render(request, 'main/book_list.html', {'books': books})
+
+
+@staff_member_required(login_url='/accounts/login/')
+def bookListAdmin(request):
+    books = Books.objects.filter()
+    return render(request, 'main/book_list.html', {'books': books, 'IM_A_GOD': True})
 
 
 @login_required(login_url='/accounts/login/')
@@ -420,6 +436,7 @@ def deleteCategory(request, category_id):
                    'reverseRoute': 'add_category'})
 
 
+@login_required(login_url='/accounts/login/')
 def create_order_request(request):
     if request.method == 'POST':
         form = OrderRequestsForm(request.POST)
@@ -441,6 +458,7 @@ def create_order_request(request):
     return render(request, 'main/trading.html', {'form': form})
 
 
+@login_required(login_url='/accounts/login/')
 def create_order_request_from_page(request, book_id):
     book = get_object_or_404(Books, idbooks=book_id)
     requestBookFind = False

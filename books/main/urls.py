@@ -50,6 +50,9 @@ urlpatterns = [
                 path('admin-panel/', views.adminPanel, name='admin-panel'),
                 path('add-book/', views.addBook, name='add_book'),
                 path('books/', views.bookList, name='book_list'),
+                path('book-list-admin/', views.bookListAdmin, name='book-list-admin'),
+                path('user-page-view/<int:user_id>/', views.userPageView, name='user-page-view'),
+
                 path('edit-book/<int:book_id>/', views.editBook, name='edit_book'),
                 path('delete-book/<int:book_id>/', views.deleteBook, name='delete_book'),
 
