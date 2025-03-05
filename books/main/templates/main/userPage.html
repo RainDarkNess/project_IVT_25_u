@@ -1,211 +1,229 @@
-<!DOCTYPE html>
-<html lang="ru">
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #007bff;
-            margin-right: 15px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .profile {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .avatar {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-right: 20px;
-        }
-
-        .info {
-            flex-grow: 1;
-        }
-
-        .books-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .book-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
-        }
-
-        .book-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .exchange-button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .exchange-button:hover {
-            background-color: #0056b3;
-        }
-
-        .notifications {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .notification {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .notification:last-child {
-            border-bottom: none;
-        }
-
-        .notification-time {
-            font-size: 12px;
-            color: #888;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <h1>Личный кабинет</h1>
+{% include "main/header.html" %}
 
-    <!-- Навигационное меню -->
-    <nav>
-        <a href="#">Главная</a>
-        <a href="#">Книги</a>
-        <a href="#">Обмены</a>
-        <a href="#">Профиль</a>
-        <a href="#">Выход</a>
-    </nav>
+<div class="container mt-4">
 
-    <!-- Профиль пользователя -->
-    <div class="profile">
-        <img src="https://via.placeholder.com/150x150" alt="Avatar" class="avatar">
-        <div class="info">
-            <h2>Иван Иванов</h2>
-            <p><strong>Email:</strong> ivan@example.com</p>
-            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
-            <p><strong>Адрес:</strong> Москва, ул. Ленина, д. 1</p>
-        </div>
-        <button>Редактировать профиль</button>
+    {% if message %}
+<div class="toast-container position-fixed bottom-0 end-0 p-3 ">
+  <div id="liveToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img width="20" height="20" src="{% static 'img/logo.png' %}" class="rounded me-2" alt="...">
+      <strong class="me-auto">Ошибка</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-
-    <!-- Список книг -->
-    <h2>Мои книги</h2>
-    <ul class="books-list">
-        <li class="book-item">
-            <div>
-                <h3 class="book-title">Война и мир</h3>
-                <p>Лев Толстой</p>
-                <p>Состояние: Отличное</p>
-            </div>
-            <button class="exchange-button">Предложить обмен</button>
-        </li>
-        <li class="book-item">
-            <div>
-                <h3 class="book-title">Мастер и Маргарита</h3>
-                <p>Михаил Булгаков</p>
-                <p>Состояние: Хорошее</p>
-            </div>
-            <button class="exchange-button">Предложить обмен</button>
-        </li>
-    </ul>
-
-    <!-- Обмены -->
-    <h2>Текущие обмены</h2>
-    <table>
-        <tr>
-            <th>Книга</th>
-            <th>Пользователь</th>
-            <th>Статус</th>
-            <th>Действия</th>
-        </tr>
-        <tr>
-            <td>Преступление и наказание</td>
-            <td>Сергей Петров</td>
-            <td>В ожидании подтверждения</td>
-            <td>
-                <button>Подтвердить</button>
-                <button>Отказать</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Анна Каренина</td>
-            <td>Елена Сидорова</td>
-            <td>Завершено</td>
-            <td>-</td>
-        </tr>
-    </table>
-
-    <!-- Уведомления -->
-    <div class="notifications">
-        <h2>Уведомления</h2>
-        <div class="notification">
-            <p>Новый запрос на обмен вашей книги "Война и мир".</p>
-            <span class="notification-time">Сегодня, 14:30</span>
-        </div>
-        <div class="notification">
-            <p>Ваш обмен книги "Мастер и Маргарита" подтвержден.</p>
-            <span class="notification-time">Вчера, 17:00</span>
-        </div>
+    <div class="toast-body">
+      {{message}}, <a style="color: white" href="{{tradeUrl}}">ссылка на обмен</a>
     </div>
+  </div>
 </div>
+    {% endif %}
+
+    {% if myResponses or myNotifications%}
+        <h2 class="mt-4">Уведомления</h2>
+        <div class="notifications card p-3">
+            {% for notify in myNotifications %}
+            <div class="notification border-bottom pb-2 mb-2
+                {% if notify.status == 3 %}
+                    it-is-my-book-send
+                {% endif %}
+                ">
+                {% if notify.status == 0 %}
+                    <p>Новый запрос на обмен вашей книги "{{notify.bookone}}" на "{{notify.booktwo}}".</p>
+                    <p><a class="btn btn-danger mt-3 mt-md-0" href="{% url 'trade_delete' notify.idorderbooks %}">Удалить предложение обмена</a></p>
+                {% elif notify.status == 1 %}
+                    <p>Обмен "{{notify.bookone}}" на "{{notify.booktwo}}" в рассмотрении.</p>
+                    <p><a class="btn btn-danger mt-3 mt-md-0" href="{% url 'trade_delete' notify.idorderbooks %}">Удалить предложение обмена</a></p>
+                {% elif notify.status == 2 %}
+                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" согласован.</p>
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' notify.idorderbooks %}">Приступить к отправке книги</a></p>
+                {% elif notify.status == 3 %}
+                    <p>Ваш обмен "{{notify.bookone}}" на "{{notify.booktwo}}" прошел успешно.</p>
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'delete_and_exit_from_trade_books' notify.idorderbooks %}">Удалить предложение обмена</a></p>
+                {% endif %}
+                <p>От пользователя {{ notify.useridtwo }}</p>
+                {% if not notify.status == 3 %}
+                <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' notify.idorderbooks %}">Посмотреть на мое предложение</a></p>
+                {% else %}
+                <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' notify.idorderbooks %}">Просмотреть обмен</a></p>
+                {% endif %}
+                <span class="notification-time">{{notify.dateorder}}</span>
+            </div>
+            {% endfor %}
+
+            {% for response in myResponses %}
+            <div class="notification border-bottom pb-2 mb-2
+                {% if response.status == 3 %}
+                    it-is-my-book-send
+                {% endif %}
+                ">
+                {% if response.status == 0 %}
+                    <p>Ваш запрос на обмен книги "{{response.booktwo}}" на "{{response.bookone}}" создан.</p>
+                {% elif response.status == 1 %}
+                    <p>Обмен "{{response.booktwo}}" на "{{response.bookone}}" в рассмотрении.</p>
+                {% elif response.status == 2 %}
+                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" согласован.</p>
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' response.idorderbooks %}">Приступить к отправке книги</a></p>
+                {% elif response.status == 3 %}
+                    <p>Ваш обмен "{{response.booktwo}}" на "{{response.bookone}}" прошел успешно.</p>
+                {% endif %}
+                <p>Для пользователя {{ response.useridone }}</p>
+                {% if not response.status == 3 %}
+                    <p><a class="btn btn-primary mt-3 mt-md-0" href="{% url 'view_trade' response.idorderbooks %}">Посмотреть предложение обмена</a></p>
+                    <p><a class="btn btn-danger mt-3 mt-md-0" href="{% url 'out_from_trade' response.idorderbooks %}">Выйти из предложения обмена</a></p>
+                {% else %}
+                    <p><a class="btn btn-success mt-3 mt-md-0" href="{% url 'action_trade' response.idorderbooks %}">Просмотреть обмен</a></p>
+                {% endif %}
+                <span class="notification-time">{{response.dateorder}}</span>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+        {% if not WE_SEE_HIM %}
+    <h2 class="mt-4">Мой профиль</h2>
+        {% else %}
+    <h2 class="mt-4">Профиль
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {{ user.get_username }}
+            {% endif %}
+    </h2>
+        {% endif %}
+    <div class="profile card p-4 shadow-sm d-flex flex-md-row flex-column align-items-center">
+        {% if user.img %}
+        <img src="{{ user.img.url }}" class="avatar" alt="Avatar">
+        {% endif %}
+        <div class="info text-center text-md-start ms-md-3">
+
+            {% if user.is_authenticated %}
+
+            {% if user.get_full_name %}
+            <h2 class="fw-bold"> {{ user.get_full_name }} </h2>
+            {% else %}
+            <h2 class="fw-bold"> {{ user.get_username }} </h2>
+            {% endif %}
+
+            <p><strong>Email:</strong> {{ user.email }} </p>
+            {% else %}
+
+            {% endif %}
+
+            <p><strong>Телефон:</strong> {{ user.telephone }} </p>
+            <p><strong>Адрес:</strong> {{ user.address }}</p>
+        </div>
+        {% if not WE_SEE_HIM %}
+        <a class="btn btn-primary mt-3 mt-md-0" href="{% url 'edit_profile' %}">Редактировать профиль</a>
+        {% endif %}
+    </div>
+    {% if books%}
+        {% if not WE_SEE_HIM %}
+    <h2 class="mt-4">Мои книги</h2>
+        {% else %}
+    <h2 class="mt-4">Книги
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {{ user.get_username }}
+            {% endif %}
+    </h2>
+        {% endif %}
+    <ul class="books-list list-unstyled">
+        {% for book in books %}
+        <li class="book-item card p-3 mb-2 d-flex flex-md-row flex-column justify-content-between align-items-md-center">
+            <div>
+                <h3 class="book-title fw-bold">{{ book.name }}</h3>
+
+                {% if book.idcover %}
+                <img style="width: 100%; height: 100%" src="/media/{{ book.idcover.img }}">
+                {% else %}
+                <p>Изображение отсуствует</p>
+                {% endif %}
+
+                <p>Автор: {{ book.idwriter }}</p>
+                <p>Состояние: Отличное</p>
+                {% if not WE_SEE_HIM %}
+                        <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
+                        <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+            </div>
+                {% if not WE_SEE_HIM %}
+                    <a href="{% url 'trading_from_page' book.idbooks %}" class="exchange-button btn btn-success mt-2 mt-md-0">Предложить
+                        обмен</a>
+                {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if myOrders%}
+
+        {% if not WE_SEE_HIM %}
+    <h2 class="mt-4">Мои книги на обмен</h2>
+        {% else %}
+    <h2 class="mt-4">Книги на обмен
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {{ user.get_username }}
+            {% endif %}
+    </h2>
+        {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+            <tr>
+                <th>Книга</th>
+                <th>Писатель</th>
+                <th>Дата выставления</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in myOrders %}
+            <tr>
+                <td>{{order.booktorequest.name}}</td>
+                <td>{{order.booktorequest.idwriter}}</td>
+                <td>{{order.dateorder}}</td>
+                <td>
+                {% if not WE_SEE_HIM %}
+                    <a href="{% url 'trading_edit'   order.idorder %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'trading_delete' order.idorder %}" class="btn btn-danger btn-sm">Удалить</a>
+                {% else %}
+                    <a class="btn btn-warning btn-sm disabled">Редактировать</a>
+                    <a class="btn btn-danger btn-sm disabled">Удалить</a>
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    addEventListener("DOMContentLoaded", (event) => {
+        const toastLiveExample = document.getElementById('liveToast')
+          const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show()
+    });
+
+</script>
+
+{% include "main/footer.html" %}
+
 </body>
-</html>
+{% endblock content %}
