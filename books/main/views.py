@@ -443,6 +443,11 @@ def create_order_request(request):
 
 def create_order_request_from_page(request, book_id):
     book = get_object_or_404(Books, idbooks=book_id)
+    requestBookFind = False
+    try:
+        requestBookFind = get_object_or_404(OrderRequests, booktorequest=book_id)
+    except:
+        print("")
     if request.method == 'POST':
         form = OrderRequestsForm(request.POST)
         if form.is_valid():
@@ -461,7 +466,15 @@ def create_order_request_from_page(request, book_id):
             'dateorder': datetime.datetime.now(),
         }
         form = OrderRequestsForm(initial=initial_data)
-
+    if requestBookFind:
+        return render(request, "main/userPage.html", {
+            'books': Books.objects.filter(idAuthorUser=request.user),
+            'myOrders': OrderRequests.objects.filter(userrequest=request.user),
+            'myNotifications': Orderbooks.objects.filter(useridone=request.user),
+            'myResponses': Orderbooks.objects.filter(useridtwo=request.user),
+            'message': 'Книга уже учавствует в обмене ',
+            'tradeUrl': '/trading-edit/'+str(requestBookFind.idorder)+'/',
+        })
     return render(request, 'main/trading.html', {'form': form})
 
 
@@ -504,6 +517,26 @@ def deleteTradeBooks(request, trade_id):
         subOrder.canView = 1
         subOrder.save()
         order.delete()
+        return redirect('userPage')
+
+    return render(request, 'main/delete_form.html',
+                  {'category': order, 'hText': 'Удалить обмен от ' + str(order.dateorder) + " с вашей книгой "
+                                               + str(order.bookone),
+                   'elementName': '',
+                   'reverseRoute': 'userPage'})
+
+
+@login_required(login_url='/accounts/login/')
+def deleteAndExitFromTradeBooks(request, trade_id):
+    order = get_object_or_404(Orderbooks, idorderbooks=trade_id)
+    if request.method == 'POST':
+        subOrder = order.idorder
+        subOrder.delete()
+        bookoneLocal = order.bookone
+        booktwoLocal = order.booktwo
+        order.delete()
+        bookoneLocal.delete()
+        booktwoLocal.delete()
         return redirect('userPage')
 
     return render(request, 'main/delete_form.html',
@@ -609,6 +642,7 @@ def actionTrade(request, trade_id):
                 newAction.dateorderone = datetime.datetime.now()
                 if form.cleaned_data.get('statususertwo') != '':
                     newAction.statususertwo = form.cleaned_data.get('statususertwo')
+                    print(form.cleaned_data.get('statususertwo'))
                 newAction.dateordertwo = datetime.datetime.now()
             else:
                 return redirect('userPage')
@@ -616,6 +650,7 @@ def actionTrade(request, trade_id):
             if newAction.statususerone == '2' and newAction.statususertwo == newAction.statususerone:
                 trade.status = 3
                 trade.save()
+                newAction.save()
                 return redirect('userPage')
             newAction.save()
             return redirect('userPage')
