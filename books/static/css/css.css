@@ -12,9 +12,11 @@
     background: var(--bg-second);
 }
 .container-fluid{
-    background: var(--bg-second);
+    /*background: var(--bg-second);*/
 }
-
+.nav-link{
+    color: white !important;
+}
 /* Header */
 
 .header {
@@ -133,4 +135,56 @@
     .topnav input[type=text] {
         border: 1px solid #ccc;
     }
+}
+
+.btn, button{
+    background-color: #c8edff;
+    border: 2px solid #422800 !important;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 10px 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn:hover {
+    background-color: #fff;
+}
+.btn:active {
+    box-shadow: rgba(66, 40, 0, 0.29) 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+button:hover {
+    background-color: #fff;
+}
+button:active {
+    box-shadow: rgba(66, 40, 0, 0.29) 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+
+.container{
+    margin: 20px;
+    padding: 20px;
+    /*background-color: rgba(196, 255, 169, 0.16) !important;*/
+    /*border: 2px solid rgba(66, 40, 0, 0.41) !important;*/
+    /*border-radius: 10px !important;*/
+    /*box-shadow: rgba(66, 40, 0, 0.44) 4px 4px 0 0 !important;*/
+}
+.container h1, h2, h3{
+    font-weight: lighter !important;;
+    text-align: center !important;;
+}
+h1, h2, h3, p, span, label{
+    font-weight: 400 !important;
 }
