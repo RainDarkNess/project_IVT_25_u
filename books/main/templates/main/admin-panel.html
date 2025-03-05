@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container mt-5">
+    <h1>Админ-панель</h1>
+    <a href="/add-janre/">Добавить жанр</a>
+
+</div>
+{% include "main/footer.html" %}
+
+{% endblock content %}
