@@ -6,66 +6,180 @@
 
 <body>
 {% include "main/header.html" %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{%static 'img/ex.jpeg'%}" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{%static 'img/textbooks-banner.jpg'%}" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="text-center">
-                <h3>What We Do</h3><br>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <img src="/static/img/computer-books.jpg" class="img-responsive img-custom-size"
-                             style="width:100%" alt="Image">
-                        <p>Current Project</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <img src="/static/img/right-books.jpg" class="img-responsive img-custom-size" style="width:100%"
-                             alt="Image">
-                        <p>Project 2</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
+<div class="container-fluid main">
+    <div class="col">
+        {% if not user.is_authenticated %}
 
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="well">
-                <p>Some text..</p>
-            </div>
-            <div class="well">
-                <p>Some text..</p>
+        <div class="container-sm hello-container">
+            <div class="jumbotron jumbotron-local">
+                <div class="dialog-local">
+                    <div class="logo position-absolute top-0 end-0 p-3"></div>
+
+                    <div class="head-text-background chat-left" id="textBlockIdOne">
+                        <h1 class="head-text" id="textOne">0</h1>
+                    </div>
+
+                    <div class="head-text-background chat-right" style="margin-left: auto" id="textBlockIdTwo">
+                        <h2 style="text-align: left" class="head-text" id="textTwo">0</h2>
+                    </div>
+
+                    <div class="head-text-background chat-left" id="textBlockIdThee">
+                        <h2 class="head-text" id="textThee">0</h2>
+                    </div>
+
+                    <div class="dummy-see top-0"></div>
+
+                    <div class="two_but">
+
+                        {% if user.is_authenticated %}
+                        <a>{{ user.get_username }}</a>
+
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Выйти" class="header-input button-74-login">
+                        </form>
+                        {% else %}
+
+                        <a class="button-74-login" href="/accounts/login/" role="button">Войти</a>
+                        <a class="button-74" href="/accounts/login/" role="button">Зарегистрироваться</a>
+                        {% endif %}
+
+
+                    </div>
+                </div>
             </div>
         </div>
+
+
+        <div class="container-sm how-this-working-container">
+            <div class="jumbotron">
+                <h1 class="how-this-working">Как это работает?</h1>
+
+                <div class="img-and-text">
+
+                    <div class="how-this-working-block">
+                        <div class="bg-h2">
+                            <h2>Вы выставляете свою книгу и указываете свои предпочтения, после к вам приходит заявка
+                                с тем чтобы обменяться книгами, вы укзаываете вами удобный адрес и все готово!</h2>
+                        </div>
+                        <div class="dummy-sitting  end-0"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="container-sm how-this-working-container">
+            <div class="jumbotron" style="display: flex">
+                <div>
+                    {% if user.is_superuser %}
+                        <h1 class="how-this-working">А, это вы администратор {{ user.username }}</h1>
+                        <h2>Зашли заняться своими админскими делами?</h2>
+                    {% else %}
+                        <h1 class="how-this-working">С возвращением {{ user.username }}</h1>
+                        <h2>Обменяться зашли?</h2>
+                    {% endif %}
+
+                </div>
+                <div class="dummy-hi end-0"></div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if requests %}
+        <div class="container mt-4">
+            <h2>Актуальные предложения</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 " style="padding-top: 50px;" id="cardsContainer">
+                {% for request in requests %}
+                <div class="card card-properties">
+                    <img src="/media/{{ request.booktorequest.idcover.img }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ request.booktorequest.name }}</h5>
+                        <p class="card-text">{{ request.booktorequest.description }}</p>
+                        <p class="card-text"><b>Жанр:</b> {{ request.booktorequest.idgenre }}</p>
+                        <p class="card-text"><b>Категория:</b> {{ request.booktorequest.idcategory }}</p>
+                        <p class="card-text"><b>Автор:</b> {{ request.booktorequest.idwriter }}</p>
+                        <p class="card-text"><b>Выставил:</b> {{ request.userrequest }}</p>
+                        <p class="card-text"><b>Хотел бы обменяться на:</b> {{ request.namebookrequest }}</p>
+                    </div>
+                        <a href="{% url 'create_trade' request.idorder %}" class="button-74-login " role="button">Отозваться</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+                <div class="container mt-4">
+                    <h2>Предложений нет</h2>
+                </div>
+        {% endif %}
     </div>
 </div>
 
-<br>
-<footer class="container-fluid text-center">
-    <p>Footer Text</p>
-</footer>
+<script>
+    data = [
+        {
+            "id": "textOne",
+            "text": "Добро пожаловать в Trade Books",
+            "textBlockId": "textBlockIdOne"
+        },
+        {
+            "id": "textTwo",
+            "text": "Здесь каждый читатель находит свою книгу.",
+            "textBlockId": "textBlockIdTwo"
+        },
+        {
+            "id": "textThee",
+            "text": "Мы не продаем книги, а обмениваем их.",
+            "textBlockId": "textBlockIdThee"
+        },
+
+    ]
+    indexData = 0;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // for (let i = 0; i < 5; i++) {
+        //     const cardsContainer = document.getElementById('cardsContainer');
+        //     const cardToDuplicate = cardsContainer.querySelector('.card');
+        //     const newCard = cardToDuplicate.cloneNode(true);
+        //     cardsContainer.appendChild(newCard);
+        // }
+
+        setTimeout(() => type(data[indexData].id, data[indexData].text, data[indexData].textBlockId), 600);
+
+    });
+
+    let index = 0;
+
+    function type(id, text, textBlockId) {
+        let blockText = document.getElementById(textBlockId);
+
+        let textElement = document.getElementById(id);
+
+        if (textElement.textContent === "0") {
+            textElement.textContent = "";
+        }
+
+        try {
+            blockText.style.opacity = "1";
+        } catch (e) {
+            console.error(e);
+        }
+
+        if (index < text.length) {
+            textElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(() => type(id, text, textBlockId), 20);
+        } else {
+            if (indexData < data.length) {
+                indexData++;
+                setTimeout(() => type(data[indexData].id, data[indexData].text, data[indexData].textBlockId), 600);
+            }
+            index = 0;
+        }
+    }
+
+</script>
+{% include "main/footer.html" %}
 
 
 </body>
