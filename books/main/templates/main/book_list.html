@@ -15,6 +15,9 @@
             <th>Обложка</th>
             <th>Жанр</th>
             <th>Автор</th>
+            {% if IM_A_GOD %}
+                <th>Загрузил</th>
+            {% endif %}
             <th>Действия</th>
         </tr>
         </thead>
@@ -26,13 +29,16 @@
             <td>{{ book.idcategory }}</td>
             <td>
                 {% if book.idcover %}
-                <img src="/media/{{ book.idcover.img }}">
+                <img style="width: 100%; height: 100%" src="/media/{{ book.idcover.img }}">
                 {% else %}
                 <p>Изображение отсуствует</p>
                 {% endif %}
             </td>
             <td>{{ book.idgenre }}</td>
             <td>{{ book.idwriter }}</td>
+            {% if IM_A_GOD %}
+                <td><a href="{% url 'user-page-view' book.idAuthorUser.id %}" class="btn btn-primary">{{ book.idAuthorUser }}</a></td>
+            {% endif %}
             <td>
                 <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
                 <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>

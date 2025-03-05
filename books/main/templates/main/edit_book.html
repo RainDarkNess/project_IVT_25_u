@@ -34,21 +34,27 @@
                 {{ form.idcategory }}
                 {{ form.idcategory.errors }}
             </div>
+            {% if user.is_superuser %}
             <a href="{% url 'add_category' %}" class="btn btn-secondary mt-3">Добавить Категорию</a>
+            {% endif %}
 
             <div class="form-group">
                 <label for="idgenre">Жанр:</label>
                 {{ form.idgenre }}
                 {{ form.idgenre.errors }}
             </div>
+            {% if user.is_superuser %}
             <a href="{% url 'add-janre' %}" class="btn btn-secondary mt-3">Добавить жанр</a>
+            {% endif %}
 
             <div class="form-group">
                 <label for="idwriter">Писатель:</label>
                 {{ form.idwriter }}
                 {{ form.idwriter.errors }}
             </div>
+            {% if user.is_superuser %}
             <a href="{% url 'add_author' %}" class="btn btn-secondary mt-3">Добавить писателя</a>
+            {% endif %}
 
             <div class="form-group">
                 <label for="idcover">Обложка:</label>
