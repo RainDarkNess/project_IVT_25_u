@@ -33,11 +33,7 @@
                         {% if trade.useridonetoggle == '1' %}
                             <h3>Подтверждено</h3>
                         {% endif %}
-                        {% if not canEdit and trade %}
-                        <b>Книга</b>
-                        {% else %}
-                        <b>Книга которую вы запрашиваете</b>
-                        {% endif %}
+
                         {% if trade %}
                         <img src="/media/{{ trade.bookone.idcover.img }}" id="bookOneImage" class="card-img-top"
                              alt="..."
@@ -53,6 +49,7 @@
                                 <h2>Книга</h2>
                                 <p>Название книги: <span id="myBookNameOne">{{ trade.bookone.name }}</span></p>
                                 <p>Автор: <span id="myBookAuthorOne">{{ trade.bookone.idwriter }}</span></p>
+                                <p>Номер хозяина: <span>{{ trade.bookone.idAuthorUser.telephone }}</span></p>
                             </label>
                             <input for="bookone" type="text" id="bookone" name="bookone"
                                    value="{{trade.bookone.idbooks}}" style="display:none;">
@@ -94,8 +91,10 @@
                         <div class="card-body">
                             <label for="bookone" class="mb-0">
                                 <h2>Книга</h2>
-                                <p>Название книги: {{ order.namebookrequest }}</p>
+                                <p>Название книги: {{ order.booktorequest.name }}</p>
+                                <p>Хотели бы обменяться на: {{ order.namebookrequest }}</p>
                                 <p>Автор: {{ order.booktorequest.idwriter }}</p>
+                                <p>Номер хозяина: <span>{{ order.booktorequest.idAuthorUser.telephone }}</span></p>
                             </label>
                             <input for="bookone" type="text" id="bookone" name="bookone"
                                    value="{{order.booktorequest.idbooks}}" style="display:none;">
@@ -125,11 +124,6 @@
                             <h3>Подтверждено</h3>
                         {% endif %}
 
-                        {% if canEdit or not trade %}
-                        <b>Книга</b>
-                        {% else %}
-                        <b>Запрашиваемая книга</b>
-                        {% endif %}
                         {% if trade %}
                         <img class="card-img-top" id="booktwoImage" src="/media/{{ trade.booktwo.idcover.img }}"
                              {% if canEdit %}
@@ -144,6 +138,7 @@
                                 <h2>Книга на обмен</h2>
                                 <p>Название книги: <span id="myBookName">{{trade.booktwo.name}}</span></p>
                                 <p>Автор: <span id="myBookAuthor">{{trade.booktwo.idwriter}}</span></p>
+                                <p>Номер хозяина: <span>{{ trade.booktwo.idAuthorUser.telephone }}</span></p>
                                 <input for="booktwo" type="text" id="booktwo" name="booktwo"
                                        value="{{trade.booktwo.idbooks}}" style="display: none">
                             </label>
@@ -310,7 +305,7 @@
                     $('#bookModal').modal('show');
                     const li = document.createElement('li');
                     li.className = 'list-group-item';
-                    li.textContent = "Ни одной книги нет";
+                    li.innerHTML = "Ни одной книги нет, <a href='/add-book/'>создать книгу</a>";
                     bookList.appendChild(li);
                 }
                 for (let i = 0; i < data.length; i++) {
