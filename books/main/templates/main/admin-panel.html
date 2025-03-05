@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+{% include "main/header.html" %}
+
+<div class="container mt-5">
+    <h1>Админ-панель</h1>
+    <ul>
+        <li><a href="/add-janre/">Добавить жанр</a></li>
+        <li><a href="/add-cover/">Добавить обложку</a></li>
+        <li><a href="/add-author/">Добавить автора</a></li>
+        <li><a href="/add-category/">Добавить категорию</a></li>
+        <li><a href="/book-list-admin/">Список книг</a></li>
+    </ul>
+</div>
+{% include "main/footer.html" %}
+
+{% endblock content %}
