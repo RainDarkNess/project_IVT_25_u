@@ -67,6 +67,8 @@
                     it-is-my-book-send
                 {% endif %}
                 ">
+                {% if response.status == 0 %}
+                <p>Ваш запрос на обмен книги "{{response.booktwo}}" на "{{response.bookone}}" создан.</p>
                 {% elif response.status == 1 %}
                     <p>Обмен "{{response.booktwo}}" на "{{response.bookone}}" в рассмотрении.</p>
                 {% elif response.status == 2 %}
