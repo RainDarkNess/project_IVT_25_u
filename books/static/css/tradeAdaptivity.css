@@ -1,0 +1,22 @@
+/* Общие стили */
+.card-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
+/* Медиа-запросы для маленьких экранов */
+@media (max-width: 576px) {
+    /* Устанавливаем вертикальное расположение карточек */
+    .card-group {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}
