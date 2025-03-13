@@ -3,18 +3,281 @@
 {% csrf_token %}
 {% block content %}
 {% include "main/header.html" %}
+<style>
+    #registrationForm  input{
+        background-color:#f5f5f5;
 
-<div class="container">
-    <h1 class="text-center">Регистрация</h1>
-    <form method="post" enctype="multipart/form-data">
+    }
+
+    .step {
+        display: none;
+    }
+    .step.active {
+        display: flex;
+    }
+    .error {
+        color: red;
+        display: none;
+    }
+    #id_username{
+        margin:20px 0px 10px 0px;
+    }
+    #id_email{
+         margin:0px 0px 20px 0px;
+
+    }
+    #id_first_name{
+        margin:10px 0px 10px 0px;
+    }
+    #id_last_name{
+         margin:0px 0px 10px 0px;
+
+    }
+    #id_telephone{
+         margin:0px 0px 10px 0px;
+
+    }
+    #id_address{
+         margin:0px 0px 10px 0px;
+
+    }
+    #id_img{
+        margin:0px 0px 10px 0px;
+    }
+    #id_password{
+         margin:0px 0px 10px 0px;
+
+    }
+
+    #id_password_confirm{
+         margin:0px 0px 10px 0px;
+
+    }
+</style>
+
+<hr id="load-hr" style="background-color:blue; width:0%; height:5px; margin-top:0px;">
+<div class="container-sm align-items-center justify-content-center" style="display:flex;flex-direction:column;" >
+    <img src="{% static 'img/head.gif' %}" alt="Описание изображения" class="img-fluid" >
+    <form class="d-inline-block border py-3 px-5" method="post" enctype="multipart/form-data" id="registrationForm" style=" border-left:1px solid #1111;border-right:1px solid #1111; border-radius:20px;">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        <h2 class="text-center" id="info">Регистрация</h2>
+        <!-- Шаг 1: Имя пользователя и email -->
+        <div class="step active align-items-center justify-content-center" id="step1">
+            <div class="row">
+                <div style="display:flex; flex-direction:column; " class="align-items-center justify-content-center">
+                    {{ form.username }}
+                    {{ form.email }}
+                    <button type="button" class="btn btn-primary" onclick="nextStep(2)" style="width:150px;">Продолжить</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Шаг 2: Имя, фамилия, телефон -->
+        <div class="step align-items-center justify-content-center " id="step2">
+            <div class="row">
+                <div style="display:flex; flex-direction:column; " class="align-items-center justify-content-center">
+                    {{ form.first_name }}
+                    {{ form.last_name }}
+                    {{ form.telephone }}
+                    <div class="row">
+                        <button type="button" class="btn btn-secondary" style="width:70px;margin:0px;" onclick="prevStep(1)">Назад</button>
+                        <button type="button" class="btn btn-primary" style="width:115px;margin:0px 0px 0px 10px;" onclick="nextStep(3)">Продолжить</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Шаг 3: Выбор иконки профиля -->
+        <div class="step align-items-center justify-content-center" id="step3">
+            <div class="row">
+                <div style="display:flex; flex-direction:column; " class="align-items-center justify-content-center">
+                    {{ form.img }}
+                    <div class="row">
+                         <button type="button" class="btn btn-secondary" style="width:70px;margin:0px;" onclick="prevStep(2)">Назад</button>
+                        <button type="button" class="btn btn-primary" style="width:115px;margin:0px 0px 0px 10px;" onclick="nextStep(4)">Продолжить</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Шаг 4: Адрес, пароль, подтверждение пароля -->
+        <div class="step align-items-center justify-content-center" id="step4">
+            <div class="row">
+                <div style="display:flex; flex-direction:column; " class="align-items-center justify-content-center">
+                    {{ form.address }}
+                    {{ form.password }}
+                    {{ form.password_confirm }}
+                    <div class="row">
+                        <button type="button" style="width:70px;margin:0px;" class="btn btn-secondary" onclick="prevStep(3)">Назад</button>
+                        <button type="submit" style="width:170px;margin:0px 0px 0px 10px;" class="btn btn-primary">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Сообщение об ошибке -->
+        <div class="error" id="errorMessage" style="color: red; display: none;"></div>
     </form>
     <div class="text-center mt-3">
         <a href="{% url 'login' %}">Уже есть аккаунт? Войти</a>
     </div>
 </div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Добавляем placeholder для каждого поля
+        const username = document.querySelector('#id_username');
+        const email = document.querySelector('#id_email');
+        const first_name = document.querySelector('#id_first_name');
+        const last_name = document.querySelector('#id_last_name');
+        const telephone = document.querySelector('#id_telephone');
+        const address = document.querySelector('#id_address');
+        const password = document.querySelector('#id_password');
+        const password_confirm = document.querySelector('#id_password_confirm');
+
+        username.placeholder = 'Имя пользователя';
+        email.placeholder = 'Email';
+        first_name.placeholder = 'Имя';
+        last_name.placeholder = 'Фамилия';
+        telephone.placeholder = 'Телефон';
+        address.placeholder = 'Адрес';
+        password.placeholder = 'Пароль';
+        password_confirm.placeholder = 'Подтвердите пароль';
+    });
+
+    let currentStep = 1;
+    let incr_for_part = 1;
+    function nextStep(step) {
+        if (validateStep(currentStep)) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('d-flex');
+            document.getElementById(`step${step}`).classList.add('active');
+            currentStep = step;
+            incr_for_part++;
+            console.log(incr_for_part)
+        }
+        if (incr_for_part == 1) {
+            document.getElementById('info').innerHTML = "Регистрация";
+            document.getElementById('load-hr').style.width = "25%";
+        } else if (incr_for_part == 2) {
+             document.getElementById('info').innerHTML = "Личные данные";
+             document.getElementById('load-hr').style.width = "50%";
+
+        } else if (incr_for_part == 3) {
+             document.getElementById("info").innerHTML = "Выбор аватара";
+             document.getElementById('load-hr').style.width = "75%";
+        } else if (incr_for_part == 4) {
+             document.getElementById("info").innerHTML = "Пароль и адрес";
+             document.getElementById('load-hr').style.width = "100%";
+        }
+    }
+function prevStep(step) {
+    document.getElementById(`step${currentStep}`).classList.remove('active');
+    document.getElementById(`step${step}`).classList.add('active');
+    currentStep = step;
+
+    switch (incr_for_part) {
+        case 5:
+            incr_for_part -= 2;
+            break;
+        default:
+            incr_for_part--;
+    }
+        if (incr_for_part == 1) {
+            document.getElementById('info').innerHTML = "Регистрация";
+            document.getElementById('load-hr').style.width = "25%";
+        } else if (incr_for_part == 2) {
+             document.getElementById('info').innerHTML = "Личные данные";
+             document.getElementById('load-hr').style.width = "50%";
+
+        } else if (incr_for_part == 3) {
+             document.getElementById("info").innerHTML = "Выбор аватара";
+             document.getElementById('load-hr').style.width = "75%";
+        } else if (incr_for_part == 4) {
+             document.getElementById("info").innerHTML = "Пароль и адрес";
+             document.getElementById('load-hr').style.width = "100%";
+        }
+
+}
+
+
+    function validateStep(step) {
+        let isValid = true;
+        let errorMessage = '';
+
+        if (step === 1) {
+            const username = document.querySelector('#id_username').value;
+            const email = document.querySelector('#id_email').value;
+
+            if (!username || !email) {
+                errorMessage = 'Пожалуйста, заполните все поля.';
+                isValid = false;
+            }
+        } else if (step === 2) {
+            const first_name = document.querySelector('#id_first_name').value;
+            const last_name = document.querySelector('#id_last_name').value;
+            const telephone = document.querySelector('#id_telephone').value;
+
+            if (!first_name || !last_name || !telephone) {
+                errorMessage = 'Пожалуйста, заполните все поля.';
+                isValid = false;
+            }
+        } else if (step === 3) {
+            const img = document.querySelector('#id_img').value;
+
+        }
+
+        if (!isValid) {
+            document.getElementById('errorMessage').innerText = errorMessage;
+            document.getElementById('errorMessage').style.display = 'block';
+        } else {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        return isValid;
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        if (currentStep === 4) {
+            const password = document.querySelector('#id_password').value;
+            const confirm_password = document.querySelector('#id_confirm_password').value;
+
+            if (password !== confirm_password) {
+                event.preventDefault();
+                document.getElementById('errorMessage').innerText = 'Пароли не совпадают.';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+    });
+</script>
+<!--<div class="container" style="border:1px solid #1111; border-radius:20px;">-->
+
+<!--    <h1 class="text-center">Регистрация</h1>-->
+<!--    <form method="post" enctype="multipart/form-data">-->
+<!--        {% csrf_token %}-->
+<!--        <div class="row">-->
+<!--            <div class="col">-->
+<!--             {{ form.as_p }}-->
+<!--            </div>-->
+<!--            <div class="col">-->
+
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>-->
+<!--    </form>-->
+
+<!--</div>-->
+<!--    <div class="text-center mt-3">-->
+<!--        <a href="{% url 'login' %}">Уже есть аккаунт? Войти</a>-->
+<!--    </div>-->
+
 {% include "main/footer.html" %}
 
 {% endblock content %}

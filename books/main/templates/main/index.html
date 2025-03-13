@@ -6,7 +6,7 @@
 
 <body>
 {% include "main/header.html" %}
-<div class="container-fluid main">
+<div class="container-fluid main" style="padding:0;">
     <div class="col">
         {% if not user.is_authenticated %}
 
@@ -69,25 +69,123 @@
             </div>
         </div>
         {% else %}
-        <div class="container-sm how-this-working-container">
-            <div class="jumbotron" style="display: flex">
-                <div>
+        <div class="container-fluid how-this-working-container work-this"  style="margin:-100px 0px 0px 0px; height:300px;">
+            <div class="align-items-center justify-content-center jumbotron " style="display: flex; margin-top:100px; " >
+                <img src="{% static 'img/book-exch.png' %}" alt="Описание изображения" class="img-fluid" style="width:200px; height:200px; margin:0px 0px 0px 50px;" >
+                <div style="text-align:center; margin: 0px 50px 0px 30px;">
                     {% if user.is_superuser %}
                         <h1 class="how-this-working">А, это вы администратор {{ user.username }}</h1>
                         <h2>Зашли заняться своими админскими делами?</h2>
                     {% else %}
-                        <h1 class="how-this-working">С возвращением {{ user.username }}</h1>
-                        <h2>Обменяться зашли?</h2>
+                        <h1 class="how-this-working " style="font-size:40px; font-weight:bold; margin:0;">Добро пожаловать, {{ user.username }} !</h1>
+                        <h2 class="mb-3 mt-2" style="margin:0;">Готовы обменяться книгами?</h2>
+                        <div class="btn"><a href="/trading/" style="text-decoration:none;color:black;" >Начать обмен</a></div>
                     {% endif %}
 
                 </div>
-                <div class="dummy-hi end-0"></div>
+                <div class="dummy-hi end-0" style="width:250px; height:250px; margin:-50px 0px 0px 0px; "></div>
             </div>
         </div>
+        <div class="container-fluid d-flex" style="margin:150px 0px 0px 0px;background-color: #000000; background-image: linear-gradient(315deg, #000736 0%, #5e5368 74%); height:700px;" >
+             <img src="{% static 'img/back-sov.png' %}" alt="Описание изображения" class="img-fluid" style=" position:absolute;z-index:1; right:0px;" >
+            <div class="container-sm d-flex align-items-center justify-content-center " style="flex-direction:row;">
+                <div class="cloud d-flex justify-content-center align-items-center" style="width:300px; height:300px; position:relative; z-index:5; bottom:170px;">
+                    <h2 style="margin-top:-50px; width:200px; color:white;">Уху.... Новая книга, новый мир!</h2>
+                </div>
+             <img src="{% static 'img/sova.jfif' %}" alt="Описание изображения" class="img-fluid" style="width:300px; height:300px; border-radius:50px;border:5px solid white;position:relative;z-index:1;top:30px; right:100px;" >
+            <div class="d-flex align-items-center justify-content-center"  style=" color:white; border:5px dashed white; height:100px; border-radius:75px; padding:0px 20px 0px 20px; margin-top:200px;">
+                <h2>Выиграй книгу своей мечты!</h2>
+            </div>
+            </div>
+            <img src="{% static 'img/pet.svg' %}" alt="Описание изображения" class="img-fluid" style="width:300px; height:300px; position:relative;z-index:1;top:500px;right:680px;" >
+        </div>
+        <div class="container-fluid" style="margin-bottom:100px;">
+            <div class="d-flex align-items-center justify-content-center" style="flex-direction:column;">
+                <div class="row">
+                    <div class="d-flex align-items-center justify-content-center"  style=" color:black; border:5px dashed black; height:100px;width:300px; border-radius:75px; padding:0px 20px 0px 20px; margin-top:100px;">
+                        <h3>Как это работает?</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/right-arrow.png' %}" alt="Описание изображения" class="img-fluid" style="margin-top:35px;transform: rotate(90deg);width:120px;  position:relative; left:100px;" >
+                     <img src="{% static 'img/right-arrow.png' %}" alt="Описание изображения" class="img-fluid" style="margin-top:5px;transform: rotate(140deg);width:120px; position:relative; right:200px;" >
+                     <img src="{% static 'img/right-arrow.png' %}" alt="Описание изображения" class="img-fluid" style="margin-top:5px;transform: rotate(40deg);width:120px; position:relative; left:100px;" >
+                </div>
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="col" style="width:250px; height:400px; background-color:#000736;border-radius:40px;margin-right:50px;transform: rotate(15deg);">
+                        <div class="row">
+                            <div class="row">
+                                <div style="width:20px; height:20px;background-color:white; border-radius:50px; margin:10px 0px 10px 20px;"></div>
+                            </div>
+                            <div class="row">
+                                <img src="{% static 'img/add-user.png' %}" alt="Описание изображения" class="img-fluid" style=" width:140px;height:100px;margin:75px 0px 100px 50px; " >
+                            </div>
+                            <div class="row">
+                                <div class="col" style="">
+                                    <h6 style="width:120px;margin-left:30px; color:white;">
+                                        Приглашаешь друга
+                                    </h6>
+                                </div>
+                                 <div class="col">
+                                    <h1 style="color:white;">
+                                        1
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" style="width:250px; height:400px; background-color:#000736;border-radius:40px; margin-right:50px;">
+                        <div class="row">
+                            <div class="row">
+                                  <div style="width:20px; height:20px;background-color:white; border-radius:50%; margin:10px 20px 10px 120px;"></div>
+                            </div>
+                            <div class="row">
+                                <img src="{% static 'img/exchange.png' %}" alt="Описание изображения" class="img-fluid" style=" width:140px;height:100px;margin:75px 0px 100px 50px; " >
+                            </div>
+                             <div class="row">
+                                <div class="col" style="">
+                                    <h6 style="width:100px;margin-left:20px; color:white;">
+                                        Делаешь обменов за 3 месяца
+                                    </h6>
+                                </div>
+                                 <div class="col">
+                                    <h1 style="color:white;">
+                                        15
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" style="width:250px; height:400px; background-color:#000736;border-radius:40px;transform: rotate(-12deg);">
+                        <div class="row">
+                            <div class="row">
+                                  <div style="width:20px; height:20px;background-color:white; border-radius:50px; margin:10px 10px 10px 190px;"></div>
+                            </div>
+                            <div class="row">
+                                <img src="{% static 'img/order.png' %}" alt="Описание изображения" class="img-fluid" style=" width:140px;height:100px;margin:75px 0px 100px 50px; " >
+                            </div>
+                            <div class="row">
+                                <div class="col" style="">
+                                    <h6 style="width:130px;margin-left:20px; color:white;">
+                                        Получаешь любую книгу на выбор от нас
+                                    </h6>
+                                </div>
+                                 <div class="col">
+                                    <h1 style="color:white;">
+                                        1
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% endif %}
 
         {% if requests %}
-        <div class="container mt-4">
+        <div class="container mt-6">
             <h2>Актуальные предложения</h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 " style="padding-top: 50px;" id="cardsContainer">
                 {% for request in requests %}
