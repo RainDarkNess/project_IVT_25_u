@@ -69,7 +69,7 @@
             </div>
         </div>
         {% else %}
-        <div class="container-fluid how-this-working-container work-this"  style="margin:-100px 0px 0px 0px; height:300px;">
+                <div class="container-fluid how-this-working-container work-this"  style="margin:-100px 0px 0px 0px; height:300px;">
             <div class="align-items-center justify-content-center jumbotron " style="display: flex; margin-top:100px; " >
                 <img src="{% static 'img/book-exch.png' %}" alt="Описание изображения" class="img-fluid" style="width:200px; height:200px; margin:0px 0px 0px 50px;" >
                 <div style="text-align:center; margin: 0px 50px 0px 30px;">
@@ -86,6 +86,32 @@
                 <div class="dummy-hi end-0" style="width:250px; height:250px; margin:-50px 0px 0px 0px; "></div>
             </div>
         </div>
+                {% if requests %}
+        <div class="container mt-6">
+            <h2>Актуальные предложения</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 " style="padding-top: 50px;" id="cardsContainer">
+                {% for request in requests %}
+                <div class="card card-properties">
+                    <img src="/media/{{ request.booktorequest.idcover.img }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ request.booktorequest.name }}</h5>
+                        <p class="card-text">{{ request.booktorequest.description }}</p>
+                        <p class="card-text"><b>Жанр:</b> {{ request.booktorequest.idgenre }}</p>
+                        <p class="card-text"><b>Категория:</b> {{ request.booktorequest.idcategory }}</p>
+                        <p class="card-text"><b>Автор:</b> {{ request.booktorequest.idwriter }}</p>
+                        <p class="card-text"><b>Выставил:</b> {{ request.userrequest }}</p>
+                        <p class="card-text"><b>Хотел бы обменяться на:</b> {{ request.namebookrequest }}</p>
+                    </div>
+                        <a href="{% url 'create_trade' request.idorder %}" class="button-74-login " role="button">Отозваться</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+                <div class="container mt-4">
+                    <h2>Предложений нет</h2>
+                </div>
+        {% endif %}
         <div class="container-fluid d-flex" style="margin:150px 0px 0px 0px;background-color: #000000; background-image: linear-gradient(315deg, #000736 0%, #5e5368 74%); height:700px;" >
              <img src="{% static 'img/back-sov.png' %}" alt="Описание изображения" class="img-fluid" style=" position:absolute;z-index:1; right:0px;" >
             <div class="container-sm d-flex align-items-center justify-content-center " style="flex-direction:row;">
@@ -184,32 +210,6 @@
 
         {% endif %}
 
-        {% if requests %}
-        <div class="container mt-6">
-            <h2>Актуальные предложения</h2>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 " style="padding-top: 50px;" id="cardsContainer">
-                {% for request in requests %}
-                <div class="card card-properties">
-                    <img src="/media/{{ request.booktorequest.idcover.img }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ request.booktorequest.name }}</h5>
-                        <p class="card-text">{{ request.booktorequest.description }}</p>
-                        <p class="card-text"><b>Жанр:</b> {{ request.booktorequest.idgenre }}</p>
-                        <p class="card-text"><b>Категория:</b> {{ request.booktorequest.idcategory }}</p>
-                        <p class="card-text"><b>Автор:</b> {{ request.booktorequest.idwriter }}</p>
-                        <p class="card-text"><b>Выставил:</b> {{ request.userrequest }}</p>
-                        <p class="card-text"><b>Хотел бы обменяться на:</b> {{ request.namebookrequest }}</p>
-                    </div>
-                        <a href="{% url 'create_trade' request.idorder %}" class="button-74-login " role="button">Отозваться</a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-                <div class="container mt-4">
-                    <h2>Предложений нет</h2>
-                </div>
-        {% endif %}
     </div>
 </div>
 

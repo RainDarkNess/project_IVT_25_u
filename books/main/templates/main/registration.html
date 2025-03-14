@@ -57,6 +57,7 @@
 
 <hr id="load-hr" style="background-color:blue; width:0%; height:5px; margin-top:0px;">
 <div class="container-sm align-items-center justify-content-center" style="display:flex;flex-direction:column;" >
+    {{ form.errors }}
     <img src="{% static 'img/head.gif' %}" alt="Описание изображения" class="img-fluid" >
     <form class="d-inline-block border py-3 px-5" method="post" enctype="multipart/form-data" id="registrationForm" style=" border-left:1px solid #1111;border-right:1px solid #1111; border-radius:20px;">
         {% csrf_token %}
