@@ -73,21 +73,20 @@
 
 .work-this{
     background-image:url('../img/back-for-hi-block.png') !important;
+    background-position: center;
     background-repeat:no-repeat !important;
     background-size:cover !important;
 }
+/*.back-offers{
+  background-image:url('../img/back-for-block.png) !important;
+  background-position: center;
+  background-repeat:no-repeat !important;
+  background-size:cover !important;
+}*/
 .cloud{
      background-image: url('../img/cloud.svg');
      background-repeat: no-repeat;
     background-size: contain;
-}
-.dummy-hi {
-    background-image: url('../img/hiLogo.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 400px;
-    height: 400px;
-    margin-left: auto;
 }
 
 .jumbotron-local {
