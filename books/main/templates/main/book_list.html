@@ -4,54 +4,56 @@
 
 {% block content %}
 {% include "main/header.html" %}
-<div class="container mt-5 text-center">
+<div class="container" style="text-align:center; ">
     <h1>Список книг</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Категория</th>
-            <th>Обложка</th>
-            <th>Жанр</th>
-            <th>Автор</th>
-            {% if IM_A_GOD %}
-                <th>Загрузил</th>
-            {% endif %}
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for book in books %}
-        <tr>
-            <td>{{ book.name }}</td>
-            <td>{{ book.description }}</td>
-            <td>{{ book.idcategory }}</td>
-            <td>
-                {% if book.idcover %}
-                <img style="width: 100%; height: 100%" src="/media/{{ book.idcover.img }}">
-                {% else %}
-                <p>Изображение отсуствует</p>
+    <div class="table-responsive"  style="overflow-x: auto;">
+        <table class="table" style="width: 100%;">
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Категория</th>
+                <th>Обложка</th>
+                <th>Жанр</th>
+                <th>Автор</th>
+                {% if IM_A_GOD %}
+                    <th>Загрузил</th>
                 {% endif %}
-            </td>
-            <td>{{ book.idgenre }}</td>
-            <td>{{ book.idwriter }}</td>
-            {% if IM_A_GOD %}
-                <td><a href="{% url 'user-page-view' book.idAuthorUser.id %}" class="btn btn-primary">{{ book.idAuthorUser }}</a></td>
-            {% endif %}
-            <td>
-                <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
-                <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="7">Книг нет.</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{% url 'add_book' %}" class="btn btn-primary">Добавить книгу</a>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.name }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.idcategory }}</td>
+                <td>
+                    {% if book.idcover %}
+                    <img style="width: 100%; height: 100%" src="/media/{{ book.idcover.img }}">
+                    {% else %}
+                    <p>Изображение отсуствует</p>
+                    {% endif %}
+                </td>
+                <td>{{ book.idgenre }}</td>
+                <td>{{ book.idwriter }}</td>
+                {% if IM_A_GOD %}
+                    <td><a href="{% url 'user-page-view' book.idAuthorUser.id %}" class="btn btn-primary">{{ book.idAuthorUser }}</a></td>
+                {% endif %}
+                <td>
+                    <a href="{% url 'edit_book' book.idbooks %}" class="btn btn-warning">Редактировать</a>
+                    <a href="{% url 'delete_book' book.idbooks %}" class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">Книг нет.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'add_book' %}" class="btn btn-primary mt-3" style="width:150px;">Добавить книгу</a>
 </div>
 
 {% include "main/footer.html" %}
